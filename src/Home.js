@@ -16,7 +16,7 @@ function Home() {
       >
         <div className="col">
           <div>
-            <h1 className="h1-count">34 000</h1>
+            <h1 className="h1-count">34 590</h1>
             <p>стихотворений по разным темам</p>
           </div>
         </div>

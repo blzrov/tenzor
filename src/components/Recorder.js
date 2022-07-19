@@ -24,20 +24,30 @@ function Recorder(props) {
                 )}
               </p>
               <Button
+                style={{ fontWeight: "500" }}
                 variant="warning"
                 className="btn m-1 px-4"
                 onClick={startRecording}
               >
                 Начать запись
               </Button>
-              <Button className="btn btn-danger m-1" onClick={stopRecording}>
+              <Button
+                style={{ fontWeight: "500" }}
+                className="btn btn-danger m-1"
+                onClick={stopRecording}
+              >
                 Остановить запись
               </Button>
             </div>
             <div>
               <audio src={mediaBlobUrl} controls></audio>
             </div>
-            <button className="btn btn-primary m-1 px-4">Опубликовать</button>
+            <Button
+              style={{ fontWeight: "500" }}
+              className="btn btn-primary m-1 px-4"
+            >
+              Опубликовать
+            </Button>
           </div>
         )}
       ></ReactMediaRecorder>

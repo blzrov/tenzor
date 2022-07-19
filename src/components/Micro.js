@@ -12,7 +12,7 @@ function Micro() {
   return (
     <Container>
       <div className="row">
-        <div className="col">
+        <div className="col" style={{ fontWeight: "500" }}>
           <h3>Аудиодорожка</h3>
           <p>
             Нажмите кнопку “Записать”, если хотите записать вариант прочтения
@@ -23,6 +23,7 @@ function Micro() {
             {["checkbox"].map((type) => (
               <div key={`default-${type}`} className="mb-3">
                 <Form.Check
+                  style={{ color: "#545454" }}
                   onChange={Check}
                   type={type}
                   id={`default-${type}`}

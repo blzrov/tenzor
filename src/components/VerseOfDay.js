@@ -26,7 +26,7 @@ function VerseOfDay() {
         <br />
         Стал тайно навещать меня.
       </p>
-      <Link className="align-self-end btn btn-warning" to="/Example">
+      <Link className="align-self-end btn btn-warning" to="/example">
         Читать далее
       </Link>
     </div>

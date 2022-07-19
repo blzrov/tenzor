@@ -7,7 +7,7 @@ import Home from "./Home";
 import Rating from "./Rating";
 import Catalog from "./Catalog";
 import Example from "./Example";
-import PostIdPage from "./components/PostIdPage ";
+import PostIdPage from "./components/PostIdPage";
 
 function App() {
   return (

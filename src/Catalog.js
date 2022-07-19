@@ -22,7 +22,7 @@ function CatalogFind(props) {
   if (props.query)
     return (
       <div>
-        <h3 className="my-3">Результаты поиска по {props.query}</h3>
+        <h4 className="my-3">Результаты поиска по {props.query}</h4>
         <ul class="list-group">
           <li class="list-group-item">
             <Link style={{ color: "black" }} to="/example">
