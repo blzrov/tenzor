@@ -8,6 +8,7 @@ import Rating from "./Rating";
 import Catalog from "./Catalog";
 import Example from "./Example";
 import PostIdPage from "./components/PostIdPage";
+import RatingOnVerse from "./components/RatingOnVerse";
 
 function App() {
   return (
@@ -24,6 +25,13 @@ function App() {
               key={elem}
               path={`/${elem}`}
               element={<PostIdPage id={elem} />}
+            />
+          ))}
+          {[...Array(50000).keys()].map((elem) => (
+            <Route
+              key={elem}
+              path={`/${elem}/rating`}
+              element={<RatingOnVerse id={elem} />}
             />
           ))}
         </Routes>

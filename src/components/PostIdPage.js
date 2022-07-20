@@ -3,16 +3,11 @@ import Container from "react-bootstrap/esm/Container";
 import Micro from "./Micro";
 
 const PostIdPage = (props) => {
-  const options = {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ poemId: props.id }),
-  };
   let [author, setAuthor] = useState("Такого стихотворения ещё нет :с");
   let [title, setTitle] = useState("");
   let [text, setText] = useState("");
 
-  fetch("https://zoobrilka-alice-skill.herokuapp.com/api/getPoem", options)
+  fetch("https://zoobrilka-alice-skill.herokuapp.com/api/poem/" + props.id)
     .then((response) => response.json())
     .then((response) => handleData(response.response));
 
@@ -26,7 +21,7 @@ const PostIdPage = (props) => {
     <Container>
       <div className="row my-5 ">
         <div
-          className="col-5  border-bottom border-primary pb-5 mb-5"
+          className="col-5  border-bottom border-primary pb-5 mb-0"
           style={{ minWidth: "310px" }}
         >
           <div
@@ -41,7 +36,7 @@ const PostIdPage = (props) => {
           </div>
         </div>
         <div className="col">
-          <Micro id={props.id}/>
+          <Micro id={props.id} />
         </div>
       </div>
     </Container>

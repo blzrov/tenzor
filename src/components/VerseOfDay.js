@@ -3,15 +3,10 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 function VerseOfDay() {
   let id = 2;
-  const options = {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ poemId: id }),
-  };
   let [title, setTitle] = useState("");
   let [text, setText] = useState("");
 
-  fetch("https://zoobrilka-alice-skill.herokuapp.com/api/getPoem", options)
+  fetch("https://zoobrilka-alice-skill.herokuapp.com/api/poem/" + id)
     .then((response) => response.json())
     .then((response) => handleData(response.response));
 
