@@ -28,7 +28,7 @@ function Footer() {
                 <img
                   src={logo}
                   alt="logo"
-                  width={113}
+                  width={126}
                   style={{ filter: "brightness(10000%)" }}
                 />
               </Link>

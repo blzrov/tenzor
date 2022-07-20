@@ -1,33 +1,38 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 function VerseOfDay() {
+  let id = 2;
+  const options = {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ poemId: id }),
+  };
+  let [title, setTitle] = useState("");
+  let [text, setText] = useState("");
+
+  fetch("https://zoobrilka-alice-skill.herokuapp.com/api/getPoem", options)
+    .then((response) => response.json())
+    .then((response) => handleData(response.response));
+
+  function handleData(data) {
+    setTitle(data.title);
+    setText(data.text);
+  }
   return (
     <div className="d-flex flex-column align-items-center">
-      <strong className="mb-2">Название</strong>
-      <p style={{ maxHeight: "276px", overflow: "hidden" }}>
-        В те дни, когда мне были новы
-        <br />
-        Все впечатленья бытия –<br />
-        И взоры дев, и шум дубровы,
-        <br />
-        И ночью пенье соловья, –<br />
-        Когда возвышенные чувства,
-        <br />
-        Свобода, слава и любовь
-        <br />
-        И вдохновенные искусства
-        <br />
-        Так сильно волновали кровь, –<br />
-        Часы надежд и наслаждений
-        <br />
-        Тоской внезапной осеня,
-        <br />
-        Тогда какой-то злобный гений
-        <br />
-        Стал тайно навещать меня.
+      <strong className="mb-2">{title}</strong>
+      <p
+        style={{
+          maxHeight: "276px",
+          overflow: "hidden",
+          whiteSpace: "pre-line",
+        }}
+      >
+        {text}
       </p>
-      <Link className="align-self-end btn btn-warning" to="/example">
-        Читать далее
+      <Link className="align-self-end btn btn-warning px-4" to={"/" + id}>
+        Перейти
       </Link>
     </div>
   );

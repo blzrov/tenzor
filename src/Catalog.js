@@ -25,7 +25,7 @@ function CatalogFind(props) {
         <h4 className="my-3">Результаты поиска по {props.query}</h4>
         <ul class="list-group">
           <li class="list-group-item">
-            <Link style={{ color: "black" }} to="/example">
+            <Link style={{ color: "black" }} to={"/" + 1}>
               Первый результат поиска
             </Link>
           </li>

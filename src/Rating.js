@@ -13,6 +13,7 @@ function Rating() {
       className="mt-5"
       style={{ overflow: "scroll", fontWeight: "500" }}
     >
+      <audio id="ratingAudio" src="" style={{ display: "none" }} />
       <div className="form-check">
         <input
           className="form-check-input"

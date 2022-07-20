@@ -17,7 +17,6 @@ const PostIdPage = (props) => {
     .then((response) => handleData(response.response));
 
   function handleData(data) {
-    console.log(data.title);
     setAuthor(data.author);
     setTitle(data.title);
     setText(data.text);
@@ -42,7 +41,7 @@ const PostIdPage = (props) => {
           </div>
         </div>
         <div className="col">
-          <Micro />
+          <Micro id={props.id}/>
         </div>
       </div>
     </Container>

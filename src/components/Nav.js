@@ -2,59 +2,48 @@ import React from "react";
 import Container from "react-bootstrap/esm/Container";
 import logo from "../logo-name-lowercase.png";
 import { Link } from "react-router-dom";
-function Nav() {
+import Nav from "react-bootstrap/Nav";
+import Navbar from "react-bootstrap/Navbar";
+function Header() {
   return (
-    <div className="header" style={{ minWidth: "310px" }}>
+    <Navbar
+      collapseOnSelect
+      expand="lg"
+      variant="dark"
+      style={{ minWidth: "310px", background: "#af88e2" }}
+    >
       <Container>
-        <nav className="navbar navbar-expand-lg navbar-dark">
-          <div className="container-fluid">
-            <Link className="navbar-brand" to="/">
-              <img
-                src={logo}
-                alt="logo"
-                width={113}
-                style={{ filter: "brightness(10000%)" }}
-              />
+        <Navbar.Brand>
+          <Link className="navbar-brand" to="/">
+            <img
+              src={logo}
+              alt="logo"
+              width={126}
+              style={{ filter: "brightness(10000%)", marginTop: "-4.5px" }}
+            />
+          </Link>
+        </Navbar.Brand>
+        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+        <Navbar.Collapse id="responsive-navbar-nav">
+          <Nav className="me-auto">
+            <Link className="nav-link active" to="/rating">
+              Рейтинг
             </Link>
-            <button
-              className="navbar-toggler"
-              type="button"
-              data-bs-toggle="collapse"
-              data-bs-target="#navbarNav"
-              aria-controls="navbarNav"
-              aria-expanded="false"
-              aria-label="Toggle navigation"
-            >
-              <span className="navbar-toggler-icon"></span>
-            </button>
-            <div className="collapse navbar-collapse" id="navbarNav">
-              <ul className="navbar-nav">
-                <li className="nav-item">
-                  <Link className="nav-link active" to="/rating">
-                    Рейтинг
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link className="nav-link active" to="/catalog">
-                    Каталог
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link className="nav-link active" to="!#">
-                    Войти
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link className="nav-link active" to="!#">
-                    Поиск
-                  </Link>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </nav>
+            <Link className="nav-link active" to="/catalog">
+              Каталог
+            </Link>
+          </Nav>
+          <Nav>
+            <Link className="nav-link active" to="!#">
+              Войти
+            </Link>
+            <Link className="nav-link active" to="/catalog">
+              Поиск
+            </Link>
+          </Nav>
+        </Navbar.Collapse>
       </Container>
-    </div>
+    </Navbar>
   );
 }
-export default Nav;
+export default Header;
