@@ -28,23 +28,24 @@ function Catalog() {
     .then((response) => handleData(response.response));
 
   function handleData(data) {
-    setAuthor(data[0].author);
+    console.log(data);
+    setAuthor(data[0].author.firstName + " " + data[0].author.lastName);
     setTitle(data[0].title);
     setID(data[0].id);
 
-    setAuthor2(data[1].author);
+    setAuthor2(data[1].author.firstName + " " + data[1].author.lastName);
     setTitle2(data[1].title);
     setID2(data[1].id);
 
-    setAuthor3(data[2].author);
+    setAuthor3(data[2].author.firstName + " " + data[2].author.lastName);
     setTitle3(data[2].title);
     setID3(data[2].id);
 
-    setAuthor4(data[3].author);
+    setAuthor4(data[3].author.firstName + " " + data[3].author.lastName);
     setTitle4(data[3].title);
     setID4(data[3].id);
 
-    setAuthor5(data[4].author);
+    setAuthor5(data[4].author.firstName + " " + data[4].author.lastName);
     setTitle5(data[4].title);
     setID5(data[4].id);
   }

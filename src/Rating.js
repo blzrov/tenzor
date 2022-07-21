@@ -6,10 +6,7 @@ function Rating() {
   let [value, setValue] = useState(1);
 
   return (
-    <Container
-      className="mt-5"
-      style={{ overflow: "scroll", fontWeight: "500" }}
-    >
+    <Container className="mt-5" style={{ overflow: "auto", fontWeight: "500" }}>
       <audio id="ratingAudio" src="" style={{ display: "none" }} />
       <div className="form-check">
         <input

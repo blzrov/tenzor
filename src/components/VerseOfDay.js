@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 function VerseOfDay() {
-  let id = 2;
+  let id = 8;
   let [title, setTitle] = useState("");
   let [text, setText] = useState("");
 

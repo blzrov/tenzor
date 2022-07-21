@@ -10,7 +10,7 @@ function RatingOnVerse(props) {
     .then((response) => handleData(response.response));
 
   function handleData(data) {
-    setAuthor(data.author);
+    setAuthor(data.author.firstName + " " + data.author.lastName);
     setTitle(data.title);
   }
   let [value, setValue] = useState(1);
@@ -21,7 +21,7 @@ function RatingOnVerse(props) {
   return (
     <Container
       className="mt-5"
-      style={{ overflow: "scroll", fontWeight: "500" }}
+      style={{ overflow: "auto", fontWeight: "500" }}
     >
       <audio id="ratingAudio" src="" style={{ display: "none" }} />
       <h4>

@@ -21,18 +21,17 @@ function App() {
           <Route path="/example" element={<Example />} />
           <Route path="/catalog" element={<Catalog />} />
           {[...Array(50000).keys()].map((elem) => (
-            <Route
-              key={elem}
-              path={`/${elem}`}
-              element={<PostIdPage id={elem} />}
-            />
-          ))}
-          {[...Array(50000).keys()].map((elem) => (
-            <Route
-              key={elem}
-              path={`/${elem}/rating`}
-              element={<RatingOnVerse id={elem} />}
-            />
+            <>
+              <Route
+                key={elem}
+                path={`/${elem}`}
+                element={<PostIdPage id={elem} />}
+              />
+              <Route
+                path={`/${elem}/rating`}
+                element={<RatingOnVerse id={elem} />}
+              />
+            </>
           ))}
         </Routes>
       </div>
