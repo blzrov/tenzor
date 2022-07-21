@@ -3,7 +3,7 @@ import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
 import play from "./play-icon.png";
 import Modal from "react-bootstrap/Modal";
-function RatingTable(props) {
+function RatingTableOnVerse(props) {
   //to do id 2
   return (
     <Table className="border-primary">
@@ -25,7 +25,7 @@ function RatingTable(props) {
       </thead>
       <tbody>
         {[...Array(10).keys()].map((elem) => (
-          <RatingTableTr key={elem} id={elem} />
+          <RatingTableTr key={elem} id={elem} title={props.title} />
         ))}
       </tbody>
     </Table>
@@ -38,7 +38,7 @@ function RatingTableTr(props) {
     <tr style={{ verticalAlign: "middle" }}>
       <td>{props.id + 1}</td>
       <td>Фамилия Имя</td>
-      <td>У лукоморья дуб зеленый</td>
+      <td>{props.title}</td>
       <td>
         <button style={{ border: "none" }}>
           <img src={play} alt="play"></img>
@@ -155,4 +155,4 @@ function MyVerticallyCenteredModal(props) {
   );
 }
 
-export default RatingTable;
+export default RatingTableOnVerse;

@@ -40,12 +40,12 @@ function Footer() {
             </li>
             <li className="nav-item">
               <a className="nav-link active" href="!#">
-                support@example.com
+                denblzrv@gmail.com
               </a>
             </li>
             <li className="nav-item">
               <a className="nav-link active" href="https://tensor.ru/">
-                © 2022 тензор
+                © 2022
               </a>
             </li>
           </ul>

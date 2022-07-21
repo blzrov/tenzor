@@ -1,6 +1,8 @@
 import React from "react";
 import { ReactMediaRecorder } from "react-media-recorder";
 import Button from "react-bootstrap/Button";
+import { Link } from "react-router-dom";
+import { useState } from "react";
 function Recorder(props) {
   if (!props.check)
     return (
@@ -10,7 +12,16 @@ function Recorder(props) {
         </Button>
       </div>
     );
-  else
+  else {
+    async function UploadAudio(mediaBlobUrl) {
+      const mediaBlob = await fetch(mediaBlobUrl).then((response) =>
+        response.blob()
+      );
+      const myFile = new File([mediaBlob], (new Date() + ".wav").toString(), {
+        type: "audio/wav",
+      });
+      console.log(myFile);
+    }
     return (
       <ReactMediaRecorder
         audio
@@ -18,10 +29,10 @@ function Recorder(props) {
           <div>
             <div>
               <p>
-                {status.replace(
-                  "idle",
-                  "Запись начнётся после нажатия на кнопку"
-                )}
+                {status
+                  .replace("idle", "Запись начнётся после нажатия на кнопку")
+                  .replace("recording", "Запись идёт")
+                  .replace("stopped", "Запись остановлена")}
               </p>
               <Button
                 style={{ fontWeight: "500" }}
@@ -43,6 +54,7 @@ function Recorder(props) {
               <audio src={mediaBlobUrl} controls></audio>
             </div>
             <Button
+              onClick={{ UploadAudio }}
               style={{ fontWeight: "500" }}
               className="btn btn-primary m-1 px-4"
             >
@@ -52,6 +64,7 @@ function Recorder(props) {
         )}
       ></ReactMediaRecorder>
     );
+  }
 }
 
 export default Recorder;

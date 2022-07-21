@@ -18,7 +18,7 @@ function BestReadOnPage(props) {
         </tbody>
       </table>
       <div className="mt-3 d-flex justify-content-end">
-        <Link style={{ color: "black" }} to="/rating">
+        <Link style={{ color: "black" }} to={`/${props.id}/rating`}>
           Посмотреть все
         </Link>
       </div>
@@ -30,7 +30,9 @@ function BestReadTableTr(props) {
   return (
     <tr>
       <th scope="row">
-        Миша иванов
+        <span className="" style={{ marginRight: "20px" }}>
+          Миша иванов
+        </span>
         <button style={{ border: "none" }}>
           <img src={play} alt="play"></img>
         </button>
