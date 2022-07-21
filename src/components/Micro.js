@@ -5,7 +5,6 @@ import BestReadOnPage from "./BestReadOnPage";
 import Container from "react-bootstrap/esm/Container";
 import Form from "react-bootstrap/Form";
 
-
 function Micro(props) {
   let [checkbox, setCheckbox] = useState(false);
   function Check() {
@@ -20,7 +19,7 @@ function Micro(props) {
             Нажмите кнопку “Записать”, если хотите записать вариант прочтения
             данного стихотворения.
           </p>
-          <p>Вы не записали ещё ни одной дорожки.</p>
+          <PublishedAudio />
           <Form>
             {["checkbox"].map((type) => (
               <div key={`default-${type}`} className="mb-3">
@@ -40,5 +39,9 @@ function Micro(props) {
       </div>
     </Container>
   );
+}
+
+function PublishedAudio() {
+  return <p>Вы не записали ещё ни одной дорожки.</p>;
 }
 export default Micro;

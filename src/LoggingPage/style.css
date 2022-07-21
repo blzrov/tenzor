@@ -1,0 +1,32 @@
+.logging_page__wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+
+.logging_page__users_list_wrapper {
+  width: 20%;
+  height: 100%;
+  overflow: auto;
+}
+.logging_page__log_content_wrapper {
+  height: 100%;
+  width: 40%;
+  overflow: auto;
+}
+
+.logging_page__users_list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.users_list__item {
+  padding: 1rem;
+  cursor: pointer;
+  overflow-wrap: break-word;
+}
+
+.users_list__item_selected {
+  background-color: beige;
+}

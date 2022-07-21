@@ -3,6 +3,13 @@ import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
 import play from "./play-icon.png";
 import Modal from "react-bootstrap/Modal";
+import grade1 from "../img/grade1.svg";
+import grade2 from "../img/grade2.svg";
+import grade3 from "../img/grade3.svg";
+import grade4 from "../img/grade4.svg";
+import grade5 from "../img/grade5.svg";
+import selected1 from "../img/selected1.svg";
+
 function RatingTable(props) {
   //to do id 2
   return (
@@ -24,7 +31,7 @@ function RatingTable(props) {
         </tr>
       </thead>
       <tbody>
-        {[...Array(10).keys()].map((elem) => (
+        {[...Array(15).keys()].map((elem) => (
           <RatingTableTr key={elem} id={elem} />
         ))}
       </tbody>
@@ -59,6 +66,12 @@ function RatingTableTr(props) {
 }
 
 function MyVerticallyCenteredModal(props) {
+  //меняет при клике фото оценки
+  function choice(e) {
+    e.target.setAttribute( 'src', {selected1});
+    e.target.setAttribute('alt', 'selected');
+  }
+
   return (
     <Modal
       {...props}
@@ -73,64 +86,99 @@ function MyVerticallyCenteredModal(props) {
       </Modal.Header>
       <Modal.Body className="d-flex justify-content-center flex-column">
         <form className="d-flex justify-content-center " id="form1">
-          <div class="form-check form-check-inline">
-            <input
-              class="form-check-input"
-              type="radio"
-              name="inlineRadioOptions"
-              id="inlineRadio1"
-              value="option1"
-            />
-            <label class="form-check-label" for="inlineRadio1">
-              1
+          <div className="form-check form-check-inline">
+            <label className="form-check-label" htmlFor="inlineRadio1" >
+              <img 
+                src={grade1}
+                alt="grade-1"
+                width={50}
+                onClick={choice}
+              />
+              <input
+                className="form-check-input"
+                type="radio"
+                name="inlineRadioOptions"
+                id="inlineRadio1"
+                value="option1"
+                style={{display: "none"}}
+              />
+              <p className="grade" style={{textAlign: "center"}}>1</p>
             </label>
           </div>
-          <div class="form-check form-check-inline">
-            <input
-              class="form-check-input"
-              type="radio"
-              name="inlineRadioOptions"
-              id="inlineRadio2"
-              value="option2"
-            />
-            <label class="form-check-label" for="inlineRadio2">
-              2
+          <div className="form-check form-check-inline">
+          <label className="form-check-label" htmlFor="inlineRadio2">
+              <img 
+                src={grade2}
+                alt="grade-2"
+                width={50}
+                onClick={choice}
+              />
+              <input
+                className="form-check-input"
+                type="radio"
+                name="inlineRadioOptions"
+                id="inlineRadio2"
+                value="option2"
+                style={{display: "none"}}
+              />
+              <p className="grade" style={{textAlign: "center"}}>2</p>
             </label>
           </div>
-          <div class="form-check form-check-inline">
-            <input
-              class="form-check-input"
-              type="radio"
-              name="inlineRadioOptions"
-              id="inlineRadio3"
-              value="option3"
-            />
-            <label class="form-check-label" for="inlineRadio3">
-              3
+          <div className="form-check form-check-inline">
+          <label className="form-check-label" htmlFor="inlineRadio3">
+              <img 
+                src={grade3}
+                alt="grade-3"
+                width={50}
+                onClick={choice}
+              />
+              <input
+                className="form-check-input"
+                type="radio"
+                name="inlineRadioOptions"
+                id="inlineRadio3"
+                value="option3"
+                style={{display: "none"}}
+              />
+              <p className="grade" style={{textAlign: "center"}}>3</p>
             </label>
           </div>
-          <div class="form-check form-check-inline">
-            <input
-              class="form-check-input"
-              type="radio"
-              name="inlineRadioOptions"
-              id="inlineRadio4"
-              value="option4"
-            />
-            <label class="form-check-label" for="inlineRadio4">
-              4
+          <div className="form-check form-check-inline">
+          <label className="form-check-label" htmlFor="inlineRadio4">
+              <img 
+                src={grade4}
+                alt="grade-4"
+                width={50}
+                onClick={choice}
+              />
+              <input
+                className="form-check-input"
+                type="radio"
+                name="inlineRadioOptions"
+                id="inlineRadio4"
+                value="option4"
+                style={{display: "none"}}
+              />
+              <p className="grade" style={{textAlign: "center"}}>4</p>
             </label>
           </div>
-          <div class="form-check form-check-inline">
-            <input
-              class="form-check-input"
-              type="radio"
-              name="inlineRadioOptions"
-              id="inlineRadio5"
-              value="option5"
-            />
-            <label class="form-check-label" for="inlineRadio5">
-              5
+          <div className="form-check form-check-inline">
+          <label className="form-check-label" htmlFor="inlineRadio5">
+              <img 
+                src={grade5}
+                alt="grade-5"
+                width={50}
+                onClick={choice}
+              />
+              <input
+                className="form-check-input"
+                type="radio"
+                name="inlineRadioOptions"
+                id="inlineRadio5"
+                value="option5"
+                style={{display: "none"}}
+              />
+              <p className="grade" style={{textAlign: "center"}}>5</p>
             </label>
           </div>
         </form>

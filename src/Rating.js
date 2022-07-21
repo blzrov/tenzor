@@ -4,15 +4,9 @@ import Container from "react-bootstrap/esm/Container";
 import RatingTable from "./components/RatingTable";
 function Rating() {
   let [value, setValue] = useState(1);
-  function a(num) {
-    setValue(num);
-    console.log(value);
-  }
+
   return (
-    <Container
-      className="mt-5"
-      style={{ overflow: "scroll", fontWeight: "500" }}
-    >
+    <Container className="mt-5" style={{ overflow: "auto hidden hidden", fontWeight: "500" }}>
       <audio id="ratingAudio" src="" style={{ display: "none" }} />
       <div className="form-check">
         <input
@@ -22,7 +16,7 @@ function Rating() {
           id="flexRadioDefault1"
           defaultChecked
           onClick={() => {
-            a(1);
+            setValue(1);
           }}
         />
         <label className="form-check-label" htmlFor="flexRadioDefault1">
@@ -36,14 +30,14 @@ function Rating() {
           name="flexRadioDefault"
           id="flexRadioDefault2"
           onClick={() => {
-            a(2);
+            setValue(2);
           }}
         />
         <label className="form-check-label" htmlFor="flexRadioDefault2">
           <h5>Лучшее чтение за неделю</h5>
         </label>
       </div>
-      <RatingTable id={value} />
+      <RatingTable value={value} />
     </Container>
   );
 }
