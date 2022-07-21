@@ -1,13 +1,17 @@
 import React, { useState } from "react";
 import Container from "react-bootstrap/esm/Container";
+import { useParams } from "react-router-dom";
 import Micro from "./Micro";
 
 const PostIdPage = (props) => {
   let [author, setAuthor] = useState("Такого стихотворения ещё нет :с");
   let [title, setTitle] = useState("");
   let [text, setText] = useState("");
+  const { id } = useParams();
 
-  fetch("https://zoobrilka-alice-skill.herokuapp.com/api/poem/" + props.id)
+  if (!id) return <></>;
+
+  fetch("https://zoobrilka-alice-skill.herokuapp.com/api/poem/" + id)
     .then((response) => response.json())
     .then((response) => handleData(response.response));
 

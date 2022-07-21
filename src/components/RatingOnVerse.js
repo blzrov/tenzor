@@ -1,11 +1,18 @@
 import React from "react";
 import { useState } from "react";
+import { useParams } from "react-router-dom";
 import Container from "react-bootstrap/esm/Container";
 import RatingTableOnVerse from "./RatingTableOnVerse";
-function RatingOnVerse(props) {
+
+function RatingOnVerse() {
   let [author, setAuthor] = useState("Такого стихотворения ещё нет :с");
   let [title, setTitle] = useState("");
-  fetch("https://zoobrilka-alice-skill.herokuapp.com/api/poem/" + props.id)
+  let [value, setValue] = useState(1);
+  const { id } = useParams();
+
+  if (!id) return <></>;
+
+  fetch("https://zoobrilka-alice-skill.herokuapp.com/api/poem/" + id)
     .then((response) => response.json())
     .then((response) => handleData(response.response));
 
@@ -13,16 +20,13 @@ function RatingOnVerse(props) {
     setAuthor(data.author.firstName + " " + data.author.lastName);
     setTitle(data.title);
   }
-  let [value, setValue] = useState(1);
+
   function a(num) {
     setValue(num);
     console.log(value);
   }
   return (
-    <Container
-      className="mt-5"
-      style={{ overflow: "auto", fontWeight: "500" }}
-    >
+    <Container className="mt-5" style={{ overflow: "auto", fontWeight: "500" }}>
       <audio id="ratingAudio" src="" style={{ display: "none" }} />
       <h4>
         {author} - {title}

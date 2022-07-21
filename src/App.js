@@ -17,24 +17,15 @@ function App() {
       <Nav />
       <div className="site-content">
         <Routes>
-          <Route exands path="/" element={<Home />} />
+          <Route path="/" element={<Home />} />
           <Route path="/rating" element={<Rating />} />
           <Route path="/example" element={<Example />} />
           <Route path="/catalog" element={<Catalog />} />
           <Route path="/log" element={<LoggingPage />} />
-          {[...Array(50000).keys()].map((elem) => (
-            <>
-              <Route
-                key={elem}
-                path={`/${elem}`}
-                element={<PostIdPage id={elem} />}
-              />
-              <Route
-                path={`/${elem}/rating`}
-                element={<RatingOnVerse id={elem} />}
-              />
-            </>
-          ))}
+          <Route path="/poem">
+            <Route path=":id" element={<PostIdPage />} />
+            <Route path=":id/rating" element={<RatingOnVerse />} />
+          </Route>
         </Routes>
       </div>
       <Footer />
