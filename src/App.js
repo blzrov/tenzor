@@ -10,6 +10,7 @@ import Example from "./Example";
 import PostIdPage from "./components/PostIdPage";
 import RatingOnVerse from "./components/RatingOnVerse";
 import LoggingPage from "./LoggingPage";
+import OauthPage from "./OauthPage";
 
 function App() {
   return (
@@ -18,10 +19,11 @@ function App() {
       <div className="site-content">
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/oauth" element={<OauthPage />} />
           <Route path="/rating" element={<Rating />} />
           <Route path="/example" element={<Example />} />
           <Route path="/catalog" element={<Catalog />} />
-          <Route path="/log" element={<LoggingPage />} />
+          <Route path="/logs" element={<LoggingPage />} />
           <Route path="/poem">
             <Route path=":id" element={<PostIdPage />} />
             <Route path=":id/rating" element={<RatingOnVerse />} />

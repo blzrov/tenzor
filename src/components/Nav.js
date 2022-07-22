@@ -87,8 +87,17 @@ function MyVerticallyCenteredModal(props) {
       </Modal.Header>
       <Modal.Body>
         <h6>Вход через социальные сети:</h6>
-        <a href="!#" alt="Yandex">
-          <img style={{maxWidth:"100%"}} src={yandexLogo}></img>
+        <a
+          target="_blank"
+          rel="noreferrer"
+          href="https://oauth.yandex.ru/authorize?response_type=code&client_id=250a4b68f4b9439696580f24d1daa8f7"
+          alt="Yandex"
+        >
+          <img
+            style={{ maxWidth: "100%" }}
+            src={yandexLogo}
+            alt="sign in"
+          ></img>
         </a>
       </Modal.Body>
       <Modal.Footer>
