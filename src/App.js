@@ -2,11 +2,12 @@ import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Nav from "./components/Nav";
 import Footer from "./components/Footer";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import Home from "./Home";
 import Rating from "./Rating";
 import Catalog from "./Catalog";
 import Example from "./Example";
+import Error33 from "./Error";
 import PostIdPage from "./components/PostIdPage";
 import RatingOnVerse from "./components/RatingOnVerse";
 import LoggingPage from "./LoggingPage";
@@ -26,6 +27,7 @@ function App() {
             <Route path=":id" element={<PostIdPage />} />
             <Route path=":id/rating" element={<RatingOnVerse />} />
           </Route>
+          <Route path="/*" element={<Error33 to="/error33" replace />} />
         </Routes>
       </div>
       <Footer />
