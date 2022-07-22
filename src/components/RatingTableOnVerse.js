@@ -1,4 +1,5 @@
 import React from "react";
+import Grade from "./grade/Grade";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
 import play from "./play-icon.png";
@@ -46,7 +47,7 @@ function RatingTableTr(props) {
       </td>
       <td>5</td>
       <td>
-        <Button variant="warning" onClick={() => setModalShow(true)}>
+        <Button className="yellow-button" onClick={() => setModalShow(true)}>
           Оценить
         </Button>
       </td>
@@ -72,68 +73,7 @@ function MyVerticallyCenteredModal(props) {
         </Modal.Title>
       </Modal.Header>
       <Modal.Body className="d-flex justify-content-center flex-column">
-        <form className="d-flex justify-content-center " id="form1">
-          <div className="form-check form-check-inline">
-            <input
-              className="form-check-input"
-              type="radio"
-              name="inlineRadioOptions"
-              id="inlineRadio1"
-              value="option1"
-            />
-            <label className="form-check-label" htmlFor="inlineRadio1">
-              1
-            </label>
-          </div>
-          <div className="form-check form-check-inline">
-            <input
-              className="form-check-input"
-              type="radio"
-              name="inlineRadioOptions"
-              id="inlineRadio2"
-              value="option2"
-            />
-            <label className="form-check-label" htmlFor="inlineRadio2">
-              2
-            </label>
-          </div>
-          <div className="form-check form-check-inline">
-            <input
-              className="form-check-input"
-              type="radio"
-              name="inlineRadioOptions"
-              id="inlineRadio3"
-              value="option3"
-            />
-            <label className="form-check-label" htmlFor="inlineRadio3">
-              3
-            </label>
-          </div>
-          <div className="form-check form-check-inline">
-            <input
-              className="form-check-input"
-              type="radio"
-              name="inlineRadioOptions"
-              id="inlineRadio4"
-              value="option4"
-            />
-            <label className="form-check-label" htmlFor="inlineRadio4">
-              4
-            </label>
-          </div>
-          <div className="form-check form-check-inline">
-            <input
-              className="form-check-input"
-              type="radio"
-              name="inlineRadioOptions"
-              id="inlineRadio5"
-              value="option5"
-            />
-            <label className="form-check-label" htmlFor="inlineRadio5">
-              5
-            </label>
-          </div>
-        </form>
+        <Grade />
         <div className="d-flex justify-content-center mt-3">
           <Button
             type="submit"
@@ -141,7 +81,7 @@ function MyVerticallyCenteredModal(props) {
             form="form1"
             variant="warning"
             onClick={props.onHide}
-            className="m-1"
+            className="yellow-button m-1"
           >
             Оценить
           </Button>

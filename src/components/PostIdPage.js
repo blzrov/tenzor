@@ -42,7 +42,7 @@ const PostIdPage = (props) => {
           </div>
         </div>
         <div className="col">
-          <Micro id={props.id} />
+          <Micro id={id} />
         </div>
       </div>
     </Container>

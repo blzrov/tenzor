@@ -1,13 +1,15 @@
 import React from "react";
 import { ReactMediaRecorder } from "react-media-recorder";
 import Button from "react-bootstrap/Button";
-import { Link } from "react-router-dom";
-import { useState } from "react";
+
 function Recorder(props) {
   if (!props.check)
     return (
       <div>
-        <Button className="btn btn-warning m-1 btn m-1 px-4 disabled" disabled>
+        <Button
+          className="yellow-button btn btn-warning m-1 btn m-1 px-4 disabled "
+          disabled
+        >
           Начать запись
         </Button>
       </div>
@@ -36,8 +38,7 @@ function Recorder(props) {
               </p>
               <Button
                 style={{ fontWeight: "500" }}
-                variant="warning"
-                className="btn m-1 px-4"
+                className="yellow-button btn m-1 px-4"
                 onClick={startRecording}
               >
                 Начать запись
@@ -55,7 +56,7 @@ function Recorder(props) {
             </div>
             <Button
               onClick={{ UploadAudio }}
-              style={{ fontWeight: "500" }}
+              style={{ fontWeight: "500", background: "#753FFF" }}
               className="btn btn-primary m-1 px-4"
             >
               Опубликовать

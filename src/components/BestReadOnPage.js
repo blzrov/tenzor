@@ -18,7 +18,7 @@ function BestReadOnPage(props) {
         </tbody>
       </table>
       <div className="mt-3 d-flex justify-content-end">
-        <Link style={{ color: "black" }} to={`/${props.id}/rating`}>
+        <Link style={{ color: "black" }} to={"/poem" + `/${props.id}/rating`}>
           Посмотреть все
         </Link>
       </div>

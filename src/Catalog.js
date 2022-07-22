@@ -90,27 +90,47 @@ function CatalogFind(props) {
         <h4 className="my-3">Результаты поиска по {props.query}</h4>
         <ul className="list-group">
           <li className="list-group-item">
-            <Link style={{ color: "black" }} to={`/${props.id}`}>
+            <Link
+              className="p-2"
+              style={{ color: "black" }}
+              to={"/poem" + `/${props.id}`}
+            >
               {props.author} - {props.title}
             </Link>
           </li>
           <li className="list-group-item">
-            <Link style={{ color: "black" }} to={`/${props.id2}`}>
+            <Link
+              className="p-2"
+              style={{ color: "black" }}
+              to={"/poem" + `/${props.id2}`}
+            >
               {props.author2} - {props.title2}
             </Link>
           </li>
           <li className="list-group-item">
-            <Link style={{ color: "black" }} to={`/${props.id3}`}>
+            <Link
+              className="p-2"
+              style={{ color: "black" }}
+              to={"/poem" + `/${props.id3}`}
+            >
               {props.author3} - {props.title3}
             </Link>
           </li>
           <li className="list-group-item">
-            <Link style={{ color: "black" }} to={`/${props.id4}`}>
+            <Link
+              className="p-2"
+              style={{ color: "black" }}
+              to={"/poem" + `/${props.id4}`}
+            >
               {props.author4} - {props.title4}
             </Link>
           </li>
           <li className="list-group-item">
-            <Link style={{ color: "black" }} to={`/${props.id5}`}>
+            <Link
+              className="p-2"
+              style={{ color: "black" }}
+              to={"/poem" + `/${props.id5}`}
+            >
               {props.author5} - {props.title5}
             </Link>
           </li>
