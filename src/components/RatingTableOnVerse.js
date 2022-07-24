@@ -6,6 +6,23 @@ import play from "./play-icon.png";
 import Modal from "react-bootstrap/Modal";
 function RatingTableOnVerse(props) {
   //to do id 2
+  let [data, setData] = React.useState("");
+  let [audio, setAudio] = React.useState("");
+  fetch(
+    "https://zoobrilka-alice-skill.herokuapp.com/api/poem/" +
+      props.id +
+      "/records"
+  )
+    .then((response) => response.json())
+    .then((response) => handleData(response.response));
+
+  function handleData(data) {
+    setData(data);
+  }
+  function changeAudio(url) {
+    //setData(setAudio(url));
+    console.log(url);
+  }
   return (
     <Table className="border-primary">
       <thead
@@ -25,8 +42,14 @@ function RatingTableOnVerse(props) {
         </tr>
       </thead>
       <tbody>
-        {[...Array(10).keys()].map((elem) => (
-          <RatingTableTr key={elem} id={elem} title={props.title} />
+        {[...Array(data.length).keys()].map((elem) => (
+          <RatingTableTr
+            key={elem}
+            id={elem}
+            title={props.title}
+            data={data[elem]}
+            setAudio={changeAudio}
+          />
         ))}
       </tbody>
     </Table>
@@ -38,14 +61,19 @@ function RatingTableTr(props) {
   return (
     <tr style={{ verticalAlign: "middle" }}>
       <td>{props.id + 1}</td>
-      <td>Фамилия Имя</td>
+      <td>{props.data.owner}</td>
       <td>{props.title}</td>
       <td>
-        <button style={{ border: "none" }}>
+        <button
+          style={{ border: "none" }}
+          onClick={() => {
+            props.setAudio(props.data.url);
+          }}
+        >
           <img src={play} alt="play"></img>
         </button>
       </td>
-      <td>5</td>
+      <td>{props.data.rating}</td>
       <td>
         <Button className="yellow-button" onClick={() => setModalShow(true)}>
           Оценить
@@ -54,6 +82,7 @@ function RatingTableTr(props) {
       <MyVerticallyCenteredModal
         show={modalShow}
         onHide={() => setModalShow(false)}
+        id={props.data.id}
       />
     </tr>
   );

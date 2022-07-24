@@ -32,6 +32,7 @@ function Rating() {
           onClick={() => {
             setValue(2);
           }}
+          disabled
         />
         <label className="form-check-label" htmlFor="flexRadioDefault2">
           <h5>Лучшее чтение за неделю</h5>

@@ -5,7 +5,21 @@ import Button from "react-bootstrap/Button";
 import play from "./play-icon.png";
 import Modal from "react-bootstrap/Modal";
 function RatingTable(props) {
-  //to do id 2
+  let [data, setData] = React.useState("");
+  let [audio, setAudio] = React.useState("");
+
+  fetch("https://zoobrilka-alice-skill.herokuapp.com/api/users/records")
+    .then((response) => response.json())
+    .then((response) => handleData(response.response));
+
+  function handleData(data) {
+    setData(data);
+  }
+  function changeAudio(url) {
+    //setData(setAudio(url));
+    console.log(url);
+  }
+
   return (
     <Table className="border-primary">
       <thead
@@ -19,14 +33,21 @@ function RatingTable(props) {
           <th>№</th>
           <th>Имя пользователя</th>
           <th>Стихотворение</th>
-          <th></th>
+          <th>
+            <audio src="" autoPlay />
+          </th>
           <th>Оценка</th>
           <th></th>
         </tr>
       </thead>
       <tbody>
-        {[...Array(10).keys()].map((elem) => (
-          <RatingTableTr key={elem} id={elem} />
+        {[...Array(data.length).keys()].map((elem) => (
+          <RatingTableTr
+            key={elem}
+            id={elem}
+            data={data[elem]}
+            setAudio={changeAudio}
+          />
         ))}
       </tbody>
     </Table>
@@ -38,14 +59,19 @@ function RatingTableTr(props) {
   return (
     <tr style={{ verticalAlign: "middle" }}>
       <td>{props.id + 1}</td>
-      <td>Фамилия Имя</td>
-      <td>У лукоморья дуб зеленый</td>
+      <td>{props.data.userId}</td>
+      <td>id : {props.data.records[0].poem}</td>
       <td>
-        <button style={{ border: "none" }}>
+        <button
+          style={{ border: "none" }}
+          onClick={() => {
+            props.setAudio(props.data.records[0].url);
+          }}
+        >
           <img src={play} alt="play"></img>
         </button>
       </td>
-      <td>5</td>
+      <td>{props.data.records[0].rating}</td>
       <td>
         <Button className="yellow-button" onClick={() => setModalShow(true)}>
           Оценить

@@ -15,14 +15,17 @@ function Recorder(props) {
       </div>
     );
   else {
-    async function UploadAudio(mediaBlobUrl) {
-      const mediaBlob = await fetch(mediaBlobUrl).then((response) =>
-        response.blob()
-      );
-      const myFile = new File([mediaBlob], (new Date() + ".wav").toString(), {
-        type: "audio/wav",
-      });
+    async function UploadAudio(myFile) {
       console.log(myFile);
+      let options = {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ record: { myFile }, userId: 25, poemId: 1 }),
+      };
+      fetch("https://zoobrilka-alice-skill.herokuapp.com/api/record", options)
+        .then((response) => response.json())
+        .then((response) => console.log(response));
+      //
     }
     return (
       <ReactMediaRecorder
@@ -55,7 +58,32 @@ function Recorder(props) {
               <audio src={mediaBlobUrl} controls></audio>
             </div>
             <Button
-              onClick={{ UploadAudio }}
+              onClick={async () => {
+                const audioBlob = await fetch(mediaBlobUrl).then((r) =>
+                  r.blob()
+                );
+                const audioFile = new File([audioBlob], "record.wav", {
+                  type: "audio/wav",
+                });
+                const formData = new FormData(); // preparing to send to the server
+
+                formData.append("record", audioFile); // preparing to send to the server
+                let options = {
+                  method: "POST",
+                  body: {
+                    record: formData,
+                    userId: 25,
+                    poemId: 1,
+                  },
+                };
+                console.log(formData);
+                fetch(
+                  "https://zoobrilka-alice-skill.herokuapp.com/api/record",
+                  options
+                )
+                  .then((response) => response.json())
+                  .then((response) => console.log(response));
+              }}
               style={{ fontWeight: "500", background: "#753FFF" }}
               className="btn btn-primary m-1 px-4"
             >

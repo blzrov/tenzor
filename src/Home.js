@@ -3,6 +3,16 @@ import Container from "react-bootstrap/esm/Container";
 import VerseOfDay from "./components/VerseOfDay";
 import AliceIcon from "./components/Frame62.png";
 function Home() {
+  let [data, setData] = React.useState("");
+
+  fetch("https://zoobrilka-alice-skill.herokuapp.com/api/users/records")
+    .then((response) => response.json())
+    .then((response) => handleData(response.response));
+
+  function handleData(data) {
+    setData(data);
+    console.log(data);
+  }
   return (
     <Container>
       <div
@@ -33,8 +43,8 @@ function Home() {
             <h3 className="text-center mb-3">Рейтинг</h3>
             <table className="table">
               <tbody>
-                {[...Array(10).keys()].map((elem) => (
-                  <HomeTableTr key={elem} id={elem} />
+                {[...Array(data.length).keys()].map((elem) => (
+                  <HomeTableTr key={elem} id={elem} data={data[elem]} />
                 ))}
               </tbody>
             </table>
@@ -78,8 +88,8 @@ function HomeTableTr(props) {
   return (
     <tr>
       <th style={{ border: "none" }}>{props.id + 1}</th>
-      <td style={{ border: "none" }}>Миша Иванов</td>
-      <td style={{ border: "none" }}>5</td>
+      <td style={{ border: "none" }}>{props.data.userId}</td>
+      <td style={{ border: "none" }}>{props.data.records[0].rating}</td>
     </tr>
   );
 }

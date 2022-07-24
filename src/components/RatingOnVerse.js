@@ -25,6 +25,9 @@ function RatingOnVerse() {
     setValue(num);
     console.log(value);
   }
+
+
+
   return (
     <Container className="mt-5" style={{ overflow: "auto", fontWeight: "500" }}>
       <audio id="ratingAudio" src="" style={{ display: "none" }} />
@@ -55,12 +58,13 @@ function RatingOnVerse() {
           onClick={() => {
             a(2);
           }}
+          disabled
         />
         <label className="form-check-label" htmlFor="flexRadioDefault2">
           <h6>Лучшее чтение за неделю</h6>
         </label>
       </div>
-      <RatingTableOnVerse value={value} title={title} />
+      <RatingTableOnVerse value={value} title={title} id={id} />
     </Container>
   );
 }
