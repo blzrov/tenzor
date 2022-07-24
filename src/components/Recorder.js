@@ -65,18 +65,16 @@ function Recorder(props) {
                 const audioFile = new File([audioBlob], "record.wav", {
                   type: "audio/wav",
                 });
-                const formData = new FormData(); // preparing to send to the server
+                const body = new FormData(); // preparing to send to the server
 
-                formData.append("record", audioFile); // preparing to send to the server
+                body.append("record", audioFile);
+                body.append("userId", 25);
+                body.append("poemId", 1);
                 let options = {
                   method: "POST",
-                  body: {
-                    record: formData,
-                    userId: 25,
-                    poemId: 1,
-                  },
+                  body,
                 };
-                console.log(formData);
+                console.log(body);
                 fetch(
                   "https://zoobrilka-alice-skill.herokuapp.com/api/record",
                   options
