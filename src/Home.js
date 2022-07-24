@@ -4,14 +4,14 @@ import VerseOfDay from "./components/VerseOfDay";
 import AliceIcon from "./components/Frame62.png";
 function Home() {
   let [data, setData] = React.useState("");
-
-  fetch("https://zoobrilka-alice-skill.herokuapp.com/api/users/records")
-    .then((response) => response.json())
-    .then((response) => handleData(response.response));
+  React.useEffect(() => {
+    fetch("https://zoobrilka-alice-skill.herokuapp.com/api/users/records")
+      .then((response) => response.json())
+      .then((response) => handleData(response.response));
+  }, []);
 
   function handleData(data) {
     setData(data);
-    console.log(data);
   }
   return (
     <Container>
@@ -84,12 +84,14 @@ function Home() {
 }
 
 function HomeTableTr(props) {
-  //todo
+  if (props.id > 9) return;
   return (
     <tr>
       <th style={{ border: "none" }}>{props.id + 1}</th>
-      <td style={{ border: "none" }}>{props.data.userId}</td>
-      <td style={{ border: "none" }}>{props.data.records[0].rating}</td>
+      <td style={{ border: "none" }}>
+        {props.data.records[0].owner.split("(")[0]}
+      </td>
+      <td style={{ border: "none" }}>{props.data.userRating}</td>
     </tr>
   );
 }

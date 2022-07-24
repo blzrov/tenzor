@@ -6,21 +6,21 @@ import play from "./play-icon.png";
 import Modal from "react-bootstrap/Modal";
 function RatingTableOnVerse(props) {
   //to do id 2
+
   let [data, setData] = React.useState("");
   let [audio, setAudio] = React.useState("");
-  fetch(
-    "https://zoobrilka-alice-skill.herokuapp.com/api/poem/" +
-      props.id +
-      "/records"
-  )
-    .then((response) => response.json())
-    .then((response) => handleData(response.response));
+  React.useEffect(() => {
+    fetch("https://zoobrilka-alice-skill.herokuapp.com/api/records/" + props.id)
+      .then((response) => response.json())
+      .then((response) => handleData(response.response));
 
-  function handleData(data) {
-    setData(data);
-  }
+    function handleData(data) {
+      setData(data);
+    }
+  }, []);
   function changeAudio(url) {
-    //setData(setAudio(url));
+    if (url == audio) setAudio("");
+    else setAudio(url);
     console.log(url);
   }
   return (
@@ -36,7 +36,9 @@ function RatingTableOnVerse(props) {
           <th>№</th>
           <th>Имя пользователя</th>
           <th>Стихотворение</th>
-          <th></th>
+          <th>
+            <audio src={audio} controls autoPlay style={{ display: "none" }} />
+          </th>
           <th>Оценка</th>
           <th></th>
         </tr>
@@ -89,6 +91,10 @@ function RatingTableTr(props) {
 }
 
 function MyVerticallyCenteredModal(props) {
+  let [grade, setGrade] = React.useState();
+  function hanldeGrade(a) {
+    setGrade(a);
+  }
   return (
     <Modal
       {...props}
@@ -102,14 +108,34 @@ function MyVerticallyCenteredModal(props) {
         </Modal.Title>
       </Modal.Header>
       <Modal.Body className="d-flex justify-content-center flex-column">
-        <Grade />
+        <Grade setGrade={hanldeGrade} />
         <div className="d-flex justify-content-center mt-3">
           <Button
-            type="submit"
+            type="button"
             value="Submit"
             form="form1"
             variant="warning"
-            onClick={props.onHide}
+            onClick={() => {
+              const body = {
+                userId: Math.random().toString().split(".")[1].toString(),
+                vote: grade,
+              };
+
+              let options = {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(body),
+              };
+              fetch(
+                "https://zoobrilka-alice-skill.herokuapp.com/api/record/" +
+                  props.id +
+                  "/vote",
+                options
+              )
+                .then((response) => response.json())
+                .then((response) => console.log(response));
+              props.onHide();
+            }}
             className="yellow-button m-1"
           >
             Оценить

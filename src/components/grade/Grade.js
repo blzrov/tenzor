@@ -4,7 +4,7 @@ import g2 from "./2.png";
 import g3 from "./3.png";
 import g4 from "./4.png";
 import g5 from "./5.png";
-function Grade() {
+function Grade(props) {
   return (
     <form className="d-flex justify-content-center " id="form1">
       <div className="form-check form-check-inline mx-2 mb-3 p-0 position-relative ">
@@ -14,6 +14,9 @@ function Grade() {
           name="inlineRadioOptions"
           id="inlineRadio1"
           value="option1"
+          onChange={() => {
+            props.setGrade(1);
+          }}
           style={{
             position: "absolute",
             marginLeft: "auto",
@@ -35,6 +38,9 @@ function Grade() {
           name="inlineRadioOptions"
           id="inlineRadio2"
           value="option2"
+          onChange={() => {
+            props.setGrade(2);
+          }}
           style={{
             position: "absolute",
             marginLeft: "auto",
@@ -56,6 +62,9 @@ function Grade() {
           name="inlineRadioOptions"
           id="inlineRadio3"
           value="option3"
+          onChange={() => {
+            props.setGrade(3);
+          }}
           style={{
             position: "absolute",
             marginLeft: "auto",
@@ -77,6 +86,9 @@ function Grade() {
           name="inlineRadioOptions"
           id="inlineRadio4"
           value="option4"
+          onChange={() => {
+            props.setGrade(4);
+          }}
           style={{
             position: "absolute",
             marginLeft: "auto",
@@ -98,6 +110,9 @@ function Grade() {
           name="inlineRadioOptions"
           id="inlineRadio5"
           value="option5"
+          onChange={() => {
+            props.setGrade(5);
+          }}
           style={{
             position: "absolute",
             marginLeft: "auto",

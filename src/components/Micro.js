@@ -11,7 +11,7 @@ function Micro(props) {
     setCheckbox(!checkbox);
   }
   return (
-    <Container>
+    <Container style={{ position: "sticky", top: "2rem" }}>
       <div className="row">
         <div className="col" style={{ fontWeight: "500" }}>
           <h3>Аудиодорожка</h3>
@@ -33,7 +33,7 @@ function Micro(props) {
               </div>
             ))}
           </Form>
-          <Recorder check={checkbox} />
+          <Recorder check={checkbox} id={props.id} />
           <BestReadOnPage id={props.id} />
         </div>
       </div>
