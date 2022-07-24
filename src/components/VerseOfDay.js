@@ -6,9 +6,9 @@ function VerseOfDay() {
   let [title, setTitle] = useState("");
   let [text, setText] = useState("");
 
-  fetch("https://zoobrilka-alice-skill.herokuapp.com/api/poem/today")
-    .then((response) => response.json())
-    .then((response) => handleData(response.response));
+  // fetch("https://zoobrilka-alice-skill.herokuapp.com/api/poem/today")
+  //   .then((response) => response.json())
+  //   .then((response) => handleData(response.response));
 
   function handleData(data) {
     setID(data.id);
@@ -30,7 +30,10 @@ function VerseOfDay() {
         {text}
       </p>
 
-      <Link className="yellow-button align-self-end btn btn-warning px-4" to={"/poem/" + id}>
+      <Link
+        className="yellow-button align-self-end btn btn-warning px-4"
+        to={"/poem/" + id}
+      >
         Перейти
       </Link>
     </div>

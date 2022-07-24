@@ -88,8 +88,8 @@ function MyVerticallyCenteredModal(props) {
       <Modal.Body>
         <h6>Вход через социальные сети:</h6>
         <a
-          target="_blank"
-          rel="noreferrer"
+          // target="_blank"
+          // rel="noreferrer"
           href="https://oauth.yandex.ru/authorize?response_type=code&client_id=250a4b68f4b9439696580f24d1daa8f7"
           alt="Yandex"
         >

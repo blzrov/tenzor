@@ -56,7 +56,11 @@ function Home() {
               чтецом!
             </p>
             <div className="text-center">
-              <a href="https://dialogs.yandex.ru/">
+              <a
+                href="https://dialogs.yandex.ru/store/skills/55879c59-demo-uchitel?utm_source=site&utm_medium=badge&utm_campaign=v1&utm_term=d1"
+                target="_blank"
+                rel="noreferrer"
+              >
                 <img src={AliceIcon} alt="alice" className="mt-4" />
               </a>
             </div>
