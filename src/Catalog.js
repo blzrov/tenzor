@@ -1,8 +1,10 @@
 import { React, useState, useEffect } from "react";
 import Container from "react-bootstrap/esm/Container";
 import { Link } from "react-router-dom";
+import useDebounce from "./hooks/useDebounce";
 function Catalog() {
   let [value, setValue] = useState("");
+  const debounceValue = useDebounce(value, 500);
   let [author, setAuthor] = useState("");
   let [title, setTitle] = useState("");
   let [id, setID] = useState("");
@@ -25,11 +27,12 @@ function Catalog() {
 
   useEffect(() => {
     fetch(
-      "https://zoobrilka-alice-skill.herokuapp.com/api/search?title=" + value
+      "https://zoobrilka-alice-skill.herokuapp.com/api/search?title=" +
+        debounceValue
     )
       .then((response) => response.json())
       .then((response) => handleData(response.response));
-  }, [value]);
+  }, [debounceValue]);
 
   function handleData(data) {
     setAuthor(data[0].author.firstName + " " + data[0].author.lastName);
@@ -64,7 +67,7 @@ function Catalog() {
         }}
       ></input>
       <CatalogFind
-        query={value}
+        query={debounceValue}
         author={author}
         title={title}
         author2={author2}

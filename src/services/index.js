@@ -18,11 +18,14 @@ const getUserInfo = async (token) => {
     method: "GET",
     // Authorization: "OAuth AQAAAAAq0WpQAAhChs52VS--YUDtkT_tdVqpMtg",
     headers: new Headers({
-      Authorization: "OAuth AQAAAAAq0WpQAAhChs52VS--YUDtkT_tdVqpMtg",
+      // Authorization: "OAuth AQAAAAAq0WpQAAhChs52VS--YUDtkT_tdVqpMtg",
       // Host: "oauth.yandex.ru",
     }),
   };
-  const res = await fetch(`https://login.yandex.ru/info`, params)
+  const res = await fetch(
+    `https://login.yandex.ru/info?oauth_token=${token}`,
+    params
+  )
     .then((res) => res.json())
     .catch(console.error);
   console.log(res);
