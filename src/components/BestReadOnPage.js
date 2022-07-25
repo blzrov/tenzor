@@ -1,25 +1,31 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import play from "./play-icon.png";
+import { CurrentUser } from "../App";
+
 function BestReadOnPage(props) {
   let [data, setData] = React.useState("");
   let [audio, setAudio] = React.useState("");
-  React.useEffect(() => {
-    fetch("https://zoobrilka-alice-skill.herokuapp.com/api/records/" + props.id)
-      .then((response) => response.json())
-      .then((response) => handleData(response.response));
+  const currentUser = useContext(CurrentUser);
 
-    function handleData(data) {
-      setData(data);
-    }
-  }, [props]);
+  useEffect(() => {
+    handleData();
+  }, []);
+
+  const handleData = async () => {
+    const data = await currentUser.getRecords(props.id);
+    setData(data);
+  };
+
   function changeAudio(url) {
-    if (url == audio) setAudio("");
+    if (url === audio) setAudio("");
     else setAudio(url);
   }
+
   if (false) {
     return <div className="mt-5">123</div>;
   }
+
   return (
     <div className="mt-5">
       <table className="table">

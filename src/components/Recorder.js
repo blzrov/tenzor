@@ -1,8 +1,21 @@
-import React from "react";
+import React, { useContext } from "react";
 import { ReactMediaRecorder } from "react-media-recorder";
 import Button from "react-bootstrap/Button";
+import { CurrentUser } from "../App";
 
 function Recorder(props) {
+  const currentUser = useContext(CurrentUser);
+
+  const onClick = async (mediaBlobUrl) => {
+    const audioBlob = await fetch(mediaBlobUrl).then((r) => r.blob());
+    const audioFile = new File([audioBlob], "record.wav", {
+      type: "audio/wav",
+    });
+
+    const data = await currentUser.savePoemRecord(audioFile, props.id);
+    console.log(data);
+  };
+
   if (!props.check)
     return (
       <div className="media-button">
@@ -51,30 +64,7 @@ function Recorder(props) {
               <audio src={mediaBlobUrl} controls></audio>
             </div>
             <Button
-              onClick={async () => {
-                const audioBlob = await fetch(mediaBlobUrl).then((r) =>
-                  r.blob()
-                );
-                const audioFile = new File([audioBlob], "record.wav", {
-                  type: "audio/wav",
-                });
-                const body = new FormData(); // preparing to send to the server
-
-                body.append("record", audioFile);
-                body.append("userId", new Date().toString());
-                body.append("poemId", props.id);
-                let options = {
-                  method: "POST",
-                  body,
-                };
-                console.log(body);
-                fetch(
-                  "https://zoobrilka-alice-skill.herokuapp.com/api/record",
-                  options
-                )
-                  .then((response) => response.json())
-                  .then((response) => console.log(response));
-              }}
+              onClick={() => onClick(mediaBlobUrl)}
               style={{ fontWeight: "500", background: "#753FFF" }}
               className="btn btn-primary m-1 px-4"
             >

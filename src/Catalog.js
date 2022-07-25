@@ -1,10 +1,13 @@
-import { React, useState, useEffect } from "react";
+import { React, useState, useEffect, useContext } from "react";
 import Container from "react-bootstrap/esm/Container";
 import { Link } from "react-router-dom";
 import useDebounce from "./hooks/useDebounce";
+import { CurrentUser } from "./App";
+
 function Catalog() {
   let [value, setValue] = useState("");
   const debounceValue = useDebounce(value, 500);
+  const currentUser = useContext(CurrentUser);
   let [author, setAuthor] = useState("");
   let [title, setTitle] = useState("");
   let [id, setID] = useState("");
@@ -26,15 +29,12 @@ function Catalog() {
   let [id5, setID5] = useState("");
 
   useEffect(() => {
-    fetch(
-      "https://zoobrilka-alice-skill.herokuapp.com/api/search?title=" +
-        debounceValue
-    )
-      .then((response) => response.json())
-      .then((response) => handleData(response.response));
+    handleData();
   }, [debounceValue]);
 
-  function handleData(data) {
+  const handleData = async () => {
+    const data = await currentUser.doSearch(debounceValue);
+    if (!data.length) return;
     setAuthor(data[0].author.firstName + " " + data[0].author.lastName);
     setTitle(data[0].title);
     setID(data[0].id);
@@ -54,7 +54,7 @@ function Catalog() {
     setAuthor5(data[4].author.firstName + " " + data[4].author.lastName);
     setTitle5(data[4].title);
     setID5(data[4].id);
-  }
+  };
   return (
     <Container className="mt-5">
       <h3 className="mb-3">Каталог</h3>

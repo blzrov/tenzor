@@ -1,18 +1,22 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import Container from "react-bootstrap/esm/Container";
 import VerseOfDay from "./components/VerseOfDay";
 import AliceIcon from "./components/Frame62.png";
+import { CurrentUser } from "./App";
+
 function Home() {
   let [data, setData] = React.useState("");
-  React.useEffect(() => {
-    fetch("https://zoobrilka-alice-skill.herokuapp.com/api/users/records")
-      .then((response) => response.json())
-      .then((response) => handleData(response.response));
-  }, []);
+  const currentUser = useContext(CurrentUser);
 
-  function handleData(data) {
+  const handleData = async () => {
+    const data = await currentUser.getUsersRecords();
+    if (!data) return;
     setData(data);
-  }
+  };
+
+  useEffect(() => {
+    handleData();
+  }, [currentUser]);
   return (
     <Container>
       <div
@@ -88,7 +92,7 @@ function Home() {
 }
 
 function HomeTableTr(props) {
-  if (props.id > 9) return;
+  if (!props.data || props.id > 9) return;
   return (
     <tr>
       <th style={{ border: "none" }}>{props.id + 1}</th>

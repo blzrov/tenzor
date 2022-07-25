@@ -1,26 +1,27 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import Container from "react-bootstrap/esm/Container";
 import { useParams } from "react-router-dom";
 import Micro from "./Micro";
+import { CurrentUser } from "../App";
 
 const PostIdPage = (props) => {
   let [author, setAuthor] = useState("Такого стихотворения ещё нет :с");
   let [title, setTitle] = useState("");
   let [text, setText] = useState("");
   const { id } = useParams();
-  React.useEffect(() => {
-    if (id) {
-      fetch("https://zoobrilka-alice-skill.herokuapp.com/api/poem/" + id)
-        .then((response) => response.json())
-        .then((response) => handleData(response.response));
+  const currentUser = useContext(CurrentUser);
 
-      function handleData(data) {
-        setAuthor(data.author.firstName + " " + data.author.lastName);
-        setTitle(data.title);
-        setText(data.text);
-      }
-    }
+  useEffect(() => {
+    handleData();
   }, []);
+
+  const handleData = async () => {
+    const data = await currentUser.getPoem(id);
+    setAuthor(data.author.firstName + " " + data.author.lastName);
+    setTitle(data.title);
+    setText(data.text);
+  };
+
   if (!id) return <></>;
 
   return (

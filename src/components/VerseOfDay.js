@@ -1,21 +1,23 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { CurrentUser } from "../App";
 function VerseOfDay() {
+  const currentUser = useContext(CurrentUser);
+
   let [id, setID] = useState("");
   let [title, setTitle] = useState("");
   let [text, setText] = useState("");
-  React.useEffect(() => {
-    fetch("https://zoobrilka-alice-skill.herokuapp.com/api/poem/today")
-      .then((response) => response.json())
-      .then((response) => handleData(response.response));
+  useEffect(() => {
+    handleData();
   }, []);
 
-  function handleData(data) {
+  const handleData = async () => {
+    const data = await currentUser.getPoem("today");
     setID(data.id);
     setTitle(data.title);
     setText(data.text);
-  }
+  };
   return (
     <div className="d-flex flex-column align-items-center">
       <strong className="mb-2">{title}</strong>

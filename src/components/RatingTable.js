@@ -1,26 +1,28 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Grade from "./grade/Grade";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
 import play from "./play-icon.png";
 import Modal from "react-bootstrap/Modal";
 import { Link } from "react-router-dom";
+import { CurrentUser } from "../App";
 function RatingTable(props) {
-  let [data, setData] = React.useState("");
-  let [audio, setAudio] = React.useState("");
+  let [data, setData] = useState("");
+  let [audio, setAudio] = useState("");
 
-  React.useEffect(() => {
-    fetch("https://zoobrilka-alice-skill.herokuapp.com/api/users/records")
-      .then((response) => response.json())
-      .then((response) => handleData(response.response));
+  const currentUser = useContext(CurrentUser);
 
-    function handleData(data) {
-      setData(data);
-    }
+  useEffect(() => {
+    handleData();
   }, []);
 
+  const handleData = async () => {
+    const data = await currentUser.getRecords();
+    setData(data);
+  };
+
   function changeAudio(url) {
-    if (url == audio) setAudio("");
+    if (url === audio) setAudio("");
     else setAudio(url);
     console.log(url);
   }
@@ -60,20 +62,18 @@ function RatingTable(props) {
 }
 
 function RatingTableTr(props) {
-  const [modalShow, setModalShow] = React.useState(false);
-  let [title, setTitle] = React.useState("");
-  React.useEffect(() => {
-    fetch(
-      "https://zoobrilka-alice-skill.herokuapp.com/api/poem/" +
-        props.data.records[0].poem
-    )
-      .then((response) => response.json())
-      .then((response) => handleData(response.response));
+  const [modalShow, setModalShow] = useState(false);
+  let [title, setTitle] = useState("");
+  const currentUser = useContext(CurrentUser);
 
-    function handleData(data) {
-      setTitle(data.title);
-    }
-  });
+  useEffect(() => {
+    handleData();
+  }, []);
+
+  const handleData = async () => {
+    const data = await currentUser.getPoem(props.data.records[0].poem);
+    setTitle(data.title);
+  };
   return (
     <tr style={{ verticalAlign: "middle" }}>
       <td>{props.id + 1}</td>
@@ -112,7 +112,15 @@ function RatingTableTr(props) {
 }
 
 function MyVerticallyCenteredModal(props) {
-  let [grade, setGrade] = React.useState();
+  let [grade, setGrade] = useState();
+  const currentUser = useContext(CurrentUser);
+
+  const onClick = async () => {
+    const data = await currentUser.doVote(props.id, grade);
+    console.log(data);
+    props.onHide();
+  };
+
   function hanldeGrade(a) {
     setGrade(a);
   }
@@ -135,27 +143,7 @@ function MyVerticallyCenteredModal(props) {
             type="button"
             value="Submit"
             form="form1"
-            onClick={() => {
-              const body = {
-                userId: Math.random().toString().split(".")[1].toString(),
-                vote: grade,
-              };
-
-              let options = {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(body),
-              };
-              fetch(
-                "https://zoobrilka-alice-skill.herokuapp.com/api/record/" +
-                  props.id +
-                  "/vote",
-                options
-              )
-                .then((response) => response.json())
-                .then((response) => console.log(response));
-              props.onHide();
-            }}
+            onClick={onClick}
             className="yellow-button m-1"
           >
             Оценить

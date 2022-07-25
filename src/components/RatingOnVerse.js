@@ -1,32 +1,33 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import Container from "react-bootstrap/esm/Container";
 import RatingTableOnVerse from "./RatingTableOnVerse";
-
+import { CurrentUser } from "../App";
 function RatingOnVerse() {
   let [author, setAuthor] = useState("Такого стихотворения ещё нет :с");
   let [title, setTitle] = useState("");
   let [value, setValue] = useState(1);
   const { id } = useParams();
 
+  const currentUser = useContext(CurrentUser);
+
+  useEffect(() => {
+    handleData();
+  }, []);
+
   if (!id) return <></>;
 
-  fetch("https://zoobrilka-alice-skill.herokuapp.com/api/poem/" + id)
-    .then((response) => response.json())
-    .then((response) => handleData(response.response));
-
-  function handleData(data) {
+  const handleData = async () => {
+    const data = await currentUser.getPoem(id);
     setAuthor(data.author.firstName + " " + data.author.lastName);
     setTitle(data.title);
-  }
+  };
 
   function a(num) {
     setValue(num);
     console.log(value);
   }
-
-
 
   return (
     <Container className="mt-5" style={{ overflow: "auto", fontWeight: "500" }}>

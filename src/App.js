@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, createContext, useContext } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Nav from "./components/Nav";
 import Footer from "./components/Footer";
@@ -12,52 +12,49 @@ import PostIdPage from "./components/PostIdPage";
 import RatingOnVerse from "./components/RatingOnVerse";
 import LoggingPage from "./LoggingPage";
 import OauthPage from "./OauthPage";
-import { getUserInfo } from "./services";
+import UserController from "./models/UserController";
+
+const CurrentUser = createContext(new UserController());
 
 function App() {
-  const [accessToken, setAccessToken] = useState("");
+  const currentUser = useContext(CurrentUser);
 
-  const handleTokenData = (tokenData) => {
-    console.log(1);
-    if (tokenData.error) {
-      alert("Произошла ошибка");
-    } else {
-      console.log(2);
-      console.log(tokenData);
-      const { access_token, expires_in, refresh_token } = tokenData;
-      setAccessToken(access_token);
-    }
+  const submitCode = (code) => {
+    currentUser.doLogin(code).then((user) => user.getUserInfo());
   };
 
   useEffect(() => {
-    if (!accessToken) return;
-    getUserInfo(accessToken);
-  }, [accessToken]);
+    currentUser.getUserInfo();
+  }, [currentUser]);
 
   return (
     <div className="site">
       <Nav />
       <div className="site-content">
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route
-            path="/oauth"
-            element={<OauthPage handleTokenData={handleTokenData} />}
-          />
-          <Route path="/rating" element={<Rating />} />
-          <Route path="/example" element={<Example />} />
-          <Route path="/catalog" element={<Catalog />} />
-          <Route path="/logs" element={<LoggingPage />} />
-          <Route path="/poem">
-            <Route path=":id" element={<PostIdPage />} />
-            <Route path=":id/rating" element={<RatingOnVerse />} />
-          </Route>
-          <Route path="/*" element={<Error33 to="/error33" replace />} />
-        </Routes>
+        <CurrentUser.Provider value={currentUser}>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route
+              path="/oauth"
+              element={<OauthPage submitCode={submitCode} />}
+            />
+            <Route path="/rating" element={<Rating />} />
+            <Route path="/example" element={<Example />} />
+            <Route path="/catalog" element={<Catalog />} />
+            <Route path="/logs" element={<LoggingPage />} />
+            <Route path="/poem">
+              <Route path=":id" element={<PostIdPage />} />
+              <Route path=":id/rating" element={<RatingOnVerse />} />
+            </Route>
+            <Route path="/*" element={<Error33 to="/error33" replace />} />
+          </Routes>
+        </CurrentUser.Provider>
       </div>
       <Footer />
     </div>
   );
 }
+
+export { CurrentUser };
 
 export default App;
