@@ -5,7 +5,7 @@ import Button from "react-bootstrap/Button";
 function Recorder(props) {
   if (!props.check)
     return (
-      <div>
+      <div className="media-button">
         <Button
           className="yellow-button btn btn-warning m-1 btn m-1 px-4 disabled "
           disabled
@@ -15,15 +15,6 @@ function Recorder(props) {
       </div>
     );
   else {
-    async function UploadAudio(mediaBlobUrl) {
-      const mediaBlob = await fetch(mediaBlobUrl).then((response) =>
-        response.blob()
-      );
-      const myFile = new File([mediaBlob], (new Date() + ".wav").toString(), {
-        type: "audio/wav",
-      });
-      console.log(myFile);
-    }
     return (
       <ReactMediaRecorder
         audio
@@ -36,26 +27,54 @@ function Recorder(props) {
                   .replace("recording", "Запись идёт")
                   .replace("stopped", "Запись остановлена")}
               </p>
-              <Button
-                style={{ fontWeight: "500" }}
-                className="yellow-button btn m-1 px-4"
-                onClick={startRecording}
-              >
-                Начать запись
-              </Button>
-              <Button
-                style={{ fontWeight: "500" }}
-                className="btn btn-danger m-1"
-                onClick={stopRecording}
-              >
-                Остановить запись
-              </Button>
+              <div className="media-button">
+                <Button
+                  style={{ fontWeight: "500" }}
+                  className="yellow-button btn m-1 px-4"
+                  onClick={() => {
+                    window.scrollTo(0, 0);
+                    startRecording();
+                  }}
+                >
+                  Начать запись
+                </Button>
+                <Button
+                  style={{ fontWeight: "500" }}
+                  className="btn btn-danger m-1"
+                  onClick={stopRecording}
+                >
+                  Остановить запись
+                </Button>
+              </div>
             </div>
             <div>
               <audio src={mediaBlobUrl} controls></audio>
             </div>
             <Button
-              onClick={{ UploadAudio }}
+              onClick={async () => {
+                const audioBlob = await fetch(mediaBlobUrl).then((r) =>
+                  r.blob()
+                );
+                const audioFile = new File([audioBlob], "record.wav", {
+                  type: "audio/wav",
+                });
+                const body = new FormData(); // preparing to send to the server
+
+                body.append("record", audioFile);
+                body.append("userId", new Date().toString());
+                body.append("poemId", props.id);
+                let options = {
+                  method: "POST",
+                  body,
+                };
+                console.log(body);
+                fetch(
+                  "https://zoobrilka-alice-skill.herokuapp.com/api/record",
+                  options
+                )
+                  .then((response) => response.json())
+                  .then((response) => console.log(response));
+              }}
               style={{ fontWeight: "500", background: "#753FFF" }}
               className="btn btn-primary m-1 px-4"
             >

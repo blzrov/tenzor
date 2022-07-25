@@ -1,8 +1,8 @@
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import Container from "react-bootstrap/esm/Container";
 import { Link } from "react-router-dom";
 function Catalog() {
-  let [value, setValue] = useState(false);
+  let [value, setValue] = useState("");
   let [author, setAuthor] = useState("");
   let [title, setTitle] = useState("");
   let [id, setID] = useState("");
@@ -23,12 +23,15 @@ function Catalog() {
   let [title5, setTitle5] = useState("");
   let [id5, setID5] = useState("");
 
-  fetch("https://zoobrilka-alice-skill.herokuapp.com/api/search?title=" + value)
-    .then((response) => response.json())
-    .then((response) => handleData(response.response));
+  useEffect(() => {
+    fetch(
+      "https://zoobrilka-alice-skill.herokuapp.com/api/search?title=" + value
+    )
+      .then((response) => response.json())
+      .then((response) => handleData(response.response));
+  }, [value]);
 
   function handleData(data) {
-    console.log(data);
     setAuthor(data[0].author.firstName + " " + data[0].author.lastName);
     setTitle(data[0].title);
     setID(data[0].id);

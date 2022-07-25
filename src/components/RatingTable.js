@@ -4,8 +4,27 @@ import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
 import play from "./play-icon.png";
 import Modal from "react-bootstrap/Modal";
+import { Link } from "react-router-dom";
 function RatingTable(props) {
-  //to do id 2
+  let [data, setData] = React.useState("");
+  let [audio, setAudio] = React.useState("");
+
+  React.useEffect(() => {
+    fetch("https://zoobrilka-alice-skill.herokuapp.com/api/users/records")
+      .then((response) => response.json())
+      .then((response) => handleData(response.response));
+
+    function handleData(data) {
+      setData(data);
+    }
+  }, []);
+
+  function changeAudio(url) {
+    if (url == audio) setAudio("");
+    else setAudio(url);
+    console.log(url);
+  }
+
   return (
     <Table className="border-primary">
       <thead
@@ -19,14 +38,21 @@ function RatingTable(props) {
           <th>№</th>
           <th>Имя пользователя</th>
           <th>Стихотворение</th>
-          <th></th>
-          <th>Оценка</th>
+          <th>
+            <audio src={audio} controls autoPlay style={{ display: "none" }} />
+          </th>
+          <th>Рейтинг</th>
           <th></th>
         </tr>
       </thead>
       <tbody>
-        {[...Array(10).keys()].map((elem) => (
-          <RatingTableTr key={elem} id={elem} />
+        {[...Array(data.length).keys()].map((elem) => (
+          <RatingTableTr
+            key={elem}
+            id={elem}
+            data={data[elem]}
+            setAudio={changeAudio}
+          />
         ))}
       </tbody>
     </Table>
@@ -35,23 +61,49 @@ function RatingTable(props) {
 
 function RatingTableTr(props) {
   const [modalShow, setModalShow] = React.useState(false);
+  let [title, setTitle] = React.useState("");
+  React.useEffect(() => {
+    fetch(
+      "https://zoobrilka-alice-skill.herokuapp.com/api/poem/" +
+        props.data.records[0].poem
+    )
+      .then((response) => response.json())
+      .then((response) => handleData(response.response));
+
+    function handleData(data) {
+      setTitle(data.title);
+    }
+  });
   return (
     <tr style={{ verticalAlign: "middle" }}>
       <td>{props.id + 1}</td>
-      <td>Фамилия Имя</td>
-      <td>У лукоморья дуб зеленый</td>
+      <td>{props.data.records[0].owner.split("(")[0]}</td>
       <td>
-        <button style={{ border: "none" }}>
+        <Link
+          to={"/poem/" + props.data.records[0].poem}
+          style={{ textDecoration: "none", color: "black" }}
+        >
+          {title.split("(")[0]}
+        </Link>
+      </td>
+      <td>
+        <button
+          style={{ border: "none" }}
+          onClick={() => {
+            props.setAudio(props.data.records[0].url);
+          }}
+        >
           <img src={play} alt="play"></img>
         </button>
       </td>
-      <td>5</td>
+      <td>{props.data.userRating}</td>
       <td>
         <Button className="yellow-button" onClick={() => setModalShow(true)}>
           Оценить
         </Button>
       </td>
       <MyVerticallyCenteredModal
+        id={props.data.records[0].id}
         show={modalShow}
         onHide={() => setModalShow(false)}
       />
@@ -60,6 +112,10 @@ function RatingTableTr(props) {
 }
 
 function MyVerticallyCenteredModal(props) {
+  let [grade, setGrade] = React.useState();
+  function hanldeGrade(a) {
+    setGrade(a);
+  }
   return (
     <Modal
       {...props}
@@ -73,13 +129,33 @@ function MyVerticallyCenteredModal(props) {
         </Modal.Title>
       </Modal.Header>
       <Modal.Body className="d-flex justify-content-center flex-column">
-        <Grade />
+        <Grade setGrade={hanldeGrade} />
         <div className="d-flex justify-content-center mt-3">
           <Button
-            type="submit"
+            type="button"
             value="Submit"
             form="form1"
-            onClick={props.onHide}
+            onClick={() => {
+              const body = {
+                userId: Math.random().toString().split(".")[1].toString(),
+                vote: grade,
+              };
+
+              let options = {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(body),
+              };
+              fetch(
+                "https://zoobrilka-alice-skill.herokuapp.com/api/record/" +
+                  props.id +
+                  "/vote",
+                options
+              )
+                .then((response) => response.json())
+                .then((response) => console.log(response));
+              props.onHide();
+            }}
             className="yellow-button m-1"
           >
             Оценить

@@ -5,10 +5,11 @@ function VerseOfDay() {
   let [id, setID] = useState("");
   let [title, setTitle] = useState("");
   let [text, setText] = useState("");
-
-  // fetch("https://zoobrilka-alice-skill.herokuapp.com/api/poem/today")
-  //   .then((response) => response.json())
-  //   .then((response) => handleData(response.response));
+  React.useEffect(() => {
+    fetch("https://zoobrilka-alice-skill.herokuapp.com/api/poem/today")
+      .then((response) => response.json())
+      .then((response) => handleData(response.response));
+  }, []);
 
   function handleData(data) {
     setID(data.id);

@@ -8,18 +8,20 @@ const PostIdPage = (props) => {
   let [title, setTitle] = useState("");
   let [text, setText] = useState("");
   const { id } = useParams();
+  React.useEffect(() => {
+    if (id) {
+      fetch("https://zoobrilka-alice-skill.herokuapp.com/api/poem/" + id)
+        .then((response) => response.json())
+        .then((response) => handleData(response.response));
 
+      function handleData(data) {
+        setAuthor(data.author.firstName + " " + data.author.lastName);
+        setTitle(data.title);
+        setText(data.text);
+      }
+    }
+  }, []);
   if (!id) return <></>;
-
-  fetch("https://zoobrilka-alice-skill.herokuapp.com/api/poem/" + id)
-    .then((response) => response.json())
-    .then((response) => handleData(response.response));
-
-  function handleData(data) {
-    setAuthor(data.author.firstName + " " + data.author.lastName);
-    setTitle(data.title);
-    setText(data.text);
-  }
 
   return (
     <Container>
