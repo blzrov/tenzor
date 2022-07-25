@@ -4,13 +4,13 @@ import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
 import play from "./play-icon.png";
 import Modal from "react-bootstrap/Modal";
-function RatingTableOnVerse(props) {
-  //to do id 2
-
+import { Link } from "react-router-dom";
+function RatingTableV2(props) {
   let [data, setData] = React.useState("");
   let [audio, setAudio] = React.useState("");
+
   React.useEffect(() => {
-    fetch("https://zoobrilka-alice-skill.herokuapp.com/api/records/" + props.id)
+    fetch("https://zoobrilka-alice-skill.herokuapp.com/api/records")
       .then((response) => response.json())
       .then((response) => handleData(response.response));
 
@@ -18,11 +18,13 @@ function RatingTableOnVerse(props) {
       setData(data);
     }
   }, []);
+
   function changeAudio(url) {
     if (url == audio) setAudio("");
     else setAudio(url);
     console.log(url);
   }
+
   return (
     <Table className="border-primary">
       <thead
@@ -48,7 +50,6 @@ function RatingTableOnVerse(props) {
           <RatingTableTr
             key={elem}
             id={elem}
-            title={props.title}
             data={data[elem]}
             setAudio={changeAudio}
           />
@@ -60,11 +61,30 @@ function RatingTableOnVerse(props) {
 
 function RatingTableTr(props) {
   const [modalShow, setModalShow] = React.useState(false);
+  let [title, setTitle] = React.useState("");
+  React.useEffect(() => {
+    fetch(
+      "https://zoobrilka-alice-skill.herokuapp.com/api/poem/" + props.data.poem
+    )
+      .then((response) => response.json())
+      .then((response) => handleData(response.response));
+
+    function handleData(data) {
+      setTitle(data.title);
+    }
+  });
   return (
     <tr style={{ verticalAlign: "middle" }}>
       <td>{props.id + 1}</td>
-      <td>{props.data.owner}</td>
-      <td>{props.title}</td>
+      <td>{props.data.owner.split("(")[0]}</td>
+      <td>
+        <Link
+          to={"/poem/" + props.data.poem}
+          style={{ textDecoration: "none", color: "black" }}
+        >
+          {title.split("(")[0]}
+        </Link>
+      </td>
       <td>
         <button
           style={{ border: "none", backgroundColor: "white" }}
@@ -82,9 +102,9 @@ function RatingTableTr(props) {
         </Button>
       </td>
       <MyVerticallyCenteredModal
+        id={props.data.id}
         show={modalShow}
         onHide={() => setModalShow(false)}
-        id={props.data.id}
       />
     </tr>
   );
@@ -114,7 +134,6 @@ function MyVerticallyCenteredModal(props) {
             type="button"
             value="Submit"
             form="form1"
-            variant="warning"
             onClick={() => {
               const body = {
                 userId: Math.random().toString().split(".")[1].toString(),
@@ -157,4 +176,4 @@ function MyVerticallyCenteredModal(props) {
   );
 }
 
-export default RatingTableOnVerse;
+export default RatingTableV2;

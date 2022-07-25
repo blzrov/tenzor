@@ -6,6 +6,8 @@ import play from "./play-icon.png";
 import Modal from "react-bootstrap/Modal";
 import { Link } from "react-router-dom";
 function RatingTable(props) {
+  if (props.value == 1) {
+  }
   let [data, setData] = React.useState("");
   let [audio, setAudio] = React.useState("");
 
@@ -88,7 +90,7 @@ function RatingTableTr(props) {
       </td>
       <td>
         <button
-          style={{ border: "none" }}
+          style={{ border: "none", backgroundColor: "white" }}
           onClick={() => {
             props.setAudio(props.data.records[0].url);
           }}
@@ -161,7 +163,14 @@ function MyVerticallyCenteredModal(props) {
             Оценить
           </Button>
 
-          <Button variant="secondary" onClick={props.onHide} className="m-1">
+          <Button
+            variant="secondary"
+            onClick={() => {
+              setGrade();
+              props.onHide();
+            }}
+            className="m-1"
+          >
             Закрыть
           </Button>
         </div>

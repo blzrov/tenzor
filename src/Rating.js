@@ -2,6 +2,7 @@ import React from "react";
 import { useState } from "react";
 import Container from "react-bootstrap/esm/Container";
 import RatingTable from "./components/RatingTable";
+import RatingTableV2 from "./components/RatingTableV2";
 function Rating() {
   let [value, setValue] = useState(1);
 
@@ -15,7 +16,7 @@ function Rating() {
           name="flexRadioDefault"
           id="flexRadioDefault1"
           defaultChecked
-          onClick={() => {
+          onChange={() => {
             setValue(1);
           }}
         />
@@ -29,17 +30,22 @@ function Rating() {
           type="radio"
           name="flexRadioDefault"
           id="flexRadioDefault2"
-          onClick={() => {
+          onChange={() => {
             setValue(2);
           }}
-          disabled
+          
         />
         <label className="form-check-label" htmlFor="flexRadioDefault2">
           <h5>Лучшее чтение за неделю</h5>
         </label>
       </div>
-      <RatingTable value={value} />
+      <StupidCode value={value} />
     </Container>
   );
+}
+
+function StupidCode(props) {
+  if (props.value == 1) return <RatingTable />;
+  if (props.value == 2) return <RatingTableV2 />;
 }
 export default Rating;

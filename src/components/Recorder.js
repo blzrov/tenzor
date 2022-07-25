@@ -3,6 +3,7 @@ import { ReactMediaRecorder } from "react-media-recorder";
 import Button from "react-bootstrap/Button";
 
 function Recorder(props) {
+  let [statusRec, setStatusRec] = React.useState("Опубликовать");
   if (!props.check)
     return (
       <div className="media-button">
@@ -24,8 +25,14 @@ function Recorder(props) {
               <p>
                 {status
                   .replace("idle", "Запись начнётся после нажатия на кнопку")
-                  .replace("recording", "Запись идёт")
-                  .replace("stopped", "Запись остановлена")}
+                  .replace(
+                    "recording",
+                    "Для отстановки нажмите остановить запись"
+                  )
+                  .replace(
+                    "stopped",
+                    "Запись остановлена, нажмите play для прослушивания"
+                  )}
               </p>
               <div className="media-button">
                 <Button
@@ -33,8 +40,10 @@ function Recorder(props) {
                   className="yellow-button btn m-1 px-4"
                   onClick={() => {
                     window.scrollTo(0, 0);
+                    setStatusRec("Опубликовать");
                     startRecording();
                   }}
+                  disabled={status == "recording"}
                 >
                   Начать запись
                 </Button>
@@ -42,6 +51,7 @@ function Recorder(props) {
                   style={{ fontWeight: "500" }}
                   className="btn btn-danger m-1"
                   onClick={stopRecording}
+                  disabled={status == "idle" || status == "stopped"}
                 >
                   Остановить запись
                 </Button>
@@ -52,33 +62,41 @@ function Recorder(props) {
             </div>
             <Button
               onClick={async () => {
-                const audioBlob = await fetch(mediaBlobUrl).then((r) =>
-                  r.blob()
-                );
-                const audioFile = new File([audioBlob], "record.wav", {
-                  type: "audio/wav",
-                });
-                const body = new FormData(); // preparing to send to the server
+                if (statusRec == "Запись отправлена") {
+                  alert("Эта запись уже отправлена");
+                  return;
+                }
+                if (mediaBlobUrl) {
+                  const audioBlob = await fetch(mediaBlobUrl).then((r) =>
+                    r.blob()
+                  );
+                  const audioFile = new File([audioBlob], "record.wav", {
+                    type: "audio/wav",
+                  });
+                  const body = new FormData(); // preparing to send to the server
 
-                body.append("record", audioFile);
-                body.append("userId", new Date().toString());
-                body.append("poemId", props.id);
-                let options = {
-                  method: "POST",
-                  body,
-                };
-                console.log(body);
-                fetch(
-                  "https://zoobrilka-alice-skill.herokuapp.com/api/record",
-                  options
-                )
-                  .then((response) => response.json())
-                  .then((response) => console.log(response));
+                  body.append("record", audioFile);
+                  body.append("userId", new Date().toString());
+                  body.append("poemId", props.id);
+                  let options = {
+                    method: "POST",
+                    body,
+                  };
+                  console.log(body);
+                  fetch(
+                    "https://zoobrilka-alice-skill.herokuapp.com/api/record",
+                    options
+                  )
+                    .then((response) => response.json())
+                    .then((response) => console.log(response));
+                  setStatusRec("Запись отправлена");
+                }
               }}
               style={{ fontWeight: "500", background: "#753FFF" }}
               className="btn btn-primary m-1 px-4"
+              disabled={!mediaBlobUrl}
             >
-              Опубликовать
+              {statusRec}
             </Button>
           </div>
         )}
