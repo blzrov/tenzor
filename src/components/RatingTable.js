@@ -19,7 +19,7 @@ function RatingTable(props) {
   }, []);
 
   const handleData = async () => {
-    const data = await currentUser.getRecords();
+    const data = await currentUser.getUsersRecords();
     setData(data);
   };
 

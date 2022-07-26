@@ -16,7 +16,7 @@ function Recorder(props) {
     const audioFile = new File([audioBlob], "record.wav", {
       type: "audio/wav",
     });
-
+    setStatusRec("Запись отправлена");
     const data = await currentUser.savePoemRecord(audioFile, props.id);
     console.log(data);
   };
@@ -81,7 +81,7 @@ function Recorder(props) {
               onClick={() => onClick(mediaBlobUrl)}
               style={{ fontWeight: "500", background: "#753FFF" }}
               className="btn btn-primary m-1 px-4"
-              disabled={!mediaBlobUrl}
+              disabled={!mediaBlobUrl || statusRec == "Запись отправлена"}
             >
               {statusRec}
             </Button>
