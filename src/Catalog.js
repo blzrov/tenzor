@@ -27,6 +27,7 @@ function Catalog() {
   let [author5, setAuthor5] = useState("");
   let [title5, setTitle5] = useState("");
   let [id5, setID5] = useState("");
+  let [length, setLength] = useState(0);
 
   useEffect(() => {
     handleData();
@@ -35,25 +36,28 @@ function Catalog() {
   const handleData = async () => {
     const data = await currentUser.doSearch(debounceValue);
     if (!data.length) return;
-    setAuthor(data[0].author.firstName + " " + data[0].author.lastName);
-    setTitle(data[0].title);
-    setID(data[0].id);
+    if (data) {
+      setLength(data.length);
+      setAuthor(data[0].author.firstName + " " + data[0].author.lastName);
+      setTitle(data[0].title);
+      setID(data[0].id);
 
-    setAuthor2(data[1].author.firstName + " " + data[1].author.lastName);
-    setTitle2(data[1].title);
-    setID2(data[1].id);
+      setAuthor2(data[1].author.firstName + " " + data[1].author.lastName);
+      setTitle2(data[1].title);
+      setID2(data[1].id);
 
-    setAuthor3(data[2].author.firstName + " " + data[2].author.lastName);
-    setTitle3(data[2].title);
-    setID3(data[2].id);
+      setAuthor3(data[2].author.firstName + " " + data[2].author.lastName);
+      setTitle3(data[2].title);
+      setID3(data[2].id);
 
-    setAuthor4(data[3].author.firstName + " " + data[3].author.lastName);
-    setTitle4(data[3].title);
-    setID4(data[3].id);
+      setAuthor4(data[3].author.firstName + " " + data[3].author.lastName);
+      setTitle4(data[3].title);
+      setID4(data[3].id);
 
-    setAuthor5(data[4].author.firstName + " " + data[4].author.lastName);
-    setTitle5(data[4].title);
-    setID5(data[4].id);
+      setAuthor5(data[4].author.firstName + " " + data[4].author.lastName);
+      setTitle5(data[4].title);
+      setID5(data[4].id);
+    }
   };
   return (
     <Container className="mt-5">
@@ -63,10 +67,11 @@ function Catalog() {
         type="text"
         placeholder="Введите название стихотворения"
         onChange={(event) => {
-          setValue(event.target.value);
+          setValue(event.target.value.toLowerCase());
         }}
       ></input>
       <CatalogFind
+        length={length}
         query={debounceValue}
         author={author}
         title={title}
@@ -90,6 +95,7 @@ function Catalog() {
 export default Catalog;
 
 function CatalogFind(props) {
+  if (props.length == 0) return;
   if (props.query)
     return (
       <div>

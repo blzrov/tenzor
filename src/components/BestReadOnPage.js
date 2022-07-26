@@ -93,7 +93,7 @@ function BestReadTableTr(props) {
         </th>
         <td>
           <button
-            style={{ border: "none" }}
+            style={{ border: "none", backgroundColor: "white" }}
             onClick={() => {
               props.setAudio(props.data.url);
             }}

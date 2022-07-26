@@ -5,8 +5,13 @@ import { CurrentUser } from "../App";
 
 function Recorder(props) {
   const currentUser = useContext(CurrentUser);
+  let [statusRec, setStatusRec] = React.useState("Опубликовать");
 
   const onClick = async (mediaBlobUrl) => {
+    if (statusRec === "Запись отправлена") {
+      alert("Эта запись уже отправлена");
+      return;
+    }
     const audioBlob = await fetch(mediaBlobUrl).then((r) => r.blob());
     const audioFile = new File([audioBlob], "record.wav", {
       type: "audio/wav",
@@ -37,8 +42,14 @@ function Recorder(props) {
               <p>
                 {status
                   .replace("idle", "Запись начнётся после нажатия на кнопку")
-                  .replace("recording", "Запись идёт")
-                  .replace("stopped", "Запись остановлена")}
+                  .replace(
+                    "recording",
+                    "Для отстановки нажмите остановить запись"
+                  )
+                  .replace(
+                    "stopped",
+                    "Запись остановлена, нажмите play для прослушивания"
+                  )}
               </p>
               <div className="media-button">
                 <Button
@@ -46,8 +57,10 @@ function Recorder(props) {
                   className="yellow-button btn m-1 px-4"
                   onClick={() => {
                     window.scrollTo(0, 0);
+                    setStatusRec("Опубликовать");
                     startRecording();
                   }}
+                  disabled={status == "recording"}
                 >
                   Начать запись
                 </Button>
@@ -55,6 +68,7 @@ function Recorder(props) {
                   style={{ fontWeight: "500" }}
                   className="btn btn-danger m-1"
                   onClick={stopRecording}
+                  disabled={status == "idle" || status == "stopped"}
                 >
                   Остановить запись
                 </Button>
@@ -67,8 +81,9 @@ function Recorder(props) {
               onClick={() => onClick(mediaBlobUrl)}
               style={{ fontWeight: "500", background: "#753FFF" }}
               className="btn btn-primary m-1 px-4"
+              disabled={!mediaBlobUrl}
             >
-              Опубликовать
+              {statusRec}
             </Button>
           </div>
         )}

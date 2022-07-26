@@ -71,7 +71,7 @@ function RatingTableTr(props) {
       <td>{props.title}</td>
       <td>
         <button
-          style={{ border: "none" }}
+          style={{ border: "none", backgroundColor: "white" }}
           onClick={() => {
             props.setAudio(props.data.url);
           }}
@@ -133,7 +133,14 @@ function MyVerticallyCenteredModal(props) {
             Оценить
           </Button>
 
-          <Button variant="secondary" onClick={props.onHide} className="m-1">
+          <Button
+            variant="secondary"
+            onClick={() => {
+              setGrade();
+              props.onHide();
+            }}
+            className="m-1"
+          >
             Закрыть
           </Button>
         </div>
