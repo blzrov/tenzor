@@ -20,11 +20,19 @@ function App() {
   const currentUser = useContext(CurrentUser);
 
   const submitCode = (code) => {
-    currentUser.doLogin(code).then((user) => user.getUserInfo());
+    currentUser
+      .doLogin(code)
+      .then((user) =>
+        user
+          .getUserInfo()
+          .then((user) => alert(user.id ? "Авторизован" : "Не авторизован"))
+      );
   };
 
   useEffect(() => {
-    currentUser.getUserInfo();
+    currentUser
+      .getUserInfo()
+      .then((user) => alert(user.id ? "Авторизован" : "Не авторизован"));
   }, [currentUser]);
 
   return (
