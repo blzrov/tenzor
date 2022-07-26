@@ -1,4 +1,5 @@
-const serverUrl = "http://localhost:3001/";
+// const serverUrl = "http://localhost:3001/";
+const serverUrl = 'https://zoobrilka-alice-skill.herokuapp.com/';
 
 class UserController {
   id;

@@ -14,6 +14,7 @@ function VerseOfDay() {
 
   const handleData = async () => {
     const data = await currentUser.getPoem("today");
+    if (!data) return;
     setID(data.id);
     setTitle(data.title);
     setText(data.text);

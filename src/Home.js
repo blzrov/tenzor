@@ -10,7 +10,8 @@ function Home() {
 
   const handleData = async () => {
     const data = await currentUser.getUsersRecords();
-    if (!data) return;
+    console.log(data);
+    if (!data || !data.length) return;
     setData(data);
   };
 
@@ -47,9 +48,10 @@ function Home() {
             <h3 className="text-center mb-3">Рейтинг</h3>
             <table className="table">
               <tbody>
-                {[...Array(data.length).keys()].map((elem) => (
-                  <HomeTableTr key={elem} id={elem} data={data[elem]} />
-                ))}
+                {!!data &&
+                  [...Array(data.length).keys()].map((elem) => (
+                    <HomeTableTr key={elem} id={elem} data={data[elem]} />
+                  ))}
               </tbody>
             </table>
           </div>
