@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { ReactMediaRecorder } from "react-media-recorder";
 import Button from "react-bootstrap/Button";
+import Spinner from "react-bootstrap/Spinner";
 import { CurrentUser } from "../App";
 
 function Recorder(props) {
@@ -43,18 +44,22 @@ function Recorder(props) {
         render={({ status, startRecording, stopRecording, mediaBlobUrl }) => (
           <div>
             <div>
-              <p>
-                {status
-                  .replace("idle", "Запись начнётся после нажатия на кнопку")
-                  .replace(
-                    "recording",
-                    "Для отстановки нажмите остановить запись"
-                  )
-                  .replace(
-                    "stopped",
-                    "Запись остановлена, нажмите play для прослушивания"
-                  )}
-              </p>
+              <div className="d-flex align-items-center m-2">
+                <MySpinner state={status === "recording"} />
+                <span className="px-3">
+                  {status
+                    .replace("idle", "Запись начнётся после нажатия на кнопку")
+                    .replace(
+                      "recording",
+                      "Для отстановки нажмите остановить запись"
+                    )
+                    .replace(
+                      "stopped",
+                      "Запись остановлена, нажмите play для прослушивания"
+                    )}
+                </span>
+              </div>
+
               <div className="media-button">
                 <Button
                   style={{ fontWeight: "500" }}
@@ -93,6 +98,12 @@ function Recorder(props) {
         )}
       ></ReactMediaRecorder>
     );
+  }
+}
+
+function MySpinner(props) {
+  if (props.state) {
+    return <Spinner animation="grow" variant="danger" size="sm" />;
   }
 }
 
