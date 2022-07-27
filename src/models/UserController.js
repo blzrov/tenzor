@@ -1,5 +1,5 @@
-// const serverUrl = "http://localhost:3001/";
-const serverUrl = "https://zoobrilka-alice-skill.herokuapp.com/";
+//const serverUrl = "http://localhost:3001/";
+ const serverUrl = "https://zoobrilka-alice-skill.herokuapp.com/";
 
 class UserController {
   id;
@@ -154,7 +154,7 @@ class UserController {
   }
 
   async removePoemRecord(recordId) {
-    let options = {
+    const options = {
       method: "POST",
       credentials: "include",
     };
