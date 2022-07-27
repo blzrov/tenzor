@@ -42,9 +42,6 @@ function Header() {
           </Nav>
           <Nav>
             <IsAuthorized currentUser={currentUser} />
-            <Link className="nav-link active" to="/catalog">
-              <img src={find} alt="find" width="24"></img>
-            </Link>
           </Nav>
         </Navbar.Collapse>
       </Container>
