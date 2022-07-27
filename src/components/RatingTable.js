@@ -17,7 +17,7 @@ function RatingTable(props) {
 
   useEffect(() => {
     handleData();
-  }, [audio]);
+  }, []);
 
   const handleData = async () => {
     const data = await currentUser.getUsersRecords();

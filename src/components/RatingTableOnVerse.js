@@ -4,6 +4,7 @@ import Grade from "./grade/Grade";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
 import play from "./play-icon.png";
+import pause from "./pause-icon.png";
 import Modal from "react-bootstrap/Modal";
 import { CurrentUser } from "../App";
 
@@ -42,7 +43,15 @@ function RatingTableOnVerse(props) {
           <th>Имя пользователя</th>
           <th>Стихотворение</th>
           <th>
-            <audio src={audio} controls autoPlay style={{ display: "none" }} />
+            <audio
+              src={audio}
+              controls
+              onEnded={() => {
+                changeAudio("");
+              }}
+              autoPlay
+              style={{ display: "none" }}
+            />
           </th>
           <th>Оценка</th>
           <th></th>
@@ -77,7 +86,7 @@ function RatingTableTr(props) {
             props.setAudio(props.data.url);
           }}
         >
-          <img src={play} alt="play"></img>
+          <PlayOrPause audio={props.audio} data={props.data.url} />
         </button>
       </td>
       <td>{props.data.rating}</td>
@@ -93,6 +102,11 @@ function RatingTableTr(props) {
       />
     </tr>
   );
+}
+function PlayOrPause(props) {
+  console.log(props.audio);
+  if (props.audio == props.data) return <img src={pause} alt="play"></img>;
+  return <img src={play} alt="play"></img>;
 }
 
 function MyVerticallyCenteredModal(props) {

@@ -6,6 +6,7 @@ import Container from "react-bootstrap/esm/Container";
 import RatingTableOnVerse from "./RatingTableOnVerse";
 import { CurrentUser } from "../App";
 import play from "./play-icon.png";
+import pause from "./pause-icon.png";
 import { Button } from "bootstrap";
 function MyProfile() {
   const currentUser = useContext(CurrentUser);
@@ -44,6 +45,9 @@ function MyProfile() {
                   <audio
                     src={audio}
                     controls
+                    onEnded={() => {
+                      changeAudio("");
+                    }}
                     autoPlay
                     style={{ display: "none" }}
                   />
@@ -59,6 +63,7 @@ function MyProfile() {
                   data={data[elem]}
                   setAudio={changeAudio}
                   remove={remove}
+                  audio={audio}
                 />
               ))}
             </tbody>
@@ -94,7 +99,7 @@ function BestReadTableTr(props) {
               props.setAudio(props.data.url);
             }}
           >
-            <img src={play} alt="play"></img>
+            <PlayOrPause audio={props.audio} data={props.data.url} />
           </button>
         </td>
         <td>{props.data.rating}</td>
@@ -112,5 +117,11 @@ function BestReadTableTr(props) {
         </td>
       </tr>
     );
+}
+
+function PlayOrPause(props) {
+  console.log(props.audio);
+  if (props.audio == props.data) return <img src={pause} alt="play"></img>;
+  return <img src={play} alt="play"></img>;
 }
 export default MyProfile;

@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import play from "./play-icon.png";
+import pause from "./pause-icon.png";
 import { CurrentUser } from "../App";
 
 function BestReadOnPage(props) {
@@ -37,6 +38,9 @@ function BestReadOnPage(props) {
               <audio
                 src={audio}
                 controls
+                onEnded={() => {
+                  changeAudio("");
+                }}
                 autoPlay
                 style={{ display: "none" }}
               />
@@ -49,18 +53,21 @@ function BestReadOnPage(props) {
             id={props.id}
             index={1}
             data={data[0]}
+            audio={audio}
             setAudio={changeAudio}
           />
           <BestReadTableTr
             id={props.id}
             index={2}
             data={data[1]}
+            audio={audio}
             setAudio={changeAudio}
           />
           <BestReadTableTr
             id={props.id}
             index={3}
             data={data[2]}
+            audio={audio}
             setAudio={changeAudio}
           />
         </tbody>
@@ -99,12 +106,18 @@ function BestReadTableTr(props) {
               props.setAudio(props.data.url);
             }}
           >
-            <img src={play} alt="play"></img>
+            <PlayOrPause audio={props.audio} data={props.data.url} />
           </button>
         </td>
         <td>{props.data.rating}</td>
       </tr>
     );
+}
+
+function PlayOrPause(props) {
+  console.log(props.audio);
+  if (props.audio == props.data) return <img src={pause} alt="play"></img>;
+  return <img src={play} alt="play"></img>;
 }
 
 export default BestReadOnPage;
