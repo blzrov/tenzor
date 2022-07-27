@@ -63,6 +63,7 @@ function Catalog() {
     <Container className="mt-5">
       <h3 className="mb-3">Каталог</h3>
       <input
+        style={{ background: "#E7E7E7", padding: "15px", paddingLeft: "25px" }}
         className="form-control"
         type="text"
         placeholder="Введите название стихотворения"
@@ -101,7 +102,7 @@ function CatalogFind(props) {
       <div>
         <h4 className="my-3">Результаты поиска по {props.query}</h4>
         <ul className="list-group">
-          <li className="list-group-item">
+          <li className="list-group-item p-3">
             <Link
               className="p-2"
               style={{ color: "black" }}
@@ -110,7 +111,7 @@ function CatalogFind(props) {
               {props.author} - {props.title}
             </Link>
           </li>
-          <li className="list-group-item">
+          <li className="list-group-item p-3">
             <Link
               className="p-2"
               style={{ color: "black" }}
@@ -119,7 +120,7 @@ function CatalogFind(props) {
               {props.author2} - {props.title2}
             </Link>
           </li>
-          <li className="list-group-item">
+          <li className="list-group-item p-3">
             <Link
               className="p-2"
               style={{ color: "black" }}
@@ -128,7 +129,7 @@ function CatalogFind(props) {
               {props.author3} - {props.title3}
             </Link>
           </li>
-          <li className="list-group-item">
+          <li className="list-group-item p-3">
             <Link
               className="p-2"
               style={{ color: "black" }}
@@ -137,7 +138,7 @@ function CatalogFind(props) {
               {props.author4} - {props.title4}
             </Link>
           </li>
-          <li className="list-group-item">
+          <li className="list-group-item p-3">
             <Link
               className="p-2"
               style={{ color: "black" }}

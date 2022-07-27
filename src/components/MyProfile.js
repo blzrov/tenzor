@@ -31,7 +31,7 @@ function MyProfile() {
   }
 
   return (
-    <Container>
+    <Container className="mt-5">
       <div className="row">
         <div className="col">
           <h4>{currentUser.realName}</h4>
@@ -73,7 +73,7 @@ function BestReadTableTr(props) {
   if (!props.data) {
     return (
       <tr>
-        <th scope="row">Никто пока не записал прочтение :с</th>
+        <th scope="row">У вас нет записей</th>
         <td></td>
         <td></td>
       </tr>
@@ -81,7 +81,7 @@ function BestReadTableTr(props) {
   }
   if (props.data)
     return (
-      <tr>
+      <tr style={{ verticalAlign: "middle" }}>
         <th scope="row">
           <span className="" style={{ marginRight: "20px" }}>
             {props.data.poemName}
@@ -101,9 +101,9 @@ function BestReadTableTr(props) {
         <td>
           <button
             type="button"
-            className="btn btn-danger"
+            className="btn btn-light"
             onClick={() => {
-              console.log(props.data.id)
+              console.log(props.data.id);
               props.remove(props.data.id);
             }}
           >

@@ -17,7 +17,7 @@ code {
 }
 
 .footer {
-  background: #8063A5;
+  background: #8063a5;
 }
 
 .home-item {
@@ -48,3 +48,6 @@ code {
   font-weight: 500 !important;
 }
 
+.hover-underline:hover {
+  text-decoration: underline;
+}

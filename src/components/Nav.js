@@ -39,9 +39,6 @@ function Header() {
             <Link className="nav-link active" to="/catalog">
               Каталог
             </Link>
-            <Link className="nav-link active" to="/myprofile">
-              Профиль
-            </Link>
           </Nav>
           <Nav>
             <IsAuthorized currentUser={currentUser} />
@@ -61,36 +58,48 @@ function IsAuthorized({ currentUser }) {
 
   const onClick = (e) => {
     e.preventDefault();
-
-      setModalShow(true);
-
+    setModalShow(true);
   };
+
+  if (currentUser.displayName)
+    return (
+      <>
+        <AfterAuthorized currentUser={currentUser} />
+      </>
+    );
+  else
+    return (
+      <>
+        <Link disabled className="nav-link active" to="/" onClick={onClick}>
+          {currentUser.displayName ?? "Войти"}
+        </Link>
+        <MyVerticallyCenteredModal
+          show={modalShow}
+          onHide={() => setModalShow(false)}
+        />
+      </>
+    );
+}
+
+function AfterAuthorized(props) {
   return (
     <>
-      <Link disabled className="nav-link active" to="/" onClick={onClick}>
-        {currentUser.displayName ?? "Войти"}
+      <Link disabled className="nav-link active" to="/myprofile">
+        {props.currentUser.displayName}
       </Link>
-      <MyVerticallyCenteredModal
-        show={modalShow}
-        onHide={() => setModalShow(false)}
-      />
     </>
   );
 }
 
 function MyVerticallyCenteredModal(props) {
   return (
-    <Modal
-      {...props}
-      aria-labelledby="myLargeModalLabel"
-      centered
-    >
+    <Modal {...props} aria-labelledby="myLargeModalLabel" centered>
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
           Авторизация
         </Modal.Title>
       </Modal.Header>
-      <Modal.Body >
+      <Modal.Body>
         <h6>Вход через социальные сети:</h6>
         <a
           // target="_blank"
@@ -105,7 +114,6 @@ function MyVerticallyCenteredModal(props) {
           ></img>
         </a>
       </Modal.Body>
-
     </Modal>
   );
 }

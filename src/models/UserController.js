@@ -155,12 +155,12 @@ class UserController {
 
   async removePoemRecord(recordId) {
     let options = {
-      method: "DELETE",
+      method: "POST",
       credentials: "include",
     };
 
     const { response, error } = await this._exicute(
-      `api/record/${recordId}`,
+      `api/record/${recordId}/delete`,
       options
     );
     if (error) return null;

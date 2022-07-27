@@ -63,9 +63,9 @@ function RatingTable(props) {
 }
 
 function RatingTableTr(props) {
-  console.log(props.data);
   const [modalShow, setModalShow] = useState(false);
   const currentUser = useContext(CurrentUser);
+  if (props.data.records.length == 0) return;
 
   return (
     <tr style={{ verticalAlign: "middle" }}>
@@ -73,6 +73,7 @@ function RatingTableTr(props) {
       <td>{props.data.records[0].ownerName}</td>
       <td>
         <Link
+          className="hover-underline"
           to={"/poem/" + props.data.records[0].poem}
           style={{ textDecoration: "none", color: "black" }}
         >

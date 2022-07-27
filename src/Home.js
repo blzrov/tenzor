@@ -94,13 +94,12 @@ function Home() {
 }
 
 function HomeTableTr(props) {
-  if (!props.data || props.id > 9) return;
+  return;
+  if (!props.data || props.id > 9 || !props.data.records[0].ownerName) return;
   return (
     <tr>
       <th style={{ border: "none" }}>{props.id + 1}</th>
-      <td style={{ border: "none" }}>
-        {props.data.records[0].owner.split("(")[0]}
-      </td>
+      <td style={{ border: "none" }}>{props.data.records[0].ownerName}</td>
       <td style={{ border: "none" }}>{props.data.userRating}</td>
     </tr>
   );
