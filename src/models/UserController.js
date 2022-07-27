@@ -78,8 +78,10 @@ class UserController {
     return response;
   }
 
-  async getUserRecords(id) {
-    const { response, error } = await this._exicute(`api/user/${id}/records`);
+  async getUserRecords() {
+    const { response, error } = await this._exicute(
+      `api/user/${this.id}/records`
+    );
     if (error) return [];
     return response;
   }
@@ -154,6 +156,7 @@ class UserController {
   async removePoemRecord(recordId) {
     let options = {
       method: "DELETE",
+      credentials: "include",
     };
 
     const { response, error } = await this._exicute(
