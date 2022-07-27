@@ -1,4 +1,5 @@
 import React, { useContext, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import Container from "react-bootstrap/esm/Container";
@@ -32,39 +33,15 @@ function RatingOnVerse() {
   return (
     <Container className="mt-5" style={{ overflow: "auto", fontWeight: "500" }}>
       <audio id="ratingAudio" src="" style={{ display: "none" }} />
-      <h4>
-        {author} - {title}
-      </h4>
-      <div className="form-check">
-        <input
-          className="form-check-input"
-          type="radio"
-          name="flexRadioDefault"
-          id="flexRadioDefault1"
-          defaultChecked
-          onClick={() => {
-            a(1);
-          }}
-        />
-        <label className="form-check-label" htmlFor="flexRadioDefault1">
-          <h6>Общий рейтинг пользователей</h6>
-        </label>
-      </div>
-      <div className="form-check">
-        <input
-          className="form-check-input"
-          type="radio"
-          name="flexRadioDefault"
-          id="flexRadioDefault2"
-          onClick={() => {
-            a(2);
-          }}
-          disabled
-        />
-        <label className="form-check-label" htmlFor="flexRadioDefault2">
-          <h6>Лучшее чтение за неделю</h6>
-        </label>
-      </div>
+      <Link
+        to={"/poem/" + id}
+        style={{ textDecoration: "none", color: "black" }}
+      >
+        <h4>
+          {author} - {title}
+        </h4>
+      </Link>
+
       <RatingTableOnVerse value={value} title={title} id={id} />
     </Container>
   );

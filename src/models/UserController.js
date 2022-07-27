@@ -78,6 +78,12 @@ class UserController {
     return response;
   }
 
+  async getUserRecords(id) {
+    const { response, error } = await this._exicute(`api/user/${id}/records`);
+    if (error) return [];
+    return response;
+  }
+
   async doSearch(value) {
     const { response, error } = await this._exicute(
       `api/search?title=${value}`
@@ -125,12 +131,14 @@ class UserController {
     return response;
   }
 
-  async savePoemRecord(record, poemId) {
+  async savePoemRecord(record, poemId, title) {
     const body = new FormData();
 
     body.append("record", record);
     // body.append("userId", this.id);
     body.append("poemId", poemId);
+    body.append("ownerName", this.realName);
+    body.append("poemName", title);
 
     let options = {
       method: "POST",
@@ -139,6 +147,19 @@ class UserController {
     };
 
     const { response, error } = await this._exicute("api/record", options);
+    if (error) return null;
+    return response;
+  }
+
+  async removePoemRecord(recordId) {
+    let options = {
+      method: "DELETE",
+    };
+
+    const { response, error } = await this._exicute(
+      `api/record/${recordId}`,
+      options
+    );
     if (error) return null;
     return response;
   }

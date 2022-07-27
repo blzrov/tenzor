@@ -8,6 +8,7 @@ import Rating from "./Rating";
 import Catalog from "./Catalog";
 import Example from "./Example";
 import Error33 from "./Error";
+import MyProfile from "./components/MyProfile";
 import PostIdPage from "./components/PostIdPage";
 import RatingOnVerse from "./components/RatingOnVerse";
 import LoggingPage from "./LoggingPage";
@@ -41,6 +42,7 @@ function App() {
             />
             <Route path="/rating" element={<Rating />} />
             <Route path="/example" element={<Example />} />
+            <Route path="/myProfile" element={<MyProfile />} />
             <Route path="/catalog" element={<Catalog />} />
             <Route path="/logs" element={<LoggingPage />} />
             <Route path="/poem">

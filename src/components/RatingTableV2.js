@@ -61,28 +61,16 @@ function RatingTableV2(props) {
 
 function RatingTableTr(props) {
   const [modalShow, setModalShow] = React.useState(false);
-  let [title, setTitle] = React.useState("");
-  React.useEffect(() => {
-    fetch(
-      "https://zoobrilka-alice-skill.herokuapp.com/api/poem/" + props.data.poem
-    )
-      .then((response) => response.json())
-      .then((response) => handleData(response.response));
-
-    function handleData(data) {
-      setTitle(data.title);
-    }
-  });
   return (
     <tr style={{ verticalAlign: "middle" }}>
       <td>{props.id + 1}</td>
-      <td>{props.data.owner.split("(")[0]}</td>
+      <td>{props.data.ownerName}</td>
       <td>
         <Link
           to={"/poem/" + props.data.poem}
           style={{ textDecoration: "none", color: "black" }}
         >
-          {title.split("(")[0]}
+          {props.data.poemName}
         </Link>
       </td>
       <td>

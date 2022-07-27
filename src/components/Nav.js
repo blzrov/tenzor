@@ -39,6 +39,9 @@ function Header() {
             <Link className="nav-link active" to="/catalog">
               Каталог
             </Link>
+            <Link className="nav-link active" to="/myprofile">
+              Профиль
+            </Link>
           </Nav>
           <Nav>
             <IsAuthorized currentUser={currentUser} />
@@ -58,11 +61,9 @@ function IsAuthorized({ currentUser }) {
 
   const onClick = (e) => {
     e.preventDefault();
-    if (currentUser.id) {
-      currentUser.signOut();
-    } else {
+
       setModalShow(true);
-    }
+
   };
   return (
     <>
@@ -81,8 +82,7 @@ function MyVerticallyCenteredModal(props) {
   return (
     <Modal
       {...props}
-      size="lg"
-      aria-labelledby="contained-modal-title-vcenter"
+      aria-labelledby="myLargeModalLabel"
       centered
     >
       <Modal.Header closeButton>
@@ -90,7 +90,7 @@ function MyVerticallyCenteredModal(props) {
           Авторизация
         </Modal.Title>
       </Modal.Header>
-      <Modal.Body>
+      <Modal.Body >
         <h6>Вход через социальные сети:</h6>
         <a
           // target="_blank"
@@ -105,9 +105,7 @@ function MyVerticallyCenteredModal(props) {
           ></img>
         </a>
       </Modal.Body>
-      <Modal.Footer>
-        <Button onClick={props.onHide}>Close</Button>
-      </Modal.Footer>
+
     </Modal>
   );
 }

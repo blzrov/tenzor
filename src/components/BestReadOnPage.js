@@ -15,6 +15,7 @@ function BestReadOnPage(props) {
   const handleData = async () => {
     const data = await currentUser.getRecords(props.id);
     setData(data);
+    console.log(data);
   };
 
   function changeAudio(url) {
@@ -88,7 +89,7 @@ function BestReadTableTr(props) {
       <tr>
         <th scope="row">
           <span className="" style={{ marginRight: "20px" }}>
-            {props.data.owner}
+            {props.data.ownerName}
           </span>
         </th>
         <td>

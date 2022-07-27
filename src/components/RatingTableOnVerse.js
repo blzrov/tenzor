@@ -1,4 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
+
 import Grade from "./grade/Grade";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
@@ -67,7 +68,7 @@ function RatingTableTr(props) {
   return (
     <tr style={{ verticalAlign: "middle" }}>
       <td>{props.id + 1}</td>
-      <td>{props.data.owner}</td>
+      <td>{props.data.ownerName}</td>
       <td>{props.title}</td>
       <td>
         <button

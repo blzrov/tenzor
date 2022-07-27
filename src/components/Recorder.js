@@ -17,7 +17,11 @@ function Recorder(props) {
       type: "audio/wav",
     });
     setStatusRec("Запись отправлена");
-    const data = await currentUser.savePoemRecord(audioFile, props.id);
+    const data = await currentUser.savePoemRecord(
+      audioFile,
+      props.id,
+      props.title
+    );
     console.log(data);
   };
 

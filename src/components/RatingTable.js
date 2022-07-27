@@ -26,7 +26,6 @@ function RatingTable(props) {
   function changeAudio(url) {
     if (url === audio) setAudio("");
     else setAudio(url);
-    console.log(url);
   }
 
   return (
@@ -64,28 +63,20 @@ function RatingTable(props) {
 }
 
 function RatingTableTr(props) {
+  console.log(props.data);
   const [modalShow, setModalShow] = useState(false);
-  let [title, setTitle] = useState("");
   const currentUser = useContext(CurrentUser);
 
-  useEffect(() => {
-    handleData();
-  }, []);
-
-  const handleData = async () => {
-    const data = await currentUser.getPoem(props.data.records[0].poem);
-    setTitle(data.title);
-  };
   return (
     <tr style={{ verticalAlign: "middle" }}>
       <td>{props.id + 1}</td>
-      <td>{props.data.records[0].owner.split("(")[0]}</td>
+      <td>{props.data.records[0].ownerName}</td>
       <td>
         <Link
           to={"/poem/" + props.data.records[0].poem}
           style={{ textDecoration: "none", color: "black" }}
         >
-          {title.split("(")[0]}
+          {props.data.records[0].poemName}
         </Link>
       </td>
       <td>
@@ -119,7 +110,6 @@ function MyVerticallyCenteredModal(props) {
 
   const onClick = async () => {
     const data = await currentUser.doVote(props.id, grade);
-    console.log(data);
     props.onHide();
   };
 
@@ -135,7 +125,7 @@ function MyVerticallyCenteredModal(props) {
     >
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
-          Оцените прочтение по 5-бальной шкале
+          Оцените прочтение по 5-балной шкале
         </Modal.Title>
       </Modal.Header>
       <Modal.Body className="d-flex justify-content-center flex-column">

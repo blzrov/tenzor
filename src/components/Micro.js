@@ -6,6 +6,7 @@ import Container from "react-bootstrap/esm/Container";
 import Form from "react-bootstrap/Form";
 
 function Micro(props) {
+  console.log(props);
   let [checkbox, setCheckbox] = useState(false);
   function Check() {
     setCheckbox(!checkbox);
@@ -33,7 +34,7 @@ function Micro(props) {
               </div>
             ))}
           </Form>
-          <Recorder check={checkbox} id={props.id} />
+          <Recorder check={checkbox} id={props.id} title={props.title}/>
           <BestReadOnPage id={props.id} />
         </div>
       </div>
