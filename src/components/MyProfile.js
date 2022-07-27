@@ -68,6 +68,15 @@ function MyProfile() {
               ))}
             </tbody>
           </table>
+          <Link
+            to="/"
+            className="btn btn-light"
+            onClick={() => {
+              currentUser.signOut();
+            }}
+          >
+            Выйти
+          </Link>
         </div>
       </div>
     </Container>
