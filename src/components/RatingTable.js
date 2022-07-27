@@ -3,6 +3,7 @@ import Grade from "./grade/Grade";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
 import play from "./play-icon.png";
+import pause from "./pause-icon.png";
 import Modal from "react-bootstrap/Modal";
 import { Link } from "react-router-dom";
 import { CurrentUser } from "../App";
@@ -16,7 +17,7 @@ function RatingTable(props) {
 
   useEffect(() => {
     handleData();
-  }, []);
+  }, [audio]);
 
   const handleData = async () => {
     const data = await currentUser.getUsersRecords();
@@ -42,7 +43,15 @@ function RatingTable(props) {
           <th>Имя пользователя</th>
           <th>Стихотворение</th>
           <th>
-            <audio src={audio} controls autoPlay style={{ display: "none" }} />
+            <audio
+              src={audio}
+              controls
+              onEnded={() => {
+                changeAudio("");
+              }}
+              autoPlay
+              style={{ display: "none" }}
+            />
           </th>
           <th>Рейтинг</th>
           <th></th>
@@ -53,6 +62,7 @@ function RatingTable(props) {
           <RatingTableTr
             key={elem}
             id={elem}
+            audio={audio}
             data={data[elem]}
             setAudio={changeAudio}
           />
@@ -64,7 +74,6 @@ function RatingTable(props) {
 
 function RatingTableTr(props) {
   const [modalShow, setModalShow] = useState(false);
-  const currentUser = useContext(CurrentUser);
   if (props.data.records.length == 0) return;
 
   return (
@@ -87,7 +96,7 @@ function RatingTableTr(props) {
             props.setAudio(props.data.records[0].url);
           }}
         >
-          <img src={play} alt="play"></img>
+          <PlayOrPause audio={props.audio} data={props.data.records[0].url} />
         </button>
       </td>
       <td>{props.data.userRating}</td>
@@ -103,6 +112,12 @@ function RatingTableTr(props) {
       />
     </tr>
   );
+}
+
+function PlayOrPause(props) {
+  console.log(props.audio);
+  if (props.audio == props.data) return <img src={pause} alt="play"></img>;
+  return <img src={play} alt="play"></img>;
 }
 
 function MyVerticallyCenteredModal(props) {

@@ -94,8 +94,7 @@ function Home() {
 }
 
 function HomeTableTr(props) {
-  return;
-  if (!props.data || props.id > 9 || !props.data.records[0].ownerName) return;
+  if (!props.data || props.id > 9) return;
   return (
     <tr>
       <th style={{ border: "none" }}>{props.id + 1}</th>

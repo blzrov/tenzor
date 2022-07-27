@@ -34,7 +34,9 @@ function Catalog() {
   }, [debounceValue]);
 
   const handleData = async () => {
-    const data = await currentUser.doSearch(debounceValue);
+    const data = await currentUser.doSearch(
+      debounceValue.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()…]/g, "")
+    );
     if (!data.length) return;
     if (data) {
       setLength(data.length);
@@ -96,7 +98,7 @@ function Catalog() {
 export default Catalog;
 
 function CatalogFind(props) {
-  if (props.length == 0) return;
+  if (props.length === 0) return;
   if (props.query)
     return (
       <div>
