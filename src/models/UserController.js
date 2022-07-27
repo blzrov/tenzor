@@ -1,5 +1,5 @@
 // const serverUrl = "http://localhost:3001/";
-const serverUrl = 'https://zoobrilka-alice-skill.herokuapp.com/';
+const serverUrl = "https://zoobrilka-alice-skill.herokuapp.com/";
 
 class UserController {
   id;
@@ -14,10 +14,6 @@ class UserController {
   rating;
 
   async _exicute(uri, config) {
-    config = {
-      ...config,
-      credentials: "include",
-    };
     return await fetch(serverUrl + uri, config)
       .then(async (res) =>
         res.status === 200 ? await res.json() : { response: {} }
@@ -25,13 +21,31 @@ class UserController {
       .catch((error) => error);
   }
 
+  signOut() {
+    this.id = undefined;
+    this.login = undefined;
+    this.displayName = undefined;
+    this.firstName = undefined;
+    this.lastName = undefined;
+    this.realName = undefined;
+    this.sex = undefined;
+    this.birthday = undefined;
+    this.records = undefined;
+    this.rating = undefined;
+    return this;
+  }
+
   async doLogin(code) {
-    await this._exicute(`api/user/login?code=${code}`);
+    await this._exicute(`api/user/login?code=${code}`, {
+      credentials: "include",
+    });
     return this;
   }
 
   async getUserInfo() {
-    const { response, error } = await this._exicute("api/user/info");
+    const { response, error } = await this._exicute("api/user/info", {
+      credentials: "include",
+    });
     if (error || !response) return this;
     const {
       id,
@@ -88,12 +102,13 @@ class UserController {
 
   async doVote(recordId, vote) {
     const body = new FormData();
-    body.append("userId", this.id);
+    // body.append("userId", this.id);
     body.append("vote", vote);
 
     const options = {
       method: "POST",
       body,
+      credentials: "include",
     };
 
     const { response, error } = await this._exicute(
@@ -114,12 +129,13 @@ class UserController {
     const body = new FormData();
 
     body.append("record", record);
-    body.append("userId", this.id);
+    // body.append("userId", this.id);
     body.append("poemId", poemId);
 
     let options = {
       method: "POST",
       body,
+      credentials: "include",
     };
 
     const { response, error } = await this._exicute("api/record", options);

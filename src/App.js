@@ -2,7 +2,7 @@ import React, { useState, useEffect, createContext, useContext } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Nav from "./components/Nav";
 import Footer from "./components/Footer";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import Home from "./Home";
 import Rating from "./Rating";
 import Catalog from "./Catalog";
@@ -18,28 +18,21 @@ const CurrentUser = createContext(new UserController());
 
 function App() {
   const currentUser = useContext(CurrentUser);
+  const nav = useNavigate();
 
-  const submitCode = (code) => {
-    currentUser
-      .doLogin(code)
-      .then((user) =>
-        user
-          .getUserInfo()
-          .then((user) => alert(user.id ? "Авторизован" : "Не авторизован"))
-      );
+  const submitCode = async (code) => {
+    await (await currentUser.doLogin(code)).getUserInfo();
   };
 
   useEffect(() => {
-    currentUser
-      .getUserInfo()
-      .then((user) => alert(user.id ? "Авторизован" : "Не авторизован"));
-  }, [currentUser]);
+    currentUser.getUserInfo();
+  }, []);
 
   return (
-    <div className="site">
-      <Nav />
-      <div className="site-content">
-        <CurrentUser.Provider value={currentUser}>
+    <CurrentUser.Provider value={currentUser}>
+      <div className="site">
+        <Nav />
+        <div className="site-content">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route
@@ -56,10 +49,10 @@ function App() {
             </Route>
             <Route path="/*" element={<Error33 to="/error33" replace />} />
           </Routes>
-        </CurrentUser.Provider>
+        </div>
+        <Footer />
       </div>
-      <Footer />
-    </div>
+    </CurrentUser.Provider>
   );
 }
 

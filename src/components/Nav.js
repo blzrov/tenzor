@@ -1,14 +1,17 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Container from "react-bootstrap/esm/Container";
 import logo from "../logo-name-lowercase.png";
 import yandexLogo from "./yandex-img.svg";
 import find from "./find-icon.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
+import { CurrentUser } from "../App";
+
 function Header() {
+  const currentUser = useContext(CurrentUser);
   return (
     <Navbar
       collapseOnSelect
@@ -38,7 +41,7 @@ function Header() {
             </Link>
           </Nav>
           <Nav>
-            <IsAuthorized />
+            <IsAuthorized currentUser={currentUser} />
             <Link className="nav-link active" to="/catalog">
               <img src={find} alt="find" width="24"></img>
             </Link>
@@ -49,20 +52,22 @@ function Header() {
   );
 }
 
-function IsAuthorized() {
-  const [modalShow, setModalShow] = React.useState(false);
+function IsAuthorized({ currentUser }) {
+  const [modalShow, setModalShow] = useState(false);
+  const nav = useNavigate();
+
+  const onClick = (e) => {
+    e.preventDefault();
+    if (currentUser.id) {
+      currentUser.signOut();
+    } else {
+      setModalShow(true);
+    }
+  };
   return (
     <>
-      <Link
-        disabled
-        className="nav-link active"
-        to="/"
-        onClick={(e) => {
-          setModalShow(true);
-          e.preventDefault();
-        }}
-      >
-        Войти
+      <Link disabled className="nav-link active" to="/" onClick={onClick}>
+        {currentUser.displayName ?? "Войти"}
       </Link>
       <MyVerticallyCenteredModal
         show={modalShow}
