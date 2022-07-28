@@ -8,7 +8,7 @@ import Modal from "react-bootstrap/Modal";
 import { Link } from "react-router-dom";
 import { CurrentUser } from "../App";
 function RatingTable(props) {
-  if (props.value == 1) {
+  if (props.value === 1) {
   }
   let [data, setData] = React.useState("");
   let [audio, setAudio] = React.useState("");
@@ -17,10 +17,11 @@ function RatingTable(props) {
 
   useEffect(() => {
     handleData();
-  }, []);
+  }, [props.page]);
 
   const handleData = async () => {
-    const data = await currentUser.getUsersRecords();
+    const data = await currentUser.getUsersRecords((props.page - 1) * 10);
+    console.log(data);
     setData(data);
   };
 
@@ -34,7 +35,9 @@ function RatingTable(props) {
       <thead
         style={{
           background:
-            "linear-gradient(267.7deg, #6225FC 4.09%, #B427FF 95.97%)",
+            "linear-gradient(256.02deg, #4E22BC -10.04%, #8063A5 93.08%)",
+          border: "1px solid #000000",
+          boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
           color: "white",
         }}
       >
@@ -61,7 +64,7 @@ function RatingTable(props) {
         {[...Array(data.length).keys()].map((elem) => (
           <RatingTableTr
             key={elem}
-            id={elem}
+            id={elem + 10 * (props.page - 1)}
             audio={audio}
             data={data[elem]}
             setAudio={changeAudio}
@@ -74,7 +77,7 @@ function RatingTable(props) {
 
 function RatingTableTr(props) {
   const [modalShow, setModalShow] = useState(false);
-  if (props.data.records.length == 0) return;
+  if (props.data.records.length === 0) return;
 
   return (
     <tr style={{ verticalAlign: "middle" }}>
@@ -116,7 +119,7 @@ function RatingTableTr(props) {
 
 function PlayOrPause(props) {
   console.log(props.audio);
-  if (props.audio == props.data) return <img src={pause} alt="play"></img>;
+  if (props.audio === props.data) return <img src={pause} alt="play"></img>;
   return <img src={play} alt="play"></img>;
 }
 

@@ -6,22 +6,29 @@ import play from "./play-icon.png";
 import pause from "./pause-icon.png";
 import Modal from "react-bootstrap/Modal";
 import { Link } from "react-router-dom";
+import { CurrentUser } from "../App";
 function RatingTableV2(props) {
   let [data, setData] = React.useState("");
   let [audio, setAudio] = React.useState("");
 
   React.useEffect(() => {
-    fetch("https://zoobrilka-alice-skill.herokuapp.com/api/records")
+    fetch(
+      "https://zoobrilka-alice-skill.herokuapp.com/api/records?offset=" +
+        (props.page - 1) * 10
+    )
       .then((response) => response.json())
       .then((response) => handleData(response.response));
 
     function handleData(data) {
+      setData("");
       setData(data);
+      console.log(data);
+      console.log((props.page - 1) * 10);
     }
-  }, []);
+  }, [props.page]);
 
   function changeAudio(url) {
-    if (url == audio) setAudio("");
+    if (url === audio) setAudio("");
     else setAudio(url);
     console.log(url);
   }
@@ -31,7 +38,9 @@ function RatingTableV2(props) {
       <thead
         style={{
           background:
-            "linear-gradient(267.7deg, #6225FC 4.09%, #B427FF 95.97%)",
+            "linear-gradient(256.02deg, #4E22BC -10.04%, #8063A5 93.08%)",
+          border: "1px solid #000000",
+          boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
           color: "white",
         }}
       >
@@ -58,7 +67,7 @@ function RatingTableV2(props) {
         {[...Array(data.length).keys()].map((elem) => (
           <RatingTableTr
             key={elem}
-            id={elem}
+            id={elem + 10 * (props.page - 1)}
             audio={audio}
             data={data[elem]}
             setAudio={changeAudio}
@@ -109,16 +118,21 @@ function RatingTableTr(props) {
 }
 
 function PlayOrPause(props) {
-  console.log(props.audio);
-  if (props.audio == props.data) return <img src={pause} alt="play"></img>;
+  if (props.audio === props.data) return <img src={pause} alt="play"></img>;
   return <img src={play} alt="play"></img>;
 }
 
 function MyVerticallyCenteredModal(props) {
   let [grade, setGrade] = React.useState();
+  const currentUser = React.useContext(CurrentUser);
   function hanldeGrade(a) {
     setGrade(a);
   }
+  const onClick = async () => {
+    const data = await currentUser.doVote(props.id, grade);
+    console.log(data);
+    props.onHide();
+  };
   return (
     <Modal
       {...props}
@@ -138,27 +152,8 @@ function MyVerticallyCenteredModal(props) {
             type="button"
             value="Submit"
             form="form1"
-            onClick={() => {
-              const body = {
-                userId: Math.random().toString().split(".")[1].toString(),
-                vote: grade,
-              };
-
-              let options = {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(body),
-              };
-              fetch(
-                "https://zoobrilka-alice-skill.herokuapp.com/api/record/" +
-                  props.id +
-                  "/vote",
-                options
-              )
-                .then((response) => response.json())
-                .then((response) => console.log(response));
-              props.onHide();
-            }}
+            variant="warning"
+            onClick={onClick}
             className="yellow-button m-1"
           >
             Оценить

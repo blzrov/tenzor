@@ -1,5 +1,5 @@
 //const serverUrl = "http://localhost:3001/";
- const serverUrl = "https://zoobrilka-alice-skill.herokuapp.com/";
+const serverUrl = "https://zoobrilka-alice-skill.herokuapp.com/";
 
 class UserController {
   id;
@@ -72,8 +72,10 @@ class UserController {
     return this;
   }
 
-  async getUsersRecords() {
-    const { response, error } = await this._exicute("api/users/records");
+  async getUsersRecords(offset) {
+    const { response, error } = await this._exicute(
+      "api/users/records?offset=" + offset
+    );
     if (error) return [];
     return response;
   }

@@ -34,7 +34,9 @@ function RatingTableOnVerse(props) {
       <thead
         style={{
           background:
-            "linear-gradient(267.7deg, #6225FC 4.09%, #B427FF 95.97%)",
+            "linear-gradient(256.02deg, #4E22BC -10.04%, #8063A5 93.08%)",
+          border: "1px solid #000000",
+          boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
           color: "white",
         }}
       >
@@ -63,6 +65,7 @@ function RatingTableOnVerse(props) {
             key={elem}
             id={elem}
             title={props.title}
+            audio={audio}
             data={data[elem]}
             setAudio={changeAudio}
           />
