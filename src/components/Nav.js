@@ -68,7 +68,7 @@ function IsAuthorized({ currentUser }) {
     return (
       <>
         <Link disabled className="nav-link active" to="/" onClick={onClick}>
-          {currentUser.displayName ?? "Войти"}
+          {"Войти"}
         </Link>
         <MyVerticallyCenteredModal
           show={modalShow}

@@ -15,7 +15,7 @@ function BestReadOnPage(props) {
 
   const handleData = async () => {
     const data = await currentUser.getRecords(props.id);
-    setData(data);
+    setData(data.slice(0, 3));
     console.log(data);
   };
 
@@ -24,8 +24,41 @@ function BestReadOnPage(props) {
     else setAudio(url);
   }
 
-  if (false) {
-    return <div className="mt-5">123</div>;
+  if (data.length === 0) {
+    return (
+      <div className="mt-5">
+        <table className="table">
+          <thead>
+            <tr>
+              <th scope="col">Лучшие прочтения</th>
+              <th scope="col">
+                <audio
+                  src={audio}
+                  controls
+                  onEnded={() => {
+                    changeAudio("");
+                  }}
+                  autoPlay
+                  style={{ display: "none" }}
+                />
+              </th>
+              <th scope="col">Оценка</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">
+                <span className="" style={{ marginRight: "20px" }}>
+                  Никто пока не записал своё чтение. Станьте первым!
+                </span>
+              </th>
+              <td></td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    );
   }
 
   return (
@@ -33,7 +66,7 @@ function BestReadOnPage(props) {
       <table className="table">
         <thead>
           <tr>
-            <th scope="col">Лучшее прочтение</th>
+            <th scope="col">Лучшие прочтения</th>
             <th scope="col">
               <audio
                 src={audio}
@@ -49,32 +82,20 @@ function BestReadOnPage(props) {
           </tr>
         </thead>
         <tbody>
-          <BestReadTableTr
-            id={props.id}
-            index={1}
-            data={data[0]}
-            audio={audio}
-            setAudio={changeAudio}
-          />
-          <BestReadTableTr
-            id={props.id}
-            index={2}
-            data={data[1]}
-            audio={audio}
-            setAudio={changeAudio}
-          />
-          <BestReadTableTr
-            id={props.id}
-            index={3}
-            data={data[2]}
-            audio={audio}
-            setAudio={changeAudio}
-          />
+          {[...Array(data.length).keys()].map((elem) => (
+            <BestReadTableTr
+              key={elem}
+              id={props.id}
+              audio={audio}
+              data={data[elem]}
+              setAudio={changeAudio}
+            />
+          ))}
         </tbody>
       </table>
       <div className="mt-3 d-flex justify-content-end">
         <Link style={{ color: "black" }} to={"/poem" + `/${props.id}/rating`}>
-          Посмотреть все
+          Посмотреть все прочтения и оценить
         </Link>
       </div>
     </div>
