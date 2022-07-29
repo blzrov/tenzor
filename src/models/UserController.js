@@ -133,8 +133,10 @@ class UserController {
     return response;
   }
 
-  async getPoemRecord(poemId) {
-    const { response, error } = await this._exicute(`api/records/${poemId}`);
+  async getPoemRecord(poemId, offset) {
+    const { response, error } = await this._exicute(
+      `api/records/${poemId}?offset=` + offset
+    );
     if (error) return [];
     return response;
   }

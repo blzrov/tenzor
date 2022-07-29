@@ -18,10 +18,13 @@ function RatingTableOnVerse(props) {
 
   useEffect(() => {
     handleData();
-  }, []);
+  }, [props.page]);
 
   const handleData = async () => {
-    const data = await currentUser.getPoemRecord(props.id);
+    const data = await currentUser.getPoemRecord(
+      props.id,
+      (props.page - 1) * 10
+    );
     setData(data);
   };
   function changeAudio(url) {
