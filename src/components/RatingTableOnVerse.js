@@ -71,6 +71,7 @@ function RatingTableOnVerse(props) {
             audio={audio}
             data={data[elem]}
             setAudio={changeAudio}
+            handleData={handleData}
           />
         ))}
       </tbody>
@@ -105,6 +106,7 @@ function RatingTableTr(props) {
         show={modalShow}
         onHide={() => setModalShow(false)}
         id={props.data.id}
+        handleData={props.handleData}
       />
     </tr>
   );
@@ -123,6 +125,7 @@ function MyVerticallyCenteredModal(props) {
     const data = await currentUser.doVote(props.id, grade);
     console.log(data);
     props.onHide();
+    props.handleData();
   };
 
   function hanldeGrade(a) {

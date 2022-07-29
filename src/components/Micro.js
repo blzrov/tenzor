@@ -8,7 +8,6 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 
 function Micro(props) {
-  console.log(props);
   let [checkbox, setCheckbox] = useState(false);
   const [modalShow, setModalShow] = React.useState(false);
   function Check() {
@@ -55,8 +54,12 @@ function Micro(props) {
               onHide={() => setModalShow(false)}
             />
           </Form>
-          <Recorder check={checkbox} id={props.id} title={props.title} />
-          <BestReadOnPage id={props.id} />
+          <Recorder
+            check={checkbox}
+            id={props.id}
+            title={props.title}
+          />
+          <BestReadOnPage id={props.id}  />
         </div>
       </div>
     </Container>

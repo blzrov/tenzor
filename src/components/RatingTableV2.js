@@ -10,6 +10,7 @@ import { CurrentUser } from "../App";
 function RatingTableV2(props) {
   let [data, setData] = React.useState("");
   let [audio, setAudio] = React.useState("");
+  let [up, setUP] = React.useState("");
 
   React.useEffect(() => {
     fetch(
@@ -25,12 +26,15 @@ function RatingTableV2(props) {
       console.log(data);
       console.log((props.page - 1) * 10);
     }
-  }, [props.page]);
+  }, [props.page, up]);
 
   function changeAudio(url) {
     if (url === audio) setAudio("");
     else setAudio(url);
     console.log(url);
+  }
+  function handleData() {
+    setUP(new Date().toString());
   }
 
   return (
@@ -71,6 +75,7 @@ function RatingTableV2(props) {
             audio={audio}
             data={data[elem]}
             setAudio={changeAudio}
+            handleData={handleData}
           />
         ))}
       </tbody>
@@ -112,6 +117,7 @@ function RatingTableTr(props) {
         id={props.data.id}
         show={modalShow}
         onHide={() => setModalShow(false)}
+        handleData={props.handleData}
       />
     </tr>
   );
@@ -133,6 +139,7 @@ function MyVerticallyCenteredModal(props) {
     const data = await currentUser.doVote(props.id, grade);
     console.log(data);
     props.onHide();
+    props.handleData();
   };
   return (
     <Modal

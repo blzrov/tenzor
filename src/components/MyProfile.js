@@ -29,6 +29,7 @@ function MyProfile() {
 
   function remove(id) {
     currentUser.removePoemRecord(id);
+    handleData();
   }
 
   return (
