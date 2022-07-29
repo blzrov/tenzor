@@ -71,8 +71,9 @@ function MyProfile() {
           <Link
             to="/"
             className="btn btn-light"
-            onClick={() => {
-              currentUser.signOut();
+            onClick={async () => {
+              await currentUser.signOut();
+              console.log("123");
             }}
           >
             Выйти

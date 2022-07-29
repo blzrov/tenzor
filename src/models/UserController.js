@@ -111,6 +111,10 @@ class UserController {
   }
 
   async doVote(recordId, vote) {
+    if (!this.realName) {
+      alert("Войдите в аккаунт");
+      return;
+    }
     const body = new FormData();
     // body.append("userId", this.id);
     body.append("vote", vote);
@@ -136,6 +140,10 @@ class UserController {
   }
 
   async savePoemRecord(record, poemId, title) {
+    if (!this.realName) {
+      alert("Войдите в аккаунт");
+      return "Войдите в аккаунт";
+    }
     const body = new FormData();
 
     body.append("record", record);
@@ -152,7 +160,8 @@ class UserController {
 
     const { response, error } = await this._exicute("api/record", options);
     if (error) return null;
-    return response;
+    //return response;
+    return "Запись отправлена";
   }
 
   async removePoemRecord(recordId) {

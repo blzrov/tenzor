@@ -36,6 +36,8 @@ function RatingTable(props) {
         style={{
           background:
             "linear-gradient(256.02deg, #4E22BC -10.04%, #8063A5 93.08%)",
+          backgroundAttachment: "fixed",
+
           border: "1px solid #000000",
           boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
           color: "white",

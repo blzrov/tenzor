@@ -17,12 +17,12 @@ function Recorder(props) {
     const audioFile = new File([audioBlob], "record.wav", {
       type: "audio/wav",
     });
-    setStatusRec("Запись отправлена");
     const data = await currentUser.savePoemRecord(
       audioFile,
       props.id,
       props.title
     );
+    setStatusRec(data);
     console.log(data);
   };
 
@@ -69,7 +69,7 @@ function Recorder(props) {
                     setStatusRec("Опубликовать");
                     startRecording();
                   }}
-                  disabled={status == "recording"}
+                  disabled={status === "recording"}
                 >
                   Начать запись
                 </Button>
@@ -77,7 +77,7 @@ function Recorder(props) {
                   style={{ fontWeight: "500" }}
                   className="btn btn-danger m-1"
                   onClick={stopRecording}
-                  disabled={status == "idle" || status == "stopped"}
+                  disabled={status === "idle" || status === "stopped"}
                 >
                   Остановить запись
                 </Button>
@@ -90,7 +90,11 @@ function Recorder(props) {
               onClick={() => onClick(mediaBlobUrl)}
               style={{ fontWeight: "500", background: "#753FFF" }}
               className="btn btn-primary m-1 px-4"
-              disabled={!mediaBlobUrl || statusRec == "Запись отправлена"}
+              disabled={
+                !mediaBlobUrl ||
+                statusRec === "Запись отправлена" ||
+                statusRec === "Войдите в аккаунт"
+              }
             >
               {statusRec}
             </Button>
