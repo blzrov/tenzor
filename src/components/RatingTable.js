@@ -18,10 +18,10 @@ function RatingTable(props) {
   useEffect(() => {
     handleData();
   }, [props.page]);
-
   const handleData = async () => {
-    const data = await currentUser.getUsersRecords((props.page - 1) * 10);
+    const data = await currentUser?.getUsersRecords((props.page - 1) * 10);
     console.log(data);
+    if (!data) return;
     setData(data);
   };
 

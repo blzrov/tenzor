@@ -9,7 +9,7 @@ function Home() {
   const currentUser = useContext(CurrentUser);
 
   const handleData = async () => {
-    const data = await currentUser.getUsersRecords(0);
+    const data = await currentUser?.getUsersRecords(0);
     console.log(data);
     if (!data || !data.length) return;
     setData(data);
@@ -18,6 +18,7 @@ function Home() {
   useEffect(() => {
     handleData();
   }, []);
+
   return (
     <Container>
       <div

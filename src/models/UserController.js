@@ -46,7 +46,10 @@ class UserController {
     const { response, error } = await this._exicute("api/user/info", {
       credentials: "include",
     });
-    if (error || !response) return this;
+    if (error || !response) {
+      console.log("error");
+      return this;
+    }
     const {
       id,
       login,

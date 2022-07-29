@@ -12,6 +12,7 @@ import { CurrentUser } from "../App";
 
 function Header() {
   const currentUser = useContext(CurrentUser);
+
   return (
     <Navbar
       collapseOnSelect
@@ -41,7 +42,7 @@ function Header() {
             </Link>
           </Nav>
           <Nav>
-            <IsAuthorized currentUser={currentUser} />
+            <IsAuthorized />
           </Nav>
         </Navbar.Collapse>
       </Container>
@@ -49,16 +50,15 @@ function Header() {
   );
 }
 
-function IsAuthorized({ currentUser }) {
+function IsAuthorized() {
   const [modalShow, setModalShow] = useState(false);
   const nav = useNavigate();
-
+  const currentUser = useContext(CurrentUser);
   const onClick = (e) => {
     e.preventDefault();
     setModalShow(true);
   };
-
-  if (currentUser.displayName)
+  if (currentUser && currentUser.displayName)
     return (
       <>
         <AfterAuthorized currentUser={currentUser} />

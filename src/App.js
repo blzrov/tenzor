@@ -19,15 +19,14 @@ const CurrentUser = createContext(new UserController());
 
 function App() {
   const currentUser = useContext(CurrentUser);
-  const nav = useNavigate();
-
+  const [_, setIsAuth] = useState(false);
   const submitCode = async (code) => {
-    await (await currentUser.doLogin(code)).getUserInfo();
+    currentUser.doLogin(code).then(() => setIsAuth(!!currentUser.id));
   };
 
   useEffect(() => {
-    currentUser.getUserInfo();
-  }, []);
+    currentUser?.getUserInfo().then(() => setIsAuth(!!currentUser.id));
+  }, [currentUser]);
 
   return (
     <CurrentUser.Provider value={currentUser}>

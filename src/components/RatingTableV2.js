@@ -128,6 +128,7 @@ function MyVerticallyCenteredModal(props) {
   function hanldeGrade(a) {
     setGrade(a);
   }
+
   const onClick = async () => {
     const data = await currentUser.doVote(props.id, grade);
     console.log(data);
