@@ -20,6 +20,7 @@ function Rating() {
           defaultChecked
           onChange={() => {
             setValue(1);
+            setPage(1);
           }}
         />
         <label className="form-check-label" htmlFor="flexRadioDefault1">
@@ -34,6 +35,7 @@ function Rating() {
           id="flexRadioDefault2"
           onChange={() => {
             setValue(2);
+            setPage(1);
           }}
         />
         <label className="form-check-label" htmlFor="flexRadioDefault2">

@@ -14,8 +14,10 @@ function BestReadOnPage(props) {
   }, []);
 
   const handleData = async () => {
-    const data = await currentUser.getRecords(props.id);
+    const data = await currentUser.getPoemRecord(props.id, 0);
+    console.log(data);
     setData(data.slice(0, 3));
+    console.log(data);
     console.log(data);
   };
 
