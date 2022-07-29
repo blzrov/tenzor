@@ -2,19 +2,19 @@ import React, { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import play from "./play-icon.png";
 import pause from "./pause-icon.png";
-import { CurrentUser } from "../App";
+import { ServerControllerContext } from "../App";
 
 function BestReadOnPage(props) {
   let [data, setData] = React.useState("");
   let [audio, setAudio] = React.useState("");
-  const currentUser = useContext(CurrentUser);
+  const serverController = useContext(ServerControllerContext);
 
   useEffect(() => {
     handleData();
   }, []);
 
   const handleData = async () => {
-    const data = await currentUser.getPoemRecord(props.id, 0);
+    const data = await serverController.getPoemRecord(props.id, 0);
     console.log(data);
     setData(data.slice(0, 3));
   };

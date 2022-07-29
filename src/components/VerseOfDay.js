@@ -1,9 +1,9 @@
 import React, { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import { CurrentUser } from "../App";
+import { ServerControllerContext } from "../App";
 function VerseOfDay() {
-  const currentUser = useContext(CurrentUser);
+  const serverController = useContext(ServerControllerContext);
 
   let [id, setID] = useState("");
   let [title, setTitle] = useState("");
@@ -13,7 +13,7 @@ function VerseOfDay() {
   }, []);
 
   const handleData = async () => {
-    const data = await currentUser.getPoem("today");
+    const data = await serverController.getPoem("today");
     if (!data) return;
     setID(data.id);
     setTitle(data.title);

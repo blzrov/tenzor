@@ -13,50 +13,53 @@ import PostIdPage from "./components/PostIdPage";
 import RatingOnVerse from "./components/RatingOnVerse";
 import LoggingPage from "./LoggingPage";
 import OauthPage from "./OauthPage";
-import UserController from "./models/UserController";
+import ServerController from "./models/serverController";
 
-const CurrentUser = createContext(new UserController());
+const ServerControllerContext = createContext(new ServerController());
+const CurrentUserContext = createContext(null);
 
 function App() {
-  const currentUser = useContext(CurrentUser);
-  const [_, setIsAuth] = useState(false);
+  const serverController = useContext(ServerControllerContext);
+  const [currentUser, setCurrentUser] = useState(null);
   const submitCode = async (code) => {
-    currentUser.doLogin(code).then(() => setIsAuth(!!currentUser.id));
+    (await serverController.doLogin(code)).getUserInfo().then(setCurrentUser);
   };
 
   useEffect(() => {
-    currentUser?.getUserInfo().then(() => setIsAuth(!!currentUser.id));
-  }, [currentUser]);
+    serverController.getUserInfo().then(setCurrentUser);
+  }, []);
 
   return (
-    <CurrentUser.Provider value={currentUser}>
-      <div className="site">
-        <Nav />
-        <div className="site-content">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route
-              path="/oauth"
-              element={<OauthPage submitCode={submitCode} />}
-            />
-            <Route path="/rating" element={<Rating />} />
-            <Route path="/example" element={<Example />} />
-            <Route path="/myProfile" element={<MyProfile />} />
-            <Route path="/catalog" element={<Catalog />} />
-            <Route path="/logs" element={<LoggingPage />} />
-            <Route path="/poem">
-              <Route path=":id" element={<PostIdPage />} />
-              <Route path=":id/rating" element={<RatingOnVerse />} />
-            </Route>
-            <Route path="/*" element={<Error33 to="/error33" replace />} />
-          </Routes>
+    <ServerControllerContext.Provider value={serverController}>
+      <CurrentUserContext.Provider value={currentUser}>
+        <div className="site">
+          <Nav />
+          <div className="site-content">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route
+                path="/oauth"
+                element={<OauthPage submitCode={submitCode} />}
+              />
+              <Route path="/rating" element={<Rating />} />
+              <Route path="/example" element={<Example />} />
+              <Route path="/myProfile" element={<MyProfile />} />
+              <Route path="/catalog" element={<Catalog />} />
+              <Route path="/logs" element={<LoggingPage />} />
+              <Route path="/poem">
+                <Route path=":id" element={<PostIdPage />} />
+                <Route path=":id/rating" element={<RatingOnVerse />} />
+              </Route>
+              <Route path="/*" element={<Error33 to="/error33" replace />} />
+            </Routes>
+          </div>
+          <Footer />
         </div>
-        <Footer />
-      </div>
-    </CurrentUser.Provider>
+      </CurrentUserContext.Provider>
+    </ServerControllerContext.Provider>
   );
 }
 
-export { CurrentUser };
+export { ServerControllerContext, CurrentUserContext };
 
 export default App;

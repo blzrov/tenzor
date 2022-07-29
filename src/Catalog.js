@@ -2,11 +2,11 @@ import { React, useState, useEffect, useContext } from "react";
 import Container from "react-bootstrap/esm/Container";
 import { Link } from "react-router-dom";
 import useDebounce from "./hooks/useDebounce";
-import { CurrentUser } from "./App";
+import { ServerControllerContext } from "./App";
 
 function Catalog() {
   let [value, setValue] = useState("");
-  const currentUser = useContext(CurrentUser);
+  const serverController = useContext(ServerControllerContext);
   const debounceValue = useDebounce(value, 100);
   let [datas, setData] = useState([]);
   let [length, setLength] = useState(0);
@@ -16,7 +16,7 @@ function Catalog() {
   }, [debounceValue]);
 
   const handleData = async () => {
-    const data = await currentUser.doSearch(
+    const data = await serverController.doSearch(
       debounceValue.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()…]/g, "")
     );
     setData([]);

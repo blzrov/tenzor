@@ -2,10 +2,10 @@ import React, { useContext } from "react";
 import { ReactMediaRecorder } from "react-media-recorder";
 import Button from "react-bootstrap/Button";
 import Spinner from "react-bootstrap/Spinner";
-import { CurrentUser } from "../App";
+import { ServerControllerContext } from "../App";
 
 function Recorder(props) {
-  const currentUser = useContext(CurrentUser);
+  const serverController = useContext(ServerControllerContext);
   let [statusRec, setStatusRec] = React.useState("Опубликовать");
 
   const onClick = async (mediaBlobUrl) => {
@@ -17,7 +17,7 @@ function Recorder(props) {
     const audioFile = new File([audioBlob], "record.wav", {
       type: "audio/wav",
     });
-    const data = await currentUser.savePoemRecord(
+    const data = await serverController.savePoemRecord(
       audioFile,
       props.id,
       props.title

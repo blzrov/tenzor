@@ -8,11 +8,9 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-import { CurrentUser } from "../App";
+import { CurrentUserContext } from "../App";
 
 function Header() {
-  const currentUser = useContext(CurrentUser);
-
   return (
     <Navbar
       collapseOnSelect
@@ -53,12 +51,12 @@ function Header() {
 function IsAuthorized() {
   const [modalShow, setModalShow] = useState(false);
   const nav = useNavigate();
-  const currentUser = useContext(CurrentUser);
+  const currentUser = useContext(CurrentUserContext);
   const onClick = (e) => {
     e.preventDefault();
     setModalShow(true);
   };
-  if (currentUser && currentUser.displayName)
+  if (currentUser)
     return (
       <>
         <AfterAuthorized currentUser={currentUser} />
@@ -96,8 +94,8 @@ function MyVerticallyCenteredModal(props) {
           Авторизация
         </Modal.Title>
       </Modal.Header>
-      <Modal.Body>
-        <h6>Вход через социальные сети:</h6>
+      <Modal.Body style={{ margin: "0 auto" }}>
+        <h6 style={{ textAlign: "center" }}>Вход через социальные сети:</h6>
         <a
           // target="_blank"
           // rel="noreferrer"

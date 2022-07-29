@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import Container from "react-bootstrap/esm/Container";
 import Pagination from "react-bootstrap/Pagination";
 import RatingTableOnVerse from "./RatingTableOnVerse";
-import { CurrentUser } from "../App";
+import { ServerControllerContext } from "../App";
 function RatingOnVerse() {
   let [author, setAuthor] = useState("Такого стихотворения ещё нет :с");
   let [title, setTitle] = useState("");
@@ -13,7 +13,7 @@ function RatingOnVerse() {
   let [page, setPage] = useState(1);
   const { id } = useParams();
 
-  const currentUser = useContext(CurrentUser);
+  const serverController = useContext(ServerControllerContext);
 
   useEffect(() => {
     handleData();
@@ -22,7 +22,7 @@ function RatingOnVerse() {
   if (!id) return <></>;
 
   const handleData = async () => {
-    const data = await currentUser.getPoem(id);
+    const data = await serverController.getPoem(id);
     setAuthor(data.author.firstName + " " + data.author.lastName);
     setTitle(data.title);
   };

@@ -2,14 +2,14 @@ import React, { useContext, useEffect } from "react";
 import Container from "react-bootstrap/esm/Container";
 import VerseOfDay from "./components/VerseOfDay";
 import AliceIcon from "./components/Frame62.png";
-import { CurrentUser } from "./App";
+import { ServerControllerContext } from "./App";
 
 function Home() {
   let [data, setData] = React.useState("");
-  const currentUser = useContext(CurrentUser);
+  const serverController = useContext(ServerControllerContext);
 
   const handleData = async () => {
-    const data = await currentUser?.getUsersRecords(0);
+    const data = await serverController?.getUsersRecords(0);
     console.log(data);
     if (!data || !data.length) return;
     setData(data);

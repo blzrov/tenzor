@@ -1,39 +1,31 @@
 //const serverUrl = "http://localhost:3001/";
 const serverUrl = "https://zoobrilka-alice-skill.herokuapp.com/";
 
-class UserController {
-  id;
-  login;
-  displayName;
-  firstName;
-  lastName;
-  realName;
-  sex;
-  birthday;
-  records;
-  rating;
-
+class ServerController {
   async _exicute(uri, config) {
     return await fetch(serverUrl + uri, config)
-      .then(async (res) =>
-        res.status === 200 ? await res.json() : { response: {} }
-      )
+      .then(async (res) => {
+        if (res.status === 200) return res.json();
+        else if (res.status === 201 || res.status === 204)
+          return { response: {} };
+        else return { error: {} };
+      })
       .catch((error) => error);
   }
 
-  signOut() {
-    this.id = undefined;
-    this.login = undefined;
-    this.displayName = undefined;
-    this.firstName = undefined;
-    this.lastName = undefined;
-    this.realName = undefined;
-    this.sex = undefined;
-    this.birthday = undefined;
-    this.records = undefined;
-    this.rating = undefined;
-    return this;
-  }
+  // signOut() {
+  //   this.id = undefined;
+  //   this.login = undefined;
+  //   this.displayName = undefined;
+  //   this.firstName = undefined;
+  //   this.lastName = undefined;
+  //   this.realName = undefined;
+  //   this.sex = undefined;
+  //   this.birthday = undefined;
+  //   this.records = undefined;
+  //   this.rating = undefined;
+  //   return this;
+  // }
 
   async doLogin(code) {
     await this._exicute(`api/user/login?code=${code}`, {
@@ -48,31 +40,10 @@ class UserController {
     });
     if (error || !response) {
       console.log("error");
-      return this;
+      return null;
     }
-    const {
-      id,
-      login,
-      displayName,
-      firstName,
-      lastName,
-      realName,
-      sex,
-      birthday,
-      records,
-      rating,
-    } = response;
-    this.id = id;
-    this.login = login;
-    this.displayName = displayName;
-    this.firstName = firstName;
-    this.lastName = lastName;
-    this.realName = realName;
-    this.sex = sex;
-    this.birthday = birthday;
-    this.records = records;
-    this.rating = rating;
-    return this;
+
+    return response;
   }
 
   async getUsersRecords(offset) {
@@ -83,10 +54,8 @@ class UserController {
     return response;
   }
 
-  async getUserRecords() {
-    const { response, error } = await this._exicute(
-      `api/user/${this.id}/records`
-    );
+  async getUserRecords(id) {
+    const { response, error } = await this._exicute(`api/user/${id}/records`);
     if (error) return [];
     return response;
   }
@@ -184,4 +153,4 @@ class UserController {
   }
 }
 
-export default UserController;
+export default ServerController;

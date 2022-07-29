@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import Grade from "./grade/Grade";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
@@ -6,7 +6,7 @@ import play from "./play-icon.png";
 import pause from "./pause-icon.png";
 import Modal from "react-bootstrap/Modal";
 import { Link } from "react-router-dom";
-import { CurrentUser } from "../App";
+import { ServerControllerContext } from "../App";
 function RatingTableV2(props) {
   let [data, setData] = React.useState("");
   let [audio, setAudio] = React.useState("");
@@ -130,13 +130,13 @@ function PlayOrPause(props) {
 
 function MyVerticallyCenteredModal(props) {
   let [grade, setGrade] = React.useState();
-  const currentUser = React.useContext(CurrentUser);
+  const serverController = useContext(ServerControllerContext);
   function hanldeGrade(a) {
     setGrade(a);
   }
 
   const onClick = async () => {
-    const data = await currentUser.doVote(props.id, grade);
+    const data = await serverController.doVote(props.id, grade);
     console.log(data);
     props.onHide();
     props.handleData();

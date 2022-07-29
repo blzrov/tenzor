@@ -6,7 +6,7 @@ import Button from "react-bootstrap/Button";
 import play from "./play-icon.png";
 import pause from "./pause-icon.png";
 import Modal from "react-bootstrap/Modal";
-import { CurrentUser } from "../App";
+import { ServerControllerContext } from "../App";
 
 function RatingTableOnVerse(props) {
   //to do id 2
@@ -14,14 +14,14 @@ function RatingTableOnVerse(props) {
   let [data, setData] = useState("");
   let [audio, setAudio] = useState("");
 
-  const currentUser = useContext(CurrentUser);
+  const serverController = useContext(ServerControllerContext);
 
   useEffect(() => {
     handleData();
   }, [props.page]);
 
   const handleData = async () => {
-    const data = await currentUser.getPoemRecord(
+    const data = await serverController.getPoemRecord(
       props.id,
       (props.page - 1) * 10
     );
@@ -119,10 +119,10 @@ function PlayOrPause(props) {
 
 function MyVerticallyCenteredModal(props) {
   let [grade, setGrade] = useState();
-  const currentUser = useContext(CurrentUser);
+  const serverController = useContext(ServerControllerContext);
 
   const onClick = async () => {
-    const data = await currentUser.doVote(props.id, grade);
+    const data = await serverController.doVote(props.id, grade);
     console.log(data);
     props.onHide();
     props.handleData();

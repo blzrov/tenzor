@@ -4,12 +4,13 @@ import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import Container from "react-bootstrap/esm/Container";
 import RatingTableOnVerse from "./RatingTableOnVerse";
-import { CurrentUser } from "../App";
+import { ServerControllerContext, CurrentUserContext } from "../App";
 import play from "./play-icon.png";
 import pause from "./pause-icon.png";
 import { Button } from "bootstrap";
 function MyProfile() {
-  const currentUser = useContext(CurrentUser);
+  const serverController = useContext(ServerControllerContext);
+  const currentUser = useContext(CurrentUserContext);
   let [data, setData] = useState([]);
   let [audio, setAudio] = React.useState("");
   useEffect(() => {
@@ -17,7 +18,8 @@ function MyProfile() {
   }, []);
 
   const handleData = async () => {
-    const data = await currentUser.getUserRecords(currentUser.id);
+    if (!currentUser) return;
+    const data = await serverController.getUserRecords(currentUser.id);
     setData(data);
   };
 
@@ -28,7 +30,7 @@ function MyProfile() {
   console.log(data);
 
   function remove(id) {
-    currentUser.removePoemRecord(id);
+    serverController.removePoemRecord(id);
     handleData();
   }
 
@@ -36,7 +38,7 @@ function MyProfile() {
     <Container className="mt-5">
       <div className="row">
         <div className="col">
-          <h4>{currentUser.realName}</h4>
+          <h4>{serverController.realName}</h4>
           <h5>Мои записи</h5>
           <table className="table">
             <thead>
@@ -73,7 +75,7 @@ function MyProfile() {
             to="/"
             className="btn btn-light"
             onClick={async () => {
-              await currentUser.signOut();
+              await serverController.signOut();
               console.log("123");
             }}
           >
