@@ -1,12 +1,10 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import Container from "react-bootstrap/esm/Container";
 import logo from "../logo-name-lowercase.png";
 import yandexLogo from "./yandex-img.svg";
-import find from "./find-icon.png";
 import { Link, useNavigate } from "react-router-dom";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { CurrentUserContext } from "../App";
 
@@ -56,12 +54,7 @@ function IsAuthorized() {
     e.preventDefault();
     setModalShow(true);
   };
-  if (currentUser)
-    return (
-      <>
-        <AfterAuthorized currentUser={currentUser} />
-      </>
-    );
+  if (currentUser) return <AfterAuthorized currentUser={currentUser} />;
   else
     return (
       <>
@@ -78,11 +71,9 @@ function IsAuthorized() {
 
 function AfterAuthorized(props) {
   return (
-    <>
-      <Link disabled className="nav-link active" to="/myprofile">
-        {props.currentUser.displayName}
-      </Link>
-    </>
+    <Link disabled className="nav-link active" to="/myprofile">
+      {props.currentUser.displayName}
+    </Link>
   );
 }
 

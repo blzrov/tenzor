@@ -1,7 +1,8 @@
 import React from "react";
 import Container from "react-bootstrap/esm/Container";
 import { Link } from "react-router-dom";
-function Error() {
+
+function ErrorPage() {
   return (
     <Container>
       <div className="row my-5">
@@ -13,4 +14,5 @@ function Error() {
     </Container>
   );
 }
-export default Error;
+
+export default ErrorPage;

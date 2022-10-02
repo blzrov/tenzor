@@ -2,12 +2,11 @@ import React, { useState, useEffect, createContext, useContext } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Nav from "./components/Nav";
 import Footer from "./components/Footer";
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Home from "./Home";
 import Rating from "./Rating";
 import Catalog from "./Catalog";
-import Example from "./Example";
-import Error33 from "./Error";
+import ErrorPage from "./ErrorPage";
 import MyProfile from "./components/MyProfile";
 import PostIdPage from "./components/PostIdPage";
 import RatingOnVerse from "./components/RatingOnVerse";
@@ -42,7 +41,6 @@ function App() {
                 element={<OauthPage submitCode={submitCode} />}
               />
               <Route path="/rating" element={<Rating />} />
-              <Route path="/example" element={<Example />} />
               <Route path="/myProfile" element={<MyProfile />} />
               <Route path="/catalog" element={<Catalog />} />
               <Route path="/logs" element={<LoggingPage />} />
@@ -50,7 +48,7 @@ function App() {
                 <Route path=":id" element={<PostIdPage />} />
                 <Route path=":id/rating" element={<RatingOnVerse />} />
               </Route>
-              <Route path="/*" element={<Error33 to="/error33" replace />} />
+              <Route path="/*" element={<ErrorPage to="/error33" replace />} />
             </Routes>
           </div>
           <Footer />

@@ -2,6 +2,7 @@ import React from "react";
 import Container from "react-bootstrap/esm/Container";
 import logo from "../logo-name-lowercase.png";
 import { Link } from "react-router-dom";
+
 function Footer() {
   return (
     <footer
@@ -15,10 +16,7 @@ function Footer() {
       }}
     >
       <Container>
-        <nav
-          className="navbar navbar-expand-lg navbar-dark "
-          style={{ display: "block" }}
-        >
+        <nav className="navbar navbar-expand-lg navbar-dark d-block ">
           <ul
             className="navbar-nav d-flex justify-content-between align-items-center "
             style={{ height: "180px" }}

@@ -1,65 +1,66 @@
 import React, { useContext, useEffect } from "react";
 import Container from "react-bootstrap/esm/Container";
 import VerseOfDay from "./components/VerseOfDay";
-import AliceIcon from "./components/Frame62.png";
+import AliceIcon from "./components/AliceIcon.png";
 import { ServerControllerContext } from "./App";
 
 function Home() {
-  let [data, setData] = React.useState("");
   const serverController = useContext(ServerControllerContext);
 
-  const handleData = async () => {
-    const data = await serverController?.getUsersRecords(0);
-    console.log(data);
-    if (!data || !data.length) return;
-    setData(data);
-  };
-
   useEffect(() => {
-    handleData();
+    getUsersRecords();
   }, []);
+
+  const [usersRecords, setUsersRecords] = React.useState("");
+  const getUsersRecords = async () => {
+    const data = await serverController?.getUsersRecords(0);
+    if (!data || !data.length) return;
+    setUsersRecords(data);
+  };
 
   return (
     <Container>
       <div
-        className="row text-white p-5 my-2 mt-5"
+        className="row mt-5 mb-2 p-5 minW text-white"
         style={{
+          borderRadius: "30px",
           background:
             "linear-gradient(256.02deg, #4E22BC -10.04%, #8063A5 93.08%)",
-          borderRadius: "30px",
-          minWidth: "310px",
         }}
       >
         <div className="col">
-          <div>
-            <h1 className="h1-count">34 590</h1>
-            <p>стихотворений по разным темам</p>
-          </div>
+          <h1 className="h1-count">34 590</h1>
+          <p>стихотворений по разным темам</p>
         </div>
         <div className="col">
-          <div>
-            <h2>Заучивание и прослушивание стихотворений с Алисой</h2>
-            <p>легко и просто для любого возраста</p>
-          </div>
+          <h2>Заучивание и прослушивание стихотворений с Алисой</h2>
+          <p>легко и просто для любого возраста</p>
         </div>
       </div>
       <div className="row">
-        <div className="col my-3" style={{ minWidth: "310px" }}>
-          <div className="home-item p-4 px-5" style={{ lineHeight: "23px" }}>
-            <h3 className="text-center mb-3">Рейтинг</h3>
+        <div className="col my-3 minW">
+          <div className="home-item py-4 px-5">
+            <h3 className="mb-3 text-center">Рейтинг</h3>
             <table className="table">
               <tbody>
-                {!!data &&
-                  [...Array(data.length).keys()].map((elem) => (
-                    <HomeTableTr key={elem} id={elem} data={data[elem]} />
-                  ))}
+                {!!usersRecords &&
+                  [...Array(Math.min(usersRecords.length, 8)).keys()].map(
+                    (i) => (
+                      <HomeTableTr
+                        key={usersRecords[i].userId}
+                        index={i}
+                        data={usersRecords[i]}
+                      />
+                    )
+                  )}
               </tbody>
             </table>
           </div>
         </div>
-        <div className="col my-3" style={{ minWidth: "310px" }}>
-          <div className="home-item p-4 px-5" style={{ lineHeight: "23px" }}>
-            <h3 className="text-center mb-3">Навык Алисы</h3>
+
+        <div className="col my-3 minW">
+          <div className="home-item py-4 px-5">
+            <h3 className="mb-3 text-center">Навык Алисы</h3>
             <p>
               Алиса поможет Вам выучить стихотворение любой сложности и длины.
               <br />
@@ -83,9 +84,10 @@ function Home() {
             </div>
           </div>
         </div>
-        <div className="col my-3" style={{ minWidth: "310px" }}>
-          <div className="home-item p-4 px-5" style={{ lineHeight: "23px" }}>
-            <h3 className="text-center mb-3">Стихотворение дня</h3>
+
+        <div className="col my-3 minW">
+          <div className="home-item py-4 px-5">
+            <h3 className="mb-3 text-center">Стихотворение дня</h3>
             <VerseOfDay />
           </div>
         </div>
@@ -95,10 +97,10 @@ function Home() {
 }
 
 function HomeTableTr(props) {
-  if (!props.data || props.id > 9) return;
+  if (!props.data) return;
   return (
     <tr>
-      <th style={{ border: "none" }}>{props.id + 1}</th>
+      <th style={{ border: "none" }}>{props.index + 1}</th>
       <td style={{ border: "none" }}>{props.data.records[0].ownerName}</td>
       <td style={{ border: "none" }}>{props.data.userRating}</td>
     </tr>
