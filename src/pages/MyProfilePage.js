@@ -1,5 +1,4 @@
-import React, { useContext, useEffect } from "react";
-import { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { ServerControllerContext, CurrentUserContext } from "../App";
 import play from "../components/img/play-icon.png";
@@ -11,10 +10,10 @@ function MyProfilePage() {
   let [data, setData] = useState([]);
   let [audio, setAudio] = React.useState("");
   useEffect(() => {
-    handleData();
+    getUserRecords();
   }, []);
 
-  const handleData = async () => {
+  const getUserRecords = async () => {
     if (!currentUser) return;
     const data = await serverController.getUserRecords(currentUser.id);
     setData(data);
@@ -24,11 +23,10 @@ function MyProfilePage() {
     if (url === audio) setAudio("");
     else setAudio(url);
   }
-  console.log(data);
 
   function remove(id) {
     serverController.removePoemRecord(id);
-    handleData();
+    getUserRecords();
   }
 
   return (

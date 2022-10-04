@@ -1,9 +1,11 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
 import Micro from "../components/Micro";
 import { ServerControllerContext } from "../App";
+import Container from "react-bootstrap/esm/Container";
+import BestReadOnPage from "../components/BestReadOnPage";
 
-const PoemPage = (props) => {
+const PoemPage = () => {
   let [author, setAuthor] = useState("Такого стихотворения ещё нет :с");
   let [title, setTitle] = useState("");
   let [text, setText] = useState("");
@@ -11,10 +13,10 @@ const PoemPage = (props) => {
   const serverController = useContext(ServerControllerContext);
 
   useEffect(() => {
-    handleData();
+    getPoem();
   }, []);
 
-  const handleData = async () => {
+  const getPoem = async () => {
     const data = await serverController.getPoem(id);
     setAuthor(data.author.firstName + " " + data.author.lastName);
     setTitle(data.title);
@@ -24,29 +26,28 @@ const PoemPage = (props) => {
   if (!id) return <></>;
 
   return (
-      <div className="row my-5 ">
+    <div className="row my-5 ">
+      <div className="col-5 mb-5 pb-5 border-bottom border-primary minW">
         <div
-          className="col-5  border-bottom border-primary pb-5 mb-5"
-          style={{ minWidth: "310px" }}
+          className="d-flex flex-column align-items-center"
+          style={{ fontWeight: "500" }}
         >
-          <div
-            className="d-flex flex-column align-items-center"
-            style={{ fontWeight: "500" }}
-          >
-            <div>
-              <h3 className="">{title}</h3>
-              <h4 className="mb-3">{author}</h4>
-              <p className="" style={{ whiteSpace: "pre-line" }}>
-                {text}
-              </p>
-            </div>
+          <div>
+            <h3>{title}</h3>
+            <h4 className="mb-3">{author}</h4>
+            <p style={{ whiteSpace: "pre-line" }}>{text}</p>
           </div>
         </div>
-        <div className="col">
-          <Micro id={id} title={title} />
-        </div>
       </div>
-    
+      <div className="col ">
+        <Container
+          style={{ position: "sticky", top: "2rem", fontWeight: "500" }}
+        >
+          <Micro id={id} title={title} />
+          <BestReadOnPage id={id} />
+        </Container>
+      </div>
+    </div>
   );
 };
 

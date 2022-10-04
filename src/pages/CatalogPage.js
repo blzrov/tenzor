@@ -3,11 +3,6 @@ import { ServerControllerContext } from "../App";
 import useDebounce from "../components/hooks/useDebounce";
 import { Link } from "react-router-dom";
 
-// function CatalogPage(){
-//   return()
-// }
-//page, где структура в одной функции, а компоненты в компонентах
-
 function CatalogPage() {
   const serverController = useContext(ServerControllerContext);
   const [value, setValue] = useState("");

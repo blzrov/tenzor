@@ -6,9 +6,8 @@ import { Link } from "react-router-dom";
 function Footer() {
   return (
     <footer
-      className="footer mt-5 "
+      className="footer mt-5 minW"
       style={{
-        minWidth: "310px",
         width: "100%",
         height: "195px",
         overflow: "hidden",

@@ -1,72 +1,60 @@
 import React from "react";
 import { useState } from "react";
 import Recorder from "./Recorder";
-import BestReadOnPage from "./BestReadOnPage";
-import Container from "react-bootstrap/esm/Container";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 
 function Micro(props) {
-  let [checkbox, setCheckbox] = useState(false);
-  const [modalShow, setModalShow] = React.useState(false);
-  function Check() {
+  const [checkbox, setCheckbox] = useState(false);
+  const [modalShow, setModalShow] = useState(false);
+
+  function isAgree() {
     setCheckbox(!checkbox);
   }
+
   return (
-    <Container style={{ position: "sticky", top: "2rem" }}>
-      <div className="row">
-        <div className="col" style={{ fontWeight: "500" }}>
-          <h3>Аудиодорожка</h3>
-          <p>
-            Нажмите кнопку “Записать”, если хотите записать вариант прочтения
-            данного стихотворения.
-          </p>
-          <PublishedAudio />
-          <Form>
-            {["checkbox"].map((type) => (
-              <div key={`default-${type}`} className="mb-3">
-                <Form.Check
-                  style={{ color: "#545454" }}
-                  onChange={Check}
-                  type={type}
-                  id={`default-${type}`}
-                  label={
-                    <span>
-                      Согласен с{" "}
-                      <span
-                        style={{
-                          textDecoration: "underline",
-                          cursor: "pointer",
-                        }}
-                        onClick={() => setModalShow(true)}
-                      >
-                        правилами
-                      </span>{" "}
-                      использования сайта
-                    </span>
-                  }
-                />
-              </div>
-            ))}
-            <MyVerticallyCenteredModal
-              show={modalShow}
-              onHide={() => setModalShow(false)}
+    <div>
+      <h3>Аудиодорожка</h3>
+      <p>
+        Нажмите кнопку “Записать”, если хотите записать вариант прочтения
+        данного стихотворения.
+      </p>
+      <p>Уже записанные аудиодорожки вы можете просмотреть в профиле</p>
+      <Form>
+        {["checkbox"].map((type) => (
+          <div key={`default-${type}`} className="mb-3">
+            <Form.Check
+              style={{ color: "#545454" }}
+              onChange={isAgree}
+              type={type}
+              id={`default-${type}`}
+              label={
+                <span>
+                  Согласен с{" "}
+                  <span
+                    style={{
+                      textDecoration: "underline",
+                      cursor: "pointer",
+                    }}
+                    onClick={() => setModalShow(true)}
+                  >
+                    правилами
+                  </span>{" "}
+                  использования сайта
+                </span>
+              }
             />
-          </Form>
-          <Recorder
-            check={checkbox}
-            id={props.id}
-            title={props.title}
-          />
-          <BestReadOnPage id={props.id}  />
-        </div>
-      </div>
-    </Container>
+          </div>
+        ))}
+        <MyVCModal show={modalShow} onHide={() => setModalShow(false)} />
+      </Form>
+      <Recorder isAgree={checkbox} id={props.id} title={props.title} />
+    </div>
   );
 }
 
-function MyVerticallyCenteredModal(props) {
+function MyVCModal(props) {
   return (
     <Modal
       {...props}
@@ -326,7 +314,4 @@ function MyVerticallyCenteredModal(props) {
   );
 }
 
-function PublishedAudio() {
-  return <p>Уже записанные аудиодорожки вы можете просмотреть в профиле</p>;
-}
 export default Micro;

@@ -26,11 +26,6 @@ function RatingOnVerse() {
     setTitle(data.title);
   };
 
-  function a(num) {
-    setValue(num);
-    console.log(value);
-  }
-
   return (
     <div className="mt-5" style={{ overflow: "auto", fontWeight: "500" }}>
       <audio id="ratingAudio" src="" style={{ display: "none" }} />

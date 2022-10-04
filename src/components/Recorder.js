@@ -8,7 +8,7 @@ function Recorder(props) {
   const serverController = useContext(ServerControllerContext);
   let [statusRec, setStatusRec] = React.useState("Опубликовать");
 
-  const onClick = async (mediaBlobUrl) => {
+  const savePoemRecord = async (mediaBlobUrl) => {
     if (statusRec === "Запись отправлена") {
       alert("Эта запись уже отправлена");
       return;
@@ -23,16 +23,12 @@ function Recorder(props) {
       props.title
     );
     setStatusRec(data);
-    console.log(data);
   };
 
-  if (!props.check)
+  if (!props.isAgree)
     return (
       <div className="media-button">
-        <Button
-          className="yellow-button btn btn-warning m-1 btn m-1 px-4 disabled "
-          disabled
-        >
+        <Button className="btn btn-warning m-1 px-4 yellow-button disabled ">
           Начать запись
         </Button>
       </div>
@@ -44,8 +40,10 @@ function Recorder(props) {
         render={({ status, startRecording, stopRecording, mediaBlobUrl }) => (
           <div>
             <div>
-              <div className="d-flex align-items-center m-2">
-                <MySpinner state={status === "recording"} />
+              <div className="m-2 d-flex align-items-center">
+                {status === "recording" ? (
+                  <Spinner animation="grow" variant="danger" size="sm" />
+                ) : null}
                 <span className="px-3">
                   {status
                     .replace("idle", "Запись начнётся после нажатия на кнопку")
@@ -63,7 +61,7 @@ function Recorder(props) {
               <div className="media-button">
                 <Button
                   style={{ fontWeight: "500" }}
-                  className="yellow-button btn m-1 px-4"
+                  className="btn m-1 px-4 yellow-button"
                   onClick={() => {
                     window.scrollTo(0, 0);
                     setStatusRec("Опубликовать");
@@ -87,7 +85,7 @@ function Recorder(props) {
               <audio src={mediaBlobUrl} controls></audio>
             </div>
             <Button
-              onClick={() => onClick(mediaBlobUrl)}
+              onClick={() => savePoemRecord(mediaBlobUrl)}
               style={{ fontWeight: "500", background: "#753FFF" }}
               className="btn btn-primary m-1 px-4"
               disabled={
@@ -102,12 +100,6 @@ function Recorder(props) {
         )}
       ></ReactMediaRecorder>
     );
-  }
-}
-
-function MySpinner(props) {
-  if (props.state) {
-    return <Spinner animation="grow" variant="danger" size="sm" />;
   }
 }
 

@@ -1,15 +1,15 @@
 import React, { useState, useEffect, createContext, useContext } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { Routes, Route } from "react-router-dom";
 import Nav from "./components/Nav";
 import Footer from "./components/Footer";
-import { Routes, Route } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import RatingPage from "./pages/RatingPage";
 import CatalogPage from "./pages/CatalogPage";
 import ErrorPage from "./pages/ErrorPage";
 import MyProfilePage from "./pages/MyProfilePage";
 import PoemPage from "./pages/PoemPage";
-import RatingOnVerse from "./components/RatingOnVerse";
+import RatingOnVerse from "./components/RatingOnVerse"; //to do
 import LoggingPage from "./LoggingPage";
 import OauthPage from "./OauthPage";
 import ServerController from "./models/serverController";
@@ -46,15 +46,11 @@ function App() {
                   <Route path=":id/rating" element={<RatingOnVerse />} />
                 </Route>
                 <Route
-                  path="/*"
-                  element={<ErrorPage to="/error33" replace />}
-                />
-
-                <Route
                   path="/oauth"
                   element={<OauthPage submitCode={submitCode} />}
                 />
                 <Route path="/logs" element={<LoggingPage />} />
+                <Route path="/*" element={<ErrorPage replace />} />
               </Routes>
             </Container>
           </div>

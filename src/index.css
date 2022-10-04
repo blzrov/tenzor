@@ -32,6 +32,7 @@ code {
 .h1-count {
   font-size: 3rem;
 }
+
 .site {
   display: flex;
   min-height: 100vh;
@@ -51,4 +52,8 @@ code {
 
 .hover-underline:hover {
   text-decoration: underline;
+}
+
+.minW {
+  min-width: 310px;
 }
