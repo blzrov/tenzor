@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import Container from "react-bootstrap/esm/Container";
 import { useParams } from "react-router-dom";
-import Micro from "./Micro";
+import Micro from "../components/Micro";
 import { ServerControllerContext } from "../App";
 
 const PostIdPage = (props) => {

@@ -1,9 +1,10 @@
 import React from "react";
 import { useState } from "react";
 import Container from "react-bootstrap/esm/Container";
-import RatingTable from "./components/RatingTable";
-import RatingTableV2 from "./components/RatingTableV2";
+import RatingTable from "../components/RatingTable";
+import RatingTableV2 from "../components/RatingTableV2";
 import Pagination from "react-bootstrap/Pagination";
+
 function Rating() {
   let [value, setValue] = useState(1);
   let [page, setPage] = useState(1);

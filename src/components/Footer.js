@@ -1,6 +1,6 @@
 import React from "react";
 import Container from "react-bootstrap/esm/Container";
-import logo from "../logo-name-lowercase.png";
+import logo from "./img/logo-name-lowercase.png";
 import { Link } from "react-router-dom";
 
 function Footer() {

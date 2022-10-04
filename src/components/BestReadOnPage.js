@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
-import play from "./play-icon.png";
-import pause from "./pause-icon.png";
+import play from "./img/play-icon.png";
+import pause from "./img/pause-icon.png";
 import { ServerControllerContext } from "../App";
 
 function BestReadOnPage(props) {

@@ -1,8 +1,8 @@
 import React, { useContext, useEffect } from "react";
 import Container from "react-bootstrap/esm/Container";
-import VerseOfDay from "./components/VerseOfDay";
-import AliceIcon from "./components/AliceIcon.png";
-import { ServerControllerContext } from "./App";
+import VerseOfDay from "../components/VerseOfDay";
+import AliceIcon from "../components/img/alice-icon.png";
+import { ServerControllerContext } from "../App";
 
 function Home() {
   const serverController = useContext(ServerControllerContext);

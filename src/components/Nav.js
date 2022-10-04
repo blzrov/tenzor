@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import Container from "react-bootstrap/esm/Container";
-import logo from "../logo-name-lowercase.png";
-import yandexLogo from "./yandex-img.svg";
+import logo from "./img/logo-name-lowercase.png";
+import yandexLogo from "./img/yandex-img.svg";
 import { Link, useNavigate } from "react-router-dom";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";

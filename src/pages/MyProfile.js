@@ -3,11 +3,9 @@ import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import Container from "react-bootstrap/esm/Container";
-import RatingTableOnVerse from "./RatingTableOnVerse";
 import { ServerControllerContext, CurrentUserContext } from "../App";
-import play from "./play-icon.png";
-import pause from "./pause-icon.png";
-import { Button } from "bootstrap";
+import play from "../components/img/play-icon.png";
+import pause from "../components/img/pause-icon.png";
 function MyProfile() {
   const serverController = useContext(ServerControllerContext);
   const currentUser = useContext(CurrentUserContext);

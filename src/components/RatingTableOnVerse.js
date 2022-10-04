@@ -1,10 +1,10 @@
 import React, { useContext, useState, useEffect } from "react";
 
-import Grade from "./grade/Grade";
+import Grade from "./img/grade/Grade";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
-import play from "./play-icon.png";
-import pause from "./pause-icon.png";
+import play from "./img/play-icon.png";
+import pause from "./img/pause-icon.png";
 import Modal from "react-bootstrap/Modal";
 import { ServerControllerContext } from "../App";
 
