@@ -1,10 +1,9 @@
 import React, { useState, useContext, useEffect } from "react";
-import Container from "react-bootstrap/esm/Container";
 import { useParams } from "react-router-dom";
 import Micro from "../components/Micro";
 import { ServerControllerContext } from "../App";
 
-const PostIdPage = (props) => {
+const PoemPage = (props) => {
   let [author, setAuthor] = useState("Такого стихотворения ещё нет :с");
   let [title, setTitle] = useState("");
   let [text, setText] = useState("");
@@ -25,7 +24,6 @@ const PostIdPage = (props) => {
   if (!id) return <></>;
 
   return (
-    <Container>
       <div className="row my-5 ">
         <div
           className="col-5  border-bottom border-primary pb-5 mb-5"
@@ -48,8 +46,8 @@ const PostIdPage = (props) => {
           <Micro id={id} title={title} />
         </div>
       </div>
-    </Container>
+    
   );
 };
 
-export default PostIdPage;
+export default PoemPage;

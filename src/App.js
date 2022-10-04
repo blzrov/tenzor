@@ -3,16 +3,17 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Nav from "./components/Nav";
 import Footer from "./components/Footer";
 import { Routes, Route } from "react-router-dom";
-import Home from "./pages/Home";
-import Rating from "./pages/Rating";
-import Catalog from "./Catalog";
+import HomePage from "./pages/HomePage";
+import RatingPage from "./pages/RatingPage";
+import CatalogPage from "./pages/CatalogPage";
 import ErrorPage from "./pages/ErrorPage";
-import MyProfile from "./pages/MyProfile";
-import PostIdPage from "./pages/PostIdPage";
+import MyProfilePage from "./pages/MyProfilePage";
+import PoemPage from "./pages/PoemPage";
 import RatingOnVerse from "./components/RatingOnVerse";
 import LoggingPage from "./LoggingPage";
 import OauthPage from "./OauthPage";
 import ServerController from "./models/serverController";
+import Container from "react-bootstrap/esm/Container";
 
 const ServerControllerContext = createContext(new ServerController());
 const CurrentUserContext = createContext(null);
@@ -34,22 +35,28 @@ function App() {
         <div className="site">
           <Nav />
           <div className="site-content">
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route
-                path="/oauth"
-                element={<OauthPage submitCode={submitCode} />}
-              />
-              <Route path="/rating" element={<Rating />} />
-              <Route path="/myProfile" element={<MyProfile />} />
-              <Route path="/catalog" element={<Catalog />} />
-              <Route path="/logs" element={<LoggingPage />} />
-              <Route path="/poem">
-                <Route path=":id" element={<PostIdPage />} />
-                <Route path=":id/rating" element={<RatingOnVerse />} />
-              </Route>
-              <Route path="/*" element={<ErrorPage to="/error33" replace />} />
-            </Routes>
+            <Container>
+              <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/rating" element={<RatingPage />} />
+                <Route path="/myProfile" element={<MyProfilePage />} />
+                <Route path="/catalog" element={<CatalogPage />} />
+                <Route path="/poem">
+                  <Route path=":id" element={<PoemPage />} />
+                  <Route path=":id/rating" element={<RatingOnVerse />} />
+                </Route>
+                <Route
+                  path="/*"
+                  element={<ErrorPage to="/error33" replace />}
+                />
+
+                <Route
+                  path="/oauth"
+                  element={<OauthPage submitCode={submitCode} />}
+                />
+                <Route path="/logs" element={<LoggingPage />} />
+              </Routes>
+            </Container>
           </div>
           <Footer />
         </div>

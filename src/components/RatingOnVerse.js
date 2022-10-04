@@ -2,7 +2,6 @@ import React, { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
-import Container from "react-bootstrap/esm/Container";
 import Pagination from "react-bootstrap/Pagination";
 import RatingTableOnVerse from "./RatingTableOnVerse";
 import { ServerControllerContext } from "../App";
@@ -33,7 +32,7 @@ function RatingOnVerse() {
   }
 
   return (
-    <Container className="mt-5" style={{ overflow: "auto", fontWeight: "500" }}>
+    <div className="mt-5" style={{ overflow: "auto", fontWeight: "500" }}>
       <audio id="ratingAudio" src="" style={{ display: "none" }} />
       <Link
         to={"/poem/" + id}
@@ -46,7 +45,7 @@ function RatingOnVerse() {
 
       <RatingTableOnVerse value={value} title={title} id={id} page={page} />
       <AdvancedExample page={page} setPage={setPage} />
-    </Container>
+    </div>
   );
 }
 

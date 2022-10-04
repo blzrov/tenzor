@@ -1,16 +1,15 @@
 import React from "react";
 import { useState } from "react";
-import Container from "react-bootstrap/esm/Container";
 import RatingTable from "../components/RatingTable";
 import RatingTableV2 from "../components/RatingTableV2";
 import Pagination from "react-bootstrap/Pagination";
 
-function Rating() {
+function RatingPage() {
   let [value, setValue] = useState(1);
   let [page, setPage] = useState(1);
 
   return (
-    <Container className="mt-5" style={{ overflow: "auto", fontWeight: "500" }}>
+    <div className="mt-5" style={{ overflow: "auto", fontWeight: "500" }}>
       <audio id="ratingAudio" src="" style={{ display: "none" }} />
       <div className="form-check">
         <input
@@ -45,7 +44,7 @@ function Rating() {
       </div>
       <StupidCode value={value} page={page} />
       <AdvancedExample page={page} setPage={setPage} />
-    </Container>
+    </div>
   );
 }
 
@@ -66,4 +65,4 @@ function StupidCode(props) {
   if (props.value === 1) return <RatingTable page={props.page} />;
   if (props.value === 2) return <RatingTableV2 page={props.page} />;
 }
-export default Rating;
+export default RatingPage;

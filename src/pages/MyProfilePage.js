@@ -1,12 +1,11 @@
 import React, { useContext, useEffect } from "react";
 import { useState } from "react";
-import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
-import Container from "react-bootstrap/esm/Container";
 import { ServerControllerContext, CurrentUserContext } from "../App";
 import play from "../components/img/play-icon.png";
 import pause from "../components/img/pause-icon.png";
-function MyProfile() {
+
+function MyProfilePage() {
   const serverController = useContext(ServerControllerContext);
   const currentUser = useContext(CurrentUserContext);
   let [data, setData] = useState([]);
@@ -33,7 +32,7 @@ function MyProfile() {
   }
 
   return (
-    <Container className="mt-5">
+    <div className="mt-5">
       <div className="row">
         <div className="col">
           <h4>{serverController.realName}</h4>
@@ -81,7 +80,7 @@ function MyProfile() {
           </Link>
         </div>
       </div>
-    </Container>
+    </div>
   );
 }
 
@@ -135,4 +134,4 @@ function PlayOrPause(props) {
   if (props.audio == props.data) return <img src={pause} alt="play"></img>;
   return <img src={play} alt="play"></img>;
 }
-export default MyProfile;
+export default MyProfilePage;

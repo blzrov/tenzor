@@ -1,10 +1,9 @@
 import React, { useContext, useEffect } from "react";
-import Container from "react-bootstrap/esm/Container";
 import VerseOfDay from "../components/VerseOfDay";
 import AliceIcon from "../components/img/alice-icon.png";
 import { ServerControllerContext } from "../App";
 
-function Home() {
+function HomePage() {
   const serverController = useContext(ServerControllerContext);
 
   useEffect(() => {
@@ -19,7 +18,7 @@ function Home() {
   };
 
   return (
-    <Container>
+    <div>
       <div
         className="row mt-5 mb-2 p-5 minW text-white"
         style={{
@@ -92,7 +91,7 @@ function Home() {
           </div>
         </div>
       </div>
-    </Container>
+    </div>
   );
 }
 
@@ -107,4 +106,4 @@ function HomeTableTr(props) {
   );
 }
 
-export default Home;
+export default HomePage;
