@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from "react";
+import { ServerControllerContext } from "../App";
 import VerseOfDay from "../components/VerseOfDay";
 import AliceIcon from "../components/img/alice-icon.png";
-import { ServerControllerContext } from "../App";
 
 export default function HomePage() {
   const serverController = useContext(ServerControllerContext);

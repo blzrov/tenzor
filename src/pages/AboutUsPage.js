@@ -1,6 +1,4 @@
-import React from "react";
-
-export default function Example() {
+export default function AboutUsPage() {
   return (
     <div style={{ maxWidth: "700px" }}>
       <h3>О проекте</h3>
