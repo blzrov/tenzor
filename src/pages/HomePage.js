@@ -3,7 +3,7 @@ import VerseOfDay from "../components/VerseOfDay";
 import AliceIcon from "../components/img/alice-icon.png";
 import { ServerControllerContext } from "../App";
 
-function HomePage() {
+export default function HomePage() {
   const serverController = useContext(ServerControllerContext);
 
   useEffect(() => {
@@ -36,6 +36,7 @@ function HomePage() {
           <p>легко и просто для любого возраста</p>
         </div>
       </div>
+
       <div className="row">
         <div className="col my-3 minW">
           <div className="home-item py-4 px-5">
@@ -105,5 +106,3 @@ function HomeTableTr(props) {
     </tr>
   );
 }
-
-export default HomePage;

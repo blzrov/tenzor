@@ -4,7 +4,7 @@ import RatingTable from "../components/RatingTable";
 import RatingTableV2 from "../components/RatingTableV2";
 import Pagination from "react-bootstrap/Pagination";
 
-function RatingPage() {
+export default function RatingPage() {
   let [value, setValue] = useState(1);
   let [page, setPage] = useState(1);
 
@@ -65,4 +65,3 @@ function StupidCode(props) {
   if (props.value === 1) return <RatingTable page={props.page} />;
   if (props.value === 2) return <RatingTableV2 page={props.page} />;
 }
-export default RatingPage;

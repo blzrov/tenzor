@@ -1,27 +1,15 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import Poem from "../components/Poem";
 import Micro from "../components/Micro";
-import { ServerControllerContext } from "../App";
-import Container from "react-bootstrap/esm/Container";
 import BestReadOnPage from "../components/BestReadOnPage";
+import Container from "react-bootstrap/esm/Container";
 
-const PoemPage = () => {
-  let [author, setAuthor] = useState("Такого стихотворения ещё нет :с");
-  let [title, setTitle] = useState("");
-  let [text, setText] = useState("");
+export default function PoemPage() {
+  const [title, setTitle] = useState("");
   const { id } = useParams();
-  const serverController = useContext(ServerControllerContext);
 
-  useEffect(() => {
-    getPoem();
-  }, []);
-
-  const getPoem = async () => {
-    const data = await serverController.getPoem(id);
-    setAuthor(data.author.firstName + " " + data.author.lastName);
-    setTitle(data.title);
-    setText(data.text);
-  };
+  useEffect(() => {}, []);
 
   if (!id) return <></>;
 
@@ -32,11 +20,7 @@ const PoemPage = () => {
           className="d-flex flex-column align-items-center"
           style={{ fontWeight: "500" }}
         >
-          <div>
-            <h3>{title}</h3>
-            <h4 className="mb-3">{author}</h4>
-            <p style={{ whiteSpace: "pre-line" }}>{text}</p>
-          </div>
+          <Poem id={id} setTitle={setTitle} />
         </div>
       </div>
       <div className="col ">
@@ -49,6 +33,4 @@ const PoemPage = () => {
       </div>
     </div>
   );
-};
-
-export default PoemPage;
+}

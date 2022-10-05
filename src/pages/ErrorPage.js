@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-function ErrorPage() {
+export default function ErrorPage() {
   return (
     <div>
       <h3>Такой страницы не существует :c</h3>
@@ -12,4 +12,3 @@ function ErrorPage() {
   );
 }
 
-export default ErrorPage;

@@ -1,9 +1,10 @@
 import { React, useState, useEffect, useContext } from "react";
 import { ServerControllerContext } from "../App";
 import useDebounce from "../components/hooks/useDebounce";
+import CatalogInput from "../components/CatalogInput";
 import { Link } from "react-router-dom";
 
-function CatalogPage() {
+export default function CatalogPage() {
   const serverController = useContext(ServerControllerContext);
   const [value, setValue] = useState("");
   const [results, setResults] = useState([]);
@@ -45,25 +46,6 @@ function CatalogPage() {
       </h4>
       <CatalogUl length={length} query={value} data={results} />
     </div>
-  );
-}
-export default CatalogPage;
-
-function CatalogInput(props) {
-  return (
-    <input
-      className="form-control"
-      type="text"
-      placeholder="Введите название стихотворения"
-      onChange={(event) => {
-        props.setValue(event.target.value.toLowerCase());
-      }}
-      style={{
-        background: "#E7E7E7",
-        padding: "15px",
-        paddingLeft: "25px",
-      }}
-    />
   );
 }
 

@@ -1,6 +1,6 @@
 import React from "react";
 
-function Example() {
+export default function Example() {
   return (
     <div style={{ maxWidth: "700px" }}>
       <h3>О проекте</h3>
@@ -31,4 +31,3 @@ function Example() {
     </div>
   );
 }
-export default Example;

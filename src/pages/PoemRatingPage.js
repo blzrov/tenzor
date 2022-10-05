@@ -6,7 +6,7 @@ import Pagination from "react-bootstrap/Pagination";
 import RatingTableOnVerse from "../components/RatingTableOnVerse";
 import { ServerControllerContext } from "../App";
 
-function PoemRatingPage() {
+export default function PoemRatingPage() {
   let [author, setAuthor] = useState("Такого стихотворения ещё нет :с");
   let [title, setTitle] = useState("");
   let [value, setValue] = useState(1);
@@ -57,4 +57,3 @@ function MyPaginator(props) {
     </Pagination>
   );
 }
-export default PoemRatingPage;

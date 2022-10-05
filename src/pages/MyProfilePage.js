@@ -4,7 +4,7 @@ import { ServerControllerContext, CurrentUserContext } from "../App";
 import play from "../components/img/play-icon.png";
 import pause from "../components/img/pause-icon.png";
 
-function MyProfilePage() {
+export default function MyProfilePage() {
   const serverController = useContext(ServerControllerContext);
   const currentUser = useContext(CurrentUserContext);
   let [data, setData] = useState([]);
@@ -125,4 +125,3 @@ function PlayOrPause(props) {
   if (props.audio == props.data) return <img src={pause} alt="play" />;
   return <img src={play} alt="play" />;
 }
-export default MyProfilePage;
