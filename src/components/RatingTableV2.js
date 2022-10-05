@@ -23,8 +23,6 @@ function RatingTableV2(props) {
     function handleData(data) {
       setData("");
       setData(data);
-      console.log(data);
-      console.log((props.page - 1) * 10);
     }
   }, [props.page, up]);
 
@@ -33,6 +31,7 @@ function RatingTableV2(props) {
     else setAudio(url);
     console.log(url);
   }
+  
   function handleData() {
     setUP(new Date().toString());
   }

@@ -9,7 +9,7 @@ function RatingPage() {
   let [page, setPage] = useState(1);
 
   return (
-    <div className="mt-5" style={{ overflow: "auto", fontWeight: "500" }}>
+    <div style={{ overflow: "auto", fontWeight: "500" }}>
       <audio id="ratingAudio" src="" style={{ display: "none" }} />
       <div className="form-check">
         <input
@@ -43,12 +43,12 @@ function RatingPage() {
         </label>
       </div>
       <StupidCode value={value} page={page} />
-      <AdvancedExample page={page} setPage={setPage} />
+      <MyPaginator page={page} setPage={setPage} />
     </div>
   );
 }
 
-function AdvancedExample(props) {
+function MyPaginator(props) {
   return (
     <Pagination>
       <Pagination.Prev

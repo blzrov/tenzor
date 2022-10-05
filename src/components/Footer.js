@@ -31,7 +31,7 @@ function Footer() {
               </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link active" to="/example">
+              <Link className="nav-link active" to="/about">
                 О проекте
               </Link>
             </li>
@@ -51,4 +51,5 @@ function Footer() {
     </footer>
   );
 }
+
 export default Footer;

@@ -37,7 +37,7 @@ function CatalogPage() {
   };
 
   return (
-    <div className="mt-5">
+    <div>
       <h3 className="mb-3">Каталог</h3>
       <CatalogInput setValue={setValue} />
       <h4 className="my-3">

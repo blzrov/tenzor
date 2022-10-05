@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import Container from "react-bootstrap/esm/Container";
 import logo from "./img/logo-name-lowercase.png";
 import yandexLogo from "./img/yandex-img.svg";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import Modal from "react-bootstrap/Modal";
@@ -48,7 +48,6 @@ function Header() {
 
 function IsAuthorized() {
   const [modalShow, setModalShow] = useState(false);
-  const nav = useNavigate();
   const currentUser = useContext(CurrentUserContext);
   const onClick = (e) => {
     e.preventDefault();
@@ -61,10 +60,7 @@ function IsAuthorized() {
         <Link disabled className="nav-link active" to="/" onClick={onClick}>
           {"Войти"}
         </Link>
-        <MyVerticallyCenteredModal
-          show={modalShow}
-          onHide={() => setModalShow(false)}
-        />
+        <MyVCModal show={modalShow} onHide={() => setModalShow(false)} />
       </>
     );
 }
@@ -77,7 +73,7 @@ function AfterAuthorized(props) {
   );
 }
 
-function MyVerticallyCenteredModal(props) {
+function MyVCModal(props) {
   return (
     <Modal {...props} aria-labelledby="myLargeModalLabel" centered>
       <Modal.Header closeButton>
@@ -88,16 +84,10 @@ function MyVerticallyCenteredModal(props) {
       <Modal.Body style={{ margin: "0 auto" }}>
         <h6 style={{ textAlign: "center" }}>Вход через социальные сети:</h6>
         <a
-          // target="_blank"
-          // rel="noreferrer"
           href="https://oauth.yandex.ru/authorize?response_type=code&client_id=250a4b68f4b9439696580f24d1daa8f7"
           alt="Yandex"
         >
-          <img
-            style={{ maxWidth: "100%" }}
-            src={yandexLogo}
-            alt="sign in"
-          ></img>
+          <img style={{ maxWidth: "100%" }} src={yandexLogo} alt="sign in" />
         </a>
       </Modal.Body>
     </Modal>

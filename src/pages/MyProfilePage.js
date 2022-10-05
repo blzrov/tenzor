@@ -30,54 +30,49 @@ function MyProfilePage() {
   }
 
   return (
-    <div className="mt-5">
-      <div className="row">
-        <div className="col">
-          <h4>{serverController.realName}</h4>
-          <h5>Мои записи</h5>
-          <table className="table">
-            <thead>
-              <tr>
-                <th scope="col">Название</th>
-                <th scope="col">
-                  <audio
-                    src={audio}
-                    controls
-                    onEnded={() => {
-                      changeAudio("");
-                    }}
-                    autoPlay
-                    style={{ display: "none" }}
-                  />
-                </th>
-                <th scope="col">Оценка</th>
-                <th scope="col"></th>
-              </tr>
-            </thead>
-            <tbody>
-              {[...Array(data.length).keys()].map((elem) => (
-                <BestReadTableTr
-                  key={elem}
-                  data={data[elem]}
-                  setAudio={changeAudio}
-                  remove={remove}
-                  audio={audio}
-                />
-              ))}
-            </tbody>
-          </table>
-          <Link
-            to="/"
-            className="btn btn-light"
-            onClick={async () => {
-              await serverController.signOut();
-              console.log("123");
-            }}
-          >
-            Выйти
-          </Link>
-        </div>
-      </div>
+    <div>
+      <h4>{serverController.realName}</h4>
+      <h5>Мои записи</h5>
+      <table className="table">
+        <thead>
+          <tr>
+            <th scope="col">Название</th>
+            <th scope="col">
+              <audio
+                src={audio}
+                controls
+                onEnded={() => {
+                  changeAudio("");
+                }}
+                autoPlay
+                style={{ display: "none" }}
+              />
+            </th>
+            <th scope="col">Оценка</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          {[...Array(data.length).keys()].map((elem) => (
+            <BestReadTableTr
+              key={elem}
+              data={data[elem]}
+              setAudio={changeAudio}
+              remove={remove}
+              audio={audio}
+            />
+          ))}
+        </tbody>
+      </table>
+      <Link
+        to="/"
+        className="btn btn-light"
+        onClick={async () => {
+          await serverController.signOut();
+        }}
+      >
+        Выйти
+      </Link>
     </div>
   );
 }
@@ -116,7 +111,6 @@ function BestReadTableTr(props) {
             type="button"
             className="btn btn-light"
             onClick={() => {
-              console.log(props.data.id);
               props.remove(props.data.id);
             }}
           >
@@ -128,8 +122,7 @@ function BestReadTableTr(props) {
 }
 
 function PlayOrPause(props) {
-  console.log(props.audio);
-  if (props.audio == props.data) return <img src={pause} alt="play"></img>;
-  return <img src={play} alt="play"></img>;
+  if (props.audio == props.data) return <img src={pause} alt="play" />;
+  return <img src={play} alt="play" />;
 }
 export default MyProfilePage;

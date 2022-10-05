@@ -4,12 +4,13 @@ import { Routes, Route } from "react-router-dom";
 import Nav from "./components/Nav";
 import Footer from "./components/Footer";
 import HomePage from "./pages/HomePage";
+import AboutUsPage from "./pages/AboutUsPage"
 import RatingPage from "./pages/RatingPage";
 import CatalogPage from "./pages/CatalogPage";
 import ErrorPage from "./pages/ErrorPage";
 import MyProfilePage from "./pages/MyProfilePage";
 import PoemPage from "./pages/PoemPage";
-import RatingOnVerse from "./components/RatingOnVerse"; //to do
+import PoemRatingPage from "./pages/PoemRatingPage"; //to do
 import LoggingPage from "./LoggingPage";
 import OauthPage from "./OauthPage";
 import ServerController from "./models/serverController";
@@ -35,15 +36,16 @@ function App() {
         <div className="site">
           <Nav />
           <div className="site-content">
-            <Container>
+            <Container className="my-5">
               <Routes>
                 <Route path="/" element={<HomePage />} />
+                <Route path="/about" element={<AboutUsPage />} />
                 <Route path="/rating" element={<RatingPage />} />
                 <Route path="/myProfile" element={<MyProfilePage />} />
                 <Route path="/catalog" element={<CatalogPage />} />
                 <Route path="/poem">
                   <Route path=":id" element={<PoemPage />} />
-                  <Route path=":id/rating" element={<RatingOnVerse />} />
+                  <Route path=":id/rating" element={<PoemRatingPage />} />
                 </Route>
                 <Route
                   path="/oauth"

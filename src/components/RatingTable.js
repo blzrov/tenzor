@@ -7,9 +7,8 @@ import pause from "./img/pause-icon.png";
 import Modal from "react-bootstrap/Modal";
 import { Link } from "react-router-dom";
 import { ServerControllerContext } from "../App";
+
 function RatingTable(props) {
-  if (props.value === 1) {
-  }
   let [data, setData] = React.useState("");
   let [audio, setAudio] = React.useState("");
 
@@ -20,7 +19,6 @@ function RatingTable(props) {
   }, [props.page]);
   const handleData = async () => {
     const data = await serverController.getUsersRecords((props.page - 1) * 10);
-    console.log(data);
     if (!data) return;
     setData(data);
   };

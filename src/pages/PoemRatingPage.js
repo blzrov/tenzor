@@ -3,9 +3,10 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import Pagination from "react-bootstrap/Pagination";
-import RatingTableOnVerse from "./RatingTableOnVerse";
+import RatingTableOnVerse from "../components/RatingTableOnVerse";
 import { ServerControllerContext } from "../App";
-function RatingOnVerse() {
+
+function PoemRatingPage() {
   let [author, setAuthor] = useState("Такого стихотворения ещё нет :с");
   let [title, setTitle] = useState("");
   let [value, setValue] = useState(1);
@@ -15,19 +16,19 @@ function RatingOnVerse() {
   const serverController = useContext(ServerControllerContext);
 
   useEffect(() => {
-    handleData();
+    getPoem();
   }, []);
 
   if (!id) return <></>;
 
-  const handleData = async () => {
+  const getPoem = async () => {
     const data = await serverController.getPoem(id);
     setAuthor(data.author.firstName + " " + data.author.lastName);
     setTitle(data.title);
   };
 
   return (
-    <div className="mt-5" style={{ overflow: "auto", fontWeight: "500" }}>
+    <div style={{ overflow: "auto", fontWeight: "500" }}>
       <audio id="ratingAudio" src="" style={{ display: "none" }} />
       <Link
         to={"/poem/" + id}
@@ -39,12 +40,12 @@ function RatingOnVerse() {
       </Link>
 
       <RatingTableOnVerse value={value} title={title} id={id} page={page} />
-      <AdvancedExample page={page} setPage={setPage} />
+      <MyPaginator page={page} setPage={setPage} />
     </div>
   );
 }
 
-function AdvancedExample(props) {
+function MyPaginator(props) {
   return (
     <Pagination>
       <Pagination.Prev
@@ -56,4 +57,4 @@ function AdvancedExample(props) {
     </Pagination>
   );
 }
-export default RatingOnVerse;
+export default PoemRatingPage;

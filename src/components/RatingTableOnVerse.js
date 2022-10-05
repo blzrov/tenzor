@@ -17,21 +17,23 @@ function RatingTableOnVerse(props) {
   const serverController = useContext(ServerControllerContext);
 
   useEffect(() => {
-    handleData();
+    getPoemRecord();
   }, [props.page]);
 
-  const handleData = async () => {
+  const getPoemRecord = async () => {
     const data = await serverController.getPoemRecord(
       props.id,
       (props.page - 1) * 10
     );
     setData(data);
   };
+  
   function changeAudio(url) {
     if (url === audio) setAudio("");
     else setAudio(url);
     console.log(url);
   }
+
   return (
     <Table className="border-primary">
       <thead
@@ -71,7 +73,7 @@ function RatingTableOnVerse(props) {
             audio={audio}
             data={data[elem]}
             setAudio={changeAudio}
-            handleData={handleData}
+            handleData={getPoemRecord}
           />
         ))}
       </tbody>

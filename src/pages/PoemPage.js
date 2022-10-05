@@ -26,7 +26,7 @@ const PoemPage = () => {
   if (!id) return <></>;
 
   return (
-    <div className="row my-5 ">
+    <div className="row">
       <div className="col-5 mb-5 pb-5 border-bottom border-primary minW">
         <div
           className="d-flex flex-column align-items-center"

@@ -82,7 +82,7 @@ function Recorder(props) {
               </div>
             </div>
             <div>
-              <audio src={mediaBlobUrl} controls></audio>
+              <audio src={mediaBlobUrl} controls />
             </div>
             <Button
               onClick={() => savePoemRecord(mediaBlobUrl)}

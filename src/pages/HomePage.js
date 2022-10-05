@@ -20,7 +20,7 @@ function HomePage() {
   return (
     <div>
       <div
-        className="row mt-5 mb-2 p-5 minW text-white"
+        className="row mb-2 p-5 minW text-white"
         style={{
           borderRadius: "30px",
           background:
