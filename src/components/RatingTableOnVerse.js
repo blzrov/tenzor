@@ -1,11 +1,9 @@
 import React, { useContext, useState, useEffect } from "react";
-
-import Grade from "./img/grade/Grade";
+import MyVCModalGrade from "./MyVCModalGrade";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
 import play from "./img/play-icon.png";
 import pause from "./img/pause-icon.png";
-import Modal from "react-bootstrap/Modal";
 import { ServerControllerContext } from "../App";
 
 function RatingTableOnVerse(props) {
@@ -27,7 +25,7 @@ function RatingTableOnVerse(props) {
     );
     setData(data);
   };
-  
+
   function changeAudio(url) {
     if (url === audio) setAudio("");
     else setAudio(url);
@@ -82,7 +80,7 @@ function RatingTableOnVerse(props) {
 }
 
 function RatingTableTr(props) {
-  const [modalShow, setModalShow] = React.useState(false);
+  const [modalShow, setModalShow] = useState(false);
   return (
     <tr style={{ verticalAlign: "middle" }}>
       <td>{props.id + 1}</td>
@@ -104,7 +102,7 @@ function RatingTableTr(props) {
           Оценить
         </Button>
       </td>
-      <MyVerticallyCenteredModal
+      <MyVCModalGrade
         show={modalShow}
         onHide={() => setModalShow(false)}
         id={props.data.id}
@@ -113,66 +111,10 @@ function RatingTableTr(props) {
     </tr>
   );
 }
+
 function PlayOrPause(props) {
-  console.log(props.audio);
   if (props.audio == props.data) return <img src={pause} alt="play"></img>;
   return <img src={play} alt="play"></img>;
-}
-
-function MyVerticallyCenteredModal(props) {
-  let [grade, setGrade] = useState();
-  const serverController = useContext(ServerControllerContext);
-
-  const onClick = async () => {
-    const data = await serverController.doVote(props.id, grade);
-    console.log(data);
-    props.onHide();
-    props.handleData();
-  };
-
-  function hanldeGrade(a) {
-    setGrade(a);
-  }
-  return (
-    <Modal
-      {...props}
-      size="lg"
-      aria-labelledby="contained-modal-title-vcenter"
-      centered
-    >
-      <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">
-          Оцените прочтение по 5-бальной шкале
-        </Modal.Title>
-      </Modal.Header>
-      <Modal.Body className="d-flex justify-content-center flex-column">
-        <Grade setGrade={hanldeGrade} />
-        <div className="d-flex justify-content-center mt-3">
-          <Button
-            type="button"
-            value="Submit"
-            form="form1"
-            variant="warning"
-            onClick={onClick}
-            className="yellow-button m-1"
-          >
-            Оценить
-          </Button>
-
-          <Button
-            variant="secondary"
-            onClick={() => {
-              setGrade();
-              props.onHide();
-            }}
-            className="m-1"
-          >
-            Закрыть
-          </Button>
-        </div>
-      </Modal.Body>
-    </Modal>
-  );
 }
 
 export default RatingTableOnVerse;

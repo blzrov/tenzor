@@ -1,19 +1,19 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import play from "./img/play-icon.png";
 import pause from "./img/pause-icon.png";
 import { ServerControllerContext } from "../App";
 
 function BestReadOnPage(props) {
-  let [data, setData] = React.useState("");
-  let [audio, setAudio] = React.useState("");
+  let [data, setData] = useState("");
+  let [audio, setAudio] = useState("");
   const serverController = useContext(ServerControllerContext);
 
   useEffect(() => {
-    handleData();
+    getPoemRecord();
   }, []);
 
-  const handleData = async () => {
+  const getPoemRecord = async () => {
     const data = await serverController.getPoemRecord(props.id, 0);
     console.log(data);
     setData(data.slice(0, 3));
@@ -137,8 +137,8 @@ function BestReadTableTr(props) {
 
 function PlayOrPause(props) {
   console.log(props.audio);
-  if (props.audio == props.data) return <img src={pause} alt="play"></img>;
-  return <img src={play} alt="play"></img>;
+  if (props.audio == props.data) return <img src={pause} alt="play" />;
+  return <img src={play} alt="play" />;
 }
 
 export default BestReadOnPage;

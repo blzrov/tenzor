@@ -1,10 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
-import Grade from "./img/grade/Grade";
+import MyVCModalGrade from "./MyVCModalGrade";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
 import play from "./img/play-icon.png";
 import pause from "./img/pause-icon.png";
-import Modal from "react-bootstrap/Modal";
 import { Link } from "react-router-dom";
 import { ServerControllerContext } from "../App";
 
@@ -15,9 +14,9 @@ function RatingTable(props) {
   const serverController = useContext(ServerControllerContext);
 
   useEffect(() => {
-    handleData();
+    getUsersRecords();
   }, [props.page]);
-  const handleData = async () => {
+  const getUsersRecords = async () => {
     const data = await serverController.getUsersRecords((props.page - 1) * 10);
     if (!data) return;
     setData(data);
@@ -35,7 +34,6 @@ function RatingTable(props) {
           background:
             "linear-gradient(256.02deg, #4E22BC -10.04%, #8063A5 93.08%)",
           backgroundAttachment: "fixed",
-
           border: "1px solid #000000",
           boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
           color: "white",
@@ -68,7 +66,7 @@ function RatingTable(props) {
             audio={audio}
             data={data[elem]}
             setAudio={changeAudio}
-            handleData={handleData}
+            handleData={getUsersRecords}
           />
         ))}
       </tbody>
@@ -109,7 +107,7 @@ function RatingTableTr(props) {
           Оценить
         </Button>
       </td>
-      <MyVerticallyCenteredModal
+      <MyVCModalGrade
         id={props.data.records[0].id}
         show={modalShow}
         onHide={() => setModalShow(false)}
@@ -123,60 +121,6 @@ function PlayOrPause(props) {
   console.log(props.audio);
   if (props.audio === props.data) return <img src={pause} alt="play"></img>;
   return <img src={play} alt="play"></img>;
-}
-
-function MyVerticallyCenteredModal(props) {
-  let [grade, setGrade] = useState();
-  const serverController = useContext(ServerControllerContext);
-
-  const onClick = async () => {
-    await serverController.doVote(props.id, grade);
-    props.onHide();
-    props.handleData();
-  };
-
-  function hanldeGrade(a) {
-    setGrade(a);
-  }
-  return (
-    <Modal
-      {...props}
-      size="lg"
-      aria-labelledby="contained-modal-title-vcenter"
-      centered
-    >
-      <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">
-          Оцените прочтение по 5-балной шкале
-        </Modal.Title>
-      </Modal.Header>
-      <Modal.Body className="d-flex justify-content-center flex-column">
-        <Grade setGrade={hanldeGrade} />
-        <div className="d-flex justify-content-center mt-3">
-          <Button
-            type="button"
-            value="Submit"
-            form="form1"
-            onClick={onClick}
-            className="yellow-button m-1"
-          >
-            Оценить
-          </Button>
-
-          <Button
-            variant="secondary"
-            onClick={() => {
-              setGrade();
-              props.onHide();
-            }}
-            className="m-1"
-          >
-            Закрыть
-          </Button>
-        </div>
-      </Modal.Body>
-    </Modal>
-  );
 }
 
 export default RatingTable;
