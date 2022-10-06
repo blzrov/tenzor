@@ -1,10 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
-import MyVCModalGrade from "./MyVCModalGrade";
 import Table from "react-bootstrap/Table";
-import Button from "react-bootstrap/Button";
-import play from "./img/play-icon.png";
-import pause from "./img/pause-icon.png";
 import { ServerControllerContext } from "../App";
+import UniversalTr from "./UniversalTr";
 
 function RatingTableOnVerse(props) {
   //to do id 2
@@ -29,7 +26,6 @@ function RatingTableOnVerse(props) {
   function changeAudio(url) {
     if (url === audio) setAudio("");
     else setAudio(url);
-    console.log(url);
   }
 
   return (
@@ -64,57 +60,24 @@ function RatingTableOnVerse(props) {
       </thead>
       <tbody>
         {[...Array(data.length).keys()].map((elem) => (
-          <RatingTableTr
-            key={elem}
-            id={elem}
+          <UniversalTr
             title={props.title}
             audio={audio}
             data={data[elem]}
             setAudio={changeAudio}
             handleData={getPoemRecord}
+            //
+            key={elem}
+            index={elem + 10 * (props.page - 1)}
+            name={data[elem].ownerName}
+            url={data[elem].url}
+            id2={data[elem].id}
+            userRating={data[elem].rating}
           />
         ))}
       </tbody>
     </Table>
   );
-}
-
-function RatingTableTr(props) {
-  const [modalShow, setModalShow] = useState(false);
-  return (
-    <tr style={{ verticalAlign: "middle" }}>
-      <td>{props.id + 1}</td>
-      <td>{props.data.ownerName}</td>
-      <td>{props.title}</td>
-      <td>
-        <button
-          style={{ border: "none", backgroundColor: "white" }}
-          onClick={() => {
-            props.setAudio(props.data.url);
-          }}
-        >
-          <PlayOrPause audio={props.audio} data={props.data.url} />
-        </button>
-      </td>
-      <td>{props.data.rating}</td>
-      <td>
-        <Button className="yellow-button" onClick={() => setModalShow(true)}>
-          Оценить
-        </Button>
-      </td>
-      <MyVCModalGrade
-        show={modalShow}
-        onHide={() => setModalShow(false)}
-        id={props.data.id}
-        handleData={props.handleData}
-      />
-    </tr>
-  );
-}
-
-function PlayOrPause(props) {
-  if (props.audio == props.data) return <img src={pause} alt="play"></img>;
-  return <img src={play} alt="play"></img>;
 }
 
 export default RatingTableOnVerse;

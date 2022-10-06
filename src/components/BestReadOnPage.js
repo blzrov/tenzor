@@ -136,7 +136,6 @@ function BestReadTableTr(props) {
 }
 
 function PlayOrPause(props) {
-  console.log(props.audio);
   if (props.audio == props.data) return <img src={pause} alt="play" />;
   return <img src={play} alt="play" />;
 }

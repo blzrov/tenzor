@@ -1,16 +1,11 @@
-import React, { useContext } from "react";
-import Grade from "./img/grade/Grade";
+import React, { useState, useContext } from "react";
 import Table from "react-bootstrap/Table";
-import Button from "react-bootstrap/Button";
-import play from "./img/play-icon.png";
-import pause from "./img/pause-icon.png";
-import Modal from "react-bootstrap/Modal";
-import { Link } from "react-router-dom";
-import { ServerControllerContext } from "../App";
+import UniversalTr from "./UniversalTr";
+
 function RatingTableV2(props) {
-  let [data, setData] = React.useState("");
-  let [audio, setAudio] = React.useState("");
-  let [up, setUP] = React.useState("");
+  let [data, setData] = useState("");
+  let [audio, setAudio] = useState("");
+  let [up, setUP] = useState("");
 
   React.useEffect(() => {
     fetch(
@@ -31,7 +26,7 @@ function RatingTableV2(props) {
     else setAudio(url);
     console.log(url);
   }
-  
+
   function handleData() {
     setUP(new Date().toString());
   }
@@ -68,117 +63,21 @@ function RatingTableV2(props) {
       </thead>
       <tbody>
         {[...Array(data.length).keys()].map((elem) => (
-          <RatingTableTr
+          <UniversalTr
             key={elem}
-            id={elem + 10 * (props.page - 1)}
+            index={elem + 10 * (props.page - 1)}
             audio={audio}
-            data={data[elem]}
             setAudio={changeAudio}
             handleData={handleData}
+            name={data[elem].ownerName}
+            url={data[elem].url}
+            id2={data[elem].id}
+            userRating={data[elem].rating}
+            title={data[elem].poemName}
           />
         ))}
       </tbody>
     </Table>
-  );
-}
-
-function RatingTableTr(props) {
-  const [modalShow, setModalShow] = React.useState(false);
-  return (
-    <tr style={{ verticalAlign: "middle" }}>
-      <td>{props.id + 1}</td>
-      <td>{props.data.ownerName}</td>
-      <td>
-        <Link
-          to={"/poem/" + props.data.poem}
-          style={{ textDecoration: "none", color: "black" }}
-        >
-          {props.data.poemName}
-        </Link>
-      </td>
-      <td>
-        <button
-          style={{ border: "none", backgroundColor: "white" }}
-          onClick={() => {
-            props.setAudio(props.data.url);
-          }}
-        >
-          <PlayOrPause audio={props.audio} data={props.data.url} />
-        </button>
-      </td>
-      <td>{props.data.rating}</td>
-      <td>
-        <Button className="yellow-button" onClick={() => setModalShow(true)}>
-          Оценить
-        </Button>
-      </td>
-      <MyVerticallyCenteredModal
-        id={props.data.id}
-        show={modalShow}
-        onHide={() => setModalShow(false)}
-        handleData={props.handleData}
-      />
-    </tr>
-  );
-}
-
-function PlayOrPause(props) {
-  if (props.audio === props.data) return <img src={pause} alt="play"></img>;
-  return <img src={play} alt="play"></img>;
-}
-
-function MyVerticallyCenteredModal(props) {
-  let [grade, setGrade] = React.useState();
-  const serverController = useContext(ServerControllerContext);
-  function hanldeGrade(a) {
-    setGrade(a);
-  }
-
-  const onClick = async () => {
-    const data = await serverController.doVote(props.id, grade);
-    console.log(data);
-    props.onHide();
-    props.handleData();
-  };
-  return (
-    <Modal
-      {...props}
-      size="lg"
-      aria-labelledby="contained-modal-title-vcenter"
-      centered
-    >
-      <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">
-          Оцените прочтение по 5-бальной шкале
-        </Modal.Title>
-      </Modal.Header>
-      <Modal.Body className="d-flex justify-content-center flex-column">
-        <Grade setGrade={hanldeGrade} />
-        <div className="d-flex justify-content-center mt-3">
-          <Button
-            type="button"
-            value="Submit"
-            form="form1"
-            variant="warning"
-            onClick={onClick}
-            className="yellow-button m-1"
-          >
-            Оценить
-          </Button>
-
-          <Button
-            variant="secondary"
-            onClick={() => {
-              setGrade();
-              props.onHide();
-            }}
-            className="m-1"
-          >
-            Закрыть
-          </Button>
-        </div>
-      </Modal.Body>
-    </Modal>
   );
 }
 

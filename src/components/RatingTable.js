@@ -1,21 +1,18 @@
 import React, { useContext, useEffect, useState } from "react";
-import MyVCModalGrade from "./MyVCModalGrade";
 import Table from "react-bootstrap/Table";
-import Button from "react-bootstrap/Button";
-import play from "./img/play-icon.png";
-import pause from "./img/pause-icon.png";
-import { Link } from "react-router-dom";
 import { ServerControllerContext } from "../App";
+import UniversalTr from "./UniversalTr";
 
 function RatingTable(props) {
-  let [data, setData] = React.useState("");
-  let [audio, setAudio] = React.useState("");
+  let [data, setData] = useState("");
+  let [audio, setAudio] = useState("");
 
   const serverController = useContext(ServerControllerContext);
 
   useEffect(() => {
     getUsersRecords();
   }, [props.page]);
+  
   const getUsersRecords = async () => {
     const data = await serverController.getUsersRecords((props.page - 1) * 10);
     if (!data) return;
@@ -60,11 +57,15 @@ function RatingTable(props) {
       </thead>
       <tbody>
         {[...Array(data.length).keys()].map((elem) => (
-          <RatingTableTr
+          <UniversalTr
             key={elem}
-            id={elem + 10 * (props.page - 1)}
+            index={elem + 10 * (props.page - 1)}
+            name={data[elem].records[0].ownerName}
+            title={data[elem].records[0].poemName}
             audio={audio}
-            data={data[elem]}
+            url={data[elem].records[0].url}
+            id2={data[elem].records[0].id}
+            userRating={data[elem].userRating}
             setAudio={changeAudio}
             handleData={getUsersRecords}
           />
@@ -72,55 +73,6 @@ function RatingTable(props) {
       </tbody>
     </Table>
   );
-}
-
-function RatingTableTr(props) {
-  const [modalShow, setModalShow] = useState(false);
-  if (props.data.records.length === 0) return;
-
-  return (
-    <tr style={{ verticalAlign: "middle" }}>
-      <td>{props.id + 1}</td>
-      <td>{props.data.records[0].ownerName}</td>
-      <td>
-        <Link
-          className="hover-underline"
-          to={"/poem/" + props.data.records[0].poem}
-          style={{ textDecoration: "none", color: "black" }}
-        >
-          {props.data.records[0].poemName}
-        </Link>
-      </td>
-      <td>
-        <button
-          style={{ border: "none", backgroundColor: "white" }}
-          onClick={() => {
-            props.setAudio(props.data.records[0].url);
-          }}
-        >
-          <PlayOrPause audio={props.audio} data={props.data.records[0].url} />
-        </button>
-      </td>
-      <td>{props.data.userRating}</td>
-      <td>
-        <Button className="yellow-button" onClick={() => setModalShow(true)}>
-          Оценить
-        </Button>
-      </td>
-      <MyVCModalGrade
-        id={props.data.records[0].id}
-        show={modalShow}
-        onHide={() => setModalShow(false)}
-        handleData={props.handleData}
-      />
-    </tr>
-  );
-}
-
-function PlayOrPause(props) {
-  console.log(props.audio);
-  if (props.audio === props.data) return <img src={pause} alt="play"></img>;
-  return <img src={play} alt="play"></img>;
 }
 
 export default RatingTable;
