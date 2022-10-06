@@ -10,7 +10,7 @@ import CatalogPage from "./pages/CatalogPage";
 import ErrorPage from "./pages/ErrorPage";
 import MyProfilePage from "./pages/MyProfilePage";
 import PoemPage from "./pages/PoemPage";
-import PoemRatingPage from "./pages/PoemRatingPage"; //to do
+import PoemRatingPage from "./pages/PoemRatingPage";
 import LoggingPage from "./LoggingPage";
 import OauthPage from "./OauthPage";
 import ServerController from "./models/serverController";
